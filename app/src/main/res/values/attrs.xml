@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="customFont" format="enum">
+        <enum name="asylum" value="0" />
+        <enum name="roboto" value="1" />
+    </attr>
+    <attr name="customStyle" format="enum">
+        <enum name="regular" value="0" />
+        <enum name="light" value="1" />
+        <enum name="bold" value="2" />
+    </attr>
+
+    <declare-styleable name="FontEnabledTextView">
+        <attr name="customFont" />
+        <attr name="customStyle" />
+    </declare-styleable>
+    <declare-styleable name="FontEnabledButton">
+        <attr name="customFont" />
+        <attr name="customStyle" />
+    </declare-styleable>
+    <declare-styleable name="FontEnabledEditText">
+        <attr name="customFont" />
+        <attr name="customStyle" />
+    </declare-styleable>
+</resources>
