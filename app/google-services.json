@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "684414051983",
+    "firebase_url": "https://wild-legion.firebaseio.com",
+    "project_id": "wild-legion",
+    "storage_bucket": "wild-legion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684414051983:android:b5476ea1bc6f3f44",
+        "android_client_info": {
+          "package_name": "com.developerxy.wildlegion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684414051983-sekumcbhl4n35ihord149ad7vfr0s6nm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.developerxy.wildlegion",
+            "certificate_hash": "0052ae96a426cd93dbc2a58d5d8bc2521a02cc20"
+          }
+        },
+        {
+          "client_id": "684414051983-k3gu7fbdtu16va5ur21kdjg8ruagi3rk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClNkEGY6k057aMCC4h5j7cbVh4sjpyKpE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684414051983-k3gu7fbdtu16va5ur21kdjg8ruagi3rk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
