@@ -1,4 +1,4 @@
-package com.developerxy.wildlegion.screens
+package com.developerxy.wildlegion.screens.login
 
 import com.developerxy.wildlegion.BasePresenter
 
@@ -13,6 +13,7 @@ interface LoginContract {
         fun enableLoginButton()
         fun setLoginButtonText(text: String)
         fun showLoginError()
+        fun openMainActivity()
     }
 
     interface Presenter : BasePresenter {

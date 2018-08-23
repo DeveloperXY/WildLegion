@@ -1,4 +1,4 @@
-package com.developerxy.wildlegion.screens
+package com.developerxy.wildlegion.screens.login
 
 import com.google.firebase.auth.FirebaseAuth
 
@@ -22,7 +22,7 @@ class LoginPresenter(var mView: LoginContract.View) : LoginContract.Presenter {
         mFirebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener({
                     if (it.isSuccessful) {
-
+                        mView.openMainActivity()
                     } else {
                         mView.hideProgressBar()
                         mView.enableLoginButton()

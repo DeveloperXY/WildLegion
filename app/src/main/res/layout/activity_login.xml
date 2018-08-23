@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@android:color/black"
-    tools:context=".screens.LoginActivity">
+    tools:context=".screens.login.LoginActivity">
 
     <ImageView
         android:id="@+id/shcBackground"

@@ -1,14 +1,15 @@
-package com.developerxy.wildlegion.screens
+package com.developerxy.wildlegion.screens.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.developerxy.wildlegion.R
+import com.developerxy.wildlegion.screens.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), LoginContract.View {
@@ -66,5 +67,11 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     override fun showLoginError() {
         Toast.makeText(this, "Invalid email/password.", Toast.LENGTH_LONG).show()
+    }
+
+    override fun openMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }
