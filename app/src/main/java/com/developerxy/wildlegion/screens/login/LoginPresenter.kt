@@ -3,9 +3,9 @@ package com.developerxy.wildlegion.screens.login
 import com.google.firebase.auth.FirebaseAuth
 
 
-class LoginPresenter(var mView: LoginContract.View) : LoginContract.Presenter {
+class LoginPresenter(var mView: LoginContract.View,
+                     var mFirebaseAuth: FirebaseAuth) : LoginContract.Presenter {
 
-    var mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     var isPasswordRevealed = false
 
     override fun start() {
@@ -23,7 +23,7 @@ class LoginPresenter(var mView: LoginContract.View) : LoginContract.Presenter {
         mView.disableLoginButton()
         mView.setLoginButtonText("Signing you in...")
         mFirebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener({
+                .addOnCompleteListener {
                     if (it.isSuccessful) {
                         mView.openMainActivity()
                     } else {
@@ -32,7 +32,7 @@ class LoginPresenter(var mView: LoginContract.View) : LoginContract.Presenter {
                         mView.setLoginButtonText("Sign in")
                         mView.showLoginError()
                     }
-                })
+                }
     }
 
     override fun togglePasswordVisibility() {

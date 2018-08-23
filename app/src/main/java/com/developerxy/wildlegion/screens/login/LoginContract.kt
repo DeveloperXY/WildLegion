@@ -11,7 +11,7 @@ interface LoginContract {
         fun showProgressBar()
         fun disableLoginButton()
         fun enableLoginButton()
-        fun setLoginButtonText(text: String)
+        fun setLoginButtonText(text: String?)
         fun showLoginError()
         fun openMainActivity()
         fun setListenerOnVisibilitySwitch()

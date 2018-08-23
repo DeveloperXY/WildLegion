@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), LoginContract.View {
@@ -20,7 +21,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        mPresenter = LoginPresenter(this)
+        mPresenter = LoginPresenter(this, FirebaseAuth.getInstance())
         mPresenter.start()
     }
 
@@ -62,7 +63,8 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         loginButton.isEnabled = true
     }
 
-    override fun setLoginButtonText(text: String) {
+    override fun setLoginButtonText(text: String?) {
+        text ?: return
         loginButton.text = text
     }
 
