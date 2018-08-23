@@ -14,9 +14,13 @@ interface LoginContract {
         fun setLoginButtonText(text: String)
         fun showLoginError()
         fun openMainActivity()
+        fun setListenerOnVisibilitySwitch()
+        fun showPassword()
+        fun hidePassword()
     }
 
     interface Presenter : BasePresenter {
         fun logUserIn(email: String, password: String)
+        fun togglePasswordVisibility()
     }
 }

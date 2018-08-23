@@ -2,14 +2,17 @@ package com.developerxy.wildlegion.screens.login
 
 import com.google.firebase.auth.FirebaseAuth
 
+
 class LoginPresenter(var mView: LoginContract.View) : LoginContract.Presenter {
 
     var mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    var isPasswordRevealed = false
 
     override fun start() {
         mView.displayWlLogo()
         mView.displayShcBackground()
         mView.setListenerOnLoginButton()
+        mView.setListenerOnVisibilitySwitch()
     }
 
     override fun logUserIn(email: String, password: String) {
@@ -30,5 +33,13 @@ class LoginPresenter(var mView: LoginContract.View) : LoginContract.Presenter {
                         mView.showLoginError()
                     }
                 })
+    }
+
+    override fun togglePasswordVisibility() {
+        isPasswordRevealed = !isPasswordRevealed
+        if (isPasswordRevealed)
+            mView.showPassword()
+        else
+            mView.hidePassword()
     }
 }

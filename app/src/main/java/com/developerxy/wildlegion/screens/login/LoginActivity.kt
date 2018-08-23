@@ -3,6 +3,7 @@ package com.developerxy.wildlegion.screens.login
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.method.PasswordTransformationMethod
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -38,11 +39,11 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     override fun setListenerOnLoginButton() {
-        loginButton.setOnClickListener({
+        loginButton.setOnClickListener {
             mPresenter.logUserIn(
                     email = emailField.text.toString(),
                     password = passwordField.text.toString())
-        })
+        }
     }
 
     override fun hideProgressBar() {
@@ -73,5 +74,21 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    override fun setListenerOnVisibilitySwitch() {
+        visibilitySwitch.setOnClickListener {
+            mPresenter.togglePasswordVisibility()
+        }
+    }
+
+    override fun showPassword() {
+        passwordField.transformationMethod = PasswordTransformationMethod()
+        visibilityLabel.text = "Hide password"
+    }
+
+    override fun hidePassword() {
+        passwordField.transformationMethod = null
+        visibilityLabel.text = "Reveal password"
     }
 }

@@ -91,13 +91,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailField" />
 
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/visibilitySwitch"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:tint="@color/field_text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordField"
+        app:srcCompat="@drawable/baseline_visibility_24" />
+
+    <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        android:id="@+id/visibilityLabel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center_vertical|end"
+        android:text="Reveal password"
+        android:textColor="@color/field_text_color"
+        app:customFont="roboto"
+        app:customStyle="light"
+        app:layout_constraintBottom_toTopOf="@id/loginButton"
+        app:layout_constraintEnd_toStartOf="@id/visibilitySwitch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordField" />
+
     <com.developerxy.wildlegion.customviews.FontEnabledButton
         android:id="@+id/loginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_background"
         android:backgroundTint="@color/secondaryColor"
         android:letterSpacing="0.3"
@@ -106,7 +137,7 @@
         app:customFont="asylum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/passwordField" />
+        app:layout_constraintTop_toBottomOf="@id/visibilitySwitch" />
 
     <ProgressBar
         android:id="@+id/progressBar"
