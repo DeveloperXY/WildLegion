@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">@color/primaryDarkColor</color>
     <color name="colorAccent">@color/secondaryColor</color>
 
-    <color name="primaryColor">#f44336</color>
+    <color name="primaryColor">#000000</color>
     <color name="primaryLightColor">#ff7961</color>
     <color name="primaryDarkColor">#ba000d</color>
     <color name="secondaryColor">#d32f2f</color>
