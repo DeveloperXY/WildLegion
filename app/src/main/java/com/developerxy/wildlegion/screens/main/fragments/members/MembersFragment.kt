@@ -11,25 +11,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.adapters.MembersAdapter
-import com.developerxy.wildlegion.screens.main.network.WixAPI
+import com.developerxy.wildlegion.screens.main.models.Member
 import com.developerxy.wildlegion.utils.SpacesItemDecoration
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_members.*
-import javax.inject.Inject
 
-class MembersFragment : Fragment() {
+class MembersFragment : Fragment(), MembersContract.View {
 
-    @Inject
-    lateinit var mWixAPI: WixAPI
+    lateinit var mPresenter: MembersPresenter
 
     lateinit var mMembersAdapter: MembersAdapter
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        DaggerMembersComponent.builder()
-                .build()
-                .inject(this)
+        mPresenter = MembersPresenter(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -37,18 +31,19 @@ class MembersFragment : Fragment() {
             inflater.inflate(R.layout.fragment_members, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mPresenter.start()
+    }
+
+    override fun setupRecyclerView() {
         mMembersAdapter = MembersAdapter(context!!, mutableListOf())
         membersRecyclerview.layoutManager = LinearLayoutManager(activity)
         membersRecyclerview.addItemDecoration(SpacesItemDecoration(dpToPx(8)))
         membersRecyclerview.adapter = mMembersAdapter
+    }
 
-        mWixAPI.getClanMembers()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    mMembersAdapter.items = it
-                    mMembersAdapter.notifyDataSetChanged()
-                }
+    override fun showMembers(members: List<Member>) {
+        mMembersAdapter.items = members
+        mMembersAdapter.notifyDataSetChanged()
     }
 
     private fun dpToPx(dp: Int): Int {
