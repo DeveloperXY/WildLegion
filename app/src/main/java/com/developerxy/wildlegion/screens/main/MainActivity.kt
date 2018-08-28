@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         mPagerAdapter = MainPagerAdapter(supportFragmentManager)
         mViewPager.adapter = mPagerAdapter
         mTabLayout.setupWithViewPager(mViewPager)
+        mViewPager.offscreenPageLimit = 6
         mViewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTabLayout))
         mTabLayout.setTabsFromPagerAdapter(mPagerAdapter)
 

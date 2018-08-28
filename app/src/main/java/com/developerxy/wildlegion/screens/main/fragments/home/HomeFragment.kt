@@ -1,4 +1,4 @@
-package com.developerxy.wildlegion.screens.main.fragments
+package com.developerxy.wildlegion.screens.main.fragments.home
 
 
 import android.os.Bundle
