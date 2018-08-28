@@ -6,6 +6,14 @@
     android:padding="16dp"
     tools:context=".screens.main.fragments.members.MembersFragment">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:indeterminateDrawable="@drawable/progress_drawable" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/membersRecyclerview"
         android:layout_width="match_parent"

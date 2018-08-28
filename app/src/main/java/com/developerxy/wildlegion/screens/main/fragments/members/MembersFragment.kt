@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.Toast
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.adapters.MembersAdapter
 import com.developerxy.wildlegion.screens.main.models.Member
@@ -44,6 +46,14 @@ class MembersFragment : Fragment(), MembersContract.View {
     override fun showMembers(members: List<Member>) {
         mMembersAdapter.items = members
         mMembersAdapter.notifyDataSetChanged()
+    }
+
+    override fun showLoadingError(error: Throwable) {
+        Toast.makeText(activity, "Unable to load members data: ${error.message}", Toast.LENGTH_LONG).show()
+    }
+
+    override fun hideProgressbar() {
+        progressBar.visibility = GONE
     }
 
     private fun dpToPx(dp: Int): Int {
