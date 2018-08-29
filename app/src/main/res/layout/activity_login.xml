@@ -42,6 +42,7 @@
             android:id="@+id/wildLegionLogo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:transitionName="wild_legion_logo_trans"
             tools:src="@drawable/wild_legion_full" />
 
     </RelativeLayout>

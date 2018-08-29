@@ -1,5 +1,6 @@
 package com.developerxy.wildlegion.screens.main
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v4.view.ViewPager
@@ -21,11 +22,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var mPagerAdapter: MainPagerAdapter
     private lateinit var mPresenter: MainPresenter
 
-    private var pastSelectedTabIndex = 0;
-    private var selectedTabIndex = 0;
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ifSupportsLollipop {
+            window.enterTransition = null
+        }
         setContentView(R.layout.activity_main)
 
         mPresenter = MainPresenter(this)
@@ -85,5 +86,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             val textView = LayoutInflater.from(this).inflate(R.layout.single_tab_layout, null) as TextView
             mTabLayout.getTabAt(index - 1)?.customView = textView
         }
+    }
+
+    private fun ifSupportsLollipop(action: () -> Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            action()
     }
 }

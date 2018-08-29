@@ -24,6 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="192dp"
                 android:scaleType="centerInside"
+                android:transitionName="wild_legion_logo_trans"
                 app:layout_collapseMode="parallax"
                 tools:src="@drawable/wild_legion_full" />
 
