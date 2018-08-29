@@ -44,8 +44,8 @@ class MembersFragment : Fragment(), MembersContract.View {
     }
 
     override fun showMembers(members: List<Member>) {
-        mMembersAdapter.items = members
-        mMembersAdapter.notifyDataSetChanged()
+        mMembersAdapter.animateTo(members)
+        membersRecyclerview.scrollToPosition(0)
     }
 
     override fun showLoadingError(error: Throwable) {
@@ -54,6 +54,19 @@ class MembersFragment : Fragment(), MembersContract.View {
 
     override fun hideProgressbar() {
         progressBar.visibility = GONE
+    }
+
+    override fun onQueryTextSubmit(query: String?) = false
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        mPresenter.onSearchQueryTextChange(newText)
+        return true
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        Toast.makeText(activity, "DESTROY", Toast.LENGTH_LONG).show()
     }
 
     private fun dpToPx(dp: Int): Int {
