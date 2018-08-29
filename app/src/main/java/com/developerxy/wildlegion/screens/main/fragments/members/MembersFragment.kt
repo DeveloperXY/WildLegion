@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.fragment_members.*
 class MembersFragment : Fragment(), MembersContract.View {
 
     lateinit var mPresenter: MembersPresenter
-
     lateinit var mMembersAdapter: MembersAdapter
+    var visibility = false
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -34,6 +34,15 @@ class MembersFragment : Fragment(), MembersContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mPresenter.start()
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        if (!isVisibleToUser && visibility)
+            mPresenter.showAllMembers()
+
+        visibility = isVisibleToUser
     }
 
     override fun setupRecyclerView() {
@@ -61,12 +70,6 @@ class MembersFragment : Fragment(), MembersContract.View {
     override fun onQueryTextChange(newText: String?): Boolean {
         mPresenter.onSearchQueryTextChange(newText)
         return true
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        Toast.makeText(activity, "DESTROY", Toast.LENGTH_LONG).show()
     }
 
     private fun dpToPx(dp: Int): Int {

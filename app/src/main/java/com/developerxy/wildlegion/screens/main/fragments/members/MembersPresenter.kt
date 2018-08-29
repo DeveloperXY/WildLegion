@@ -44,4 +44,6 @@ class MembersPresenter(var mView: MembersContract.View) : MembersContract.Presen
             it.nickname.contains(newText!!, ignoreCase = true)
         })
     }
+
+    override fun showAllMembers() = mView.showMembers(membersList)
 }

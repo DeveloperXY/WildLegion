@@ -14,5 +14,6 @@ interface MembersContract {
 
     interface Presenter : BasePresenter {
         fun onSearchQueryTextChange(newText: String?)
+        fun showAllMembers()
     }
 }
