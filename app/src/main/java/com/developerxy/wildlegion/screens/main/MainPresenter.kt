@@ -6,5 +6,6 @@ class MainPresenter(var mView: MainContract.View): MainContract.Presenter {
         mView.displayWlLogo()
         mView.initializeActionBar()
         mView.setupTabLayout()
+        mView.setFabClickListener()
     }
 }

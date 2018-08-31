@@ -1,5 +1,6 @@
 package com.developerxy.wildlegion.screens.main
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
@@ -8,10 +9,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.developerxy.wildlegion.R
+import com.developerxy.wildlegion.screens.addmember.AddClanMemberActivity
 import com.developerxy.wildlegion.screens.main.adapters.MainPagerAdapter
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -78,6 +82,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
             override fun onPageSelected(position: Int) {
                 invalidateOptionsMenu()
+                handleFabVisibility(position)
+            }
+
+            private fun handleFabVisibility(position: Int) = when(position) {
+                1 -> mFab.visibility = VISIBLE
+                else -> mFab.visibility = INVISIBLE
             }
 
         })
@@ -85,6 +95,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         for (index in 1..mTabLayout.tabCount) {
             val textView = LayoutInflater.from(this).inflate(R.layout.single_tab_layout, null) as TextView
             mTabLayout.getTabAt(index - 1)?.customView = textView
+        }
+    }
+
+    override fun setFabClickListener() {
+        mFab.setOnClickListener {
+            startActivity(Intent(this, AddClanMemberActivity::class.java))
         }
     }
 

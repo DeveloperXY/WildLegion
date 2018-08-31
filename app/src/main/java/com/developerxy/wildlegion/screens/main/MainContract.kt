@@ -7,6 +7,7 @@ interface MainContract {
         fun displayWlLogo()
         fun initializeActionBar()
         fun setupTabLayout()
+        fun setFabClickListener()
     }
 
     interface Presenter: BasePresenter {
