@@ -4,7 +4,7 @@ import com.developerxy.wildlegion.BasePresenter
 
 interface MainContract {
     interface View {
-        fun displayWlLogo()
+        fun displayBackgroundImages()
         fun initializeActionBar()
         fun setupTabLayout()
         fun setFabClickListener()

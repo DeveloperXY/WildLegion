@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:animateLayoutChanges="true"
     tools:context=".screens.main.fragments.members.MembersFragment">
+
+    <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        android:id="@+id/backgroundText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="There was a problem while loading the clan members data. Please try again."
+        android:textColor="@color/field_text_color"
+        android:visibility="gone"
+        app:customFont="roboto"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -14,9 +26,17 @@
         android:layout_marginTop="16dp"
         android:indeterminateDrawable="@drawable/progress_drawable" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/membersRecyclerview"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="16dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/membersRecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

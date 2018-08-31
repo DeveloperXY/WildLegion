@@ -9,13 +9,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.adapters.MembersAdapter
 import com.developerxy.wildlegion.screens.main.models.Member
 import com.developerxy.wildlegion.utils.SpacesItemDecoration
 import kotlinx.android.synthetic.main.fragment_members.*
+
 
 class MembersFragment : Fragment(), MembersContract.View {
 
@@ -34,6 +35,9 @@ class MembersFragment : Fragment(), MembersContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mPresenter.start()
+        swipeRefreshLayout.setOnRefreshListener {
+            mPresenter.loadClanMembers()
+        }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -58,11 +62,23 @@ class MembersFragment : Fragment(), MembersContract.View {
     }
 
     override fun showLoadingError(error: Throwable) {
-        Toast.makeText(activity, "Unable to load members data: ${error.message}", Toast.LENGTH_LONG).show()
+        backgroundText.visibility = VISIBLE
+    }
+
+    override fun hideLoadingError() {
+        backgroundText.visibility = GONE
+    }
+
+    override fun showProgressbar() {
+        progressBar.visibility = VISIBLE
     }
 
     override fun hideProgressbar() {
         progressBar.visibility = GONE
+    }
+
+    override fun stopRefreshing() {
+        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun onQueryTextSubmit(query: String?) = false

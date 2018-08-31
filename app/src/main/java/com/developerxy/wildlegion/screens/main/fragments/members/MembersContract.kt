@@ -9,11 +9,15 @@ interface MembersContract {
         fun setupRecyclerView()
         fun showMembers(members: List<Member>)
         fun showLoadingError(error: Throwable)
+        fun hideLoadingError()
+        fun showProgressbar()
         fun hideProgressbar()
+        fun stopRefreshing()
     }
 
     interface Presenter : BasePresenter {
         fun onSearchQueryTextChange(newText: String?)
+        fun loadClanMembers()
         fun showAllMembers()
     }
 }

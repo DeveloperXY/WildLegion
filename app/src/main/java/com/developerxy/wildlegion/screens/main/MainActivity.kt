@@ -58,11 +58,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         return true
     }
 
-    override fun displayWlLogo() {
+    override fun displayBackgroundImages() {
         Glide.with(this)
                 .load(R.drawable.wild_legion_full)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(wildLegionLogo)
+
+        Glide.with(this)
+                .load(R.drawable.members_load_failed)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(backgroundImage)
     }
 
     override fun initializeActionBar() {
