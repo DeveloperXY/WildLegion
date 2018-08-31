@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".screens.addmember.AddClanMemberActivity">
 
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/activity_background" />
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/mToolbar"
         android:layout_width="0dp"

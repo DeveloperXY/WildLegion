@@ -1,5 +1,6 @@
 package com.developerxy.wildlegion.screens.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -15,23 +16,24 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.developerxy.wildlegion.R
+import com.developerxy.wildlegion.screens.BackgroundActivity
 import com.developerxy.wildlegion.screens.addmember.AddClanMemberActivity
 import com.developerxy.wildlegion.screens.main.adapters.MainPagerAdapter
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity(), MainContract.View {
+class MainActivity : BackgroundActivity(), MainContract.View {
 
     private lateinit var mPagerAdapter: MainPagerAdapter
     private lateinit var mPresenter: MainPresenter
 
+    @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState, R.layout.activity_main)
         ifSupportsLollipop {
             window.enterTransition = null
         }
-        setContentView(R.layout.activity_main)
 
         mPresenter = MainPresenter(this)
         mPresenter.start()
@@ -58,16 +60,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         return true
     }
 
-    override fun displayBackgroundImages() {
+    override fun displayWlLogo() {
         Glide.with(this)
                 .load(R.drawable.wild_legion_full)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(wildLegionLogo)
-
-        Glide.with(this)
-                .load(R.drawable.members_load_failed)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(backgroundImage)
     }
 
     override fun initializeActionBar() {

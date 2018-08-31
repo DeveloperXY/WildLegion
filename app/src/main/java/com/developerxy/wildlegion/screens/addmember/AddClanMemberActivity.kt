@@ -1,19 +1,20 @@
 package com.developerxy.wildlegion.screens.addmember
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
 import com.developerxy.wildlegion.R
+import com.developerxy.wildlegion.screens.BackgroundActivity
 import kotlinx.android.synthetic.main.activity_add_clan_member.*
 
 
-class AddClanMemberActivity : AppCompatActivity(), AddClanMemberContract.View {
+class AddClanMemberActivity : BackgroundActivity(), AddClanMemberContract.View {
 
     private lateinit var mPresenter: AddClanMemberPresenter
 
+    @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_clan_member)
+        super.onCreate(savedInstanceState, R.layout.activity_add_clan_member)
 
         mPresenter = AddClanMemberPresenter(this)
         mPresenter.start()
