@@ -6,7 +6,7 @@ interface AddClanMemberContract {
     interface View {
         fun initializeActionBar()
         fun setupRanksSpinner()
-        fun onCreateMemberFailed(errorMessage: String)
+        fun showCreateMemberFailedError(errorMessage: String)
         fun showLoadingView()
         fun hideLoadingView()
         fun setLoadingStatement(text: String)

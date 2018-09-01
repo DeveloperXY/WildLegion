@@ -66,7 +66,8 @@ class MembersFragment : Fragment(), MembersContract.View {
     }
 
     override fun hideLoadingError() {
-        backgroundText.visibility = GONE
+        if (backgroundText.visibility == VISIBLE)
+            backgroundText.visibility = GONE
     }
 
     override fun showProgressbar() {
@@ -74,7 +75,8 @@ class MembersFragment : Fragment(), MembersContract.View {
     }
 
     override fun hideProgressbar() {
-        progressBar.visibility = GONE
+        if (progressBar.visibility == VISIBLE)
+            progressBar.visibility = GONE
     }
 
     override fun stopRefreshing() {

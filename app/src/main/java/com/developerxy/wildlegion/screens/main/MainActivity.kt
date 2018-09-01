@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.Menu
@@ -27,6 +26,10 @@ class MainActivity : BackgroundActivity(), MainContract.View {
 
     private lateinit var mPagerAdapter: MainPagerAdapter
     private lateinit var mPresenter: MainPresenter
+
+    companion object {
+        const val REQUEST_ADD_CLAN_MEMBER = 100
+    }
 
     @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +63,15 @@ class MainActivity : BackgroundActivity(), MainContract.View {
         return true
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_ADD_CLAN_MEMBER) {
+            if (resultCode == RESULT_OK) {
+                val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
+                membersFragment.mPresenter.loadClanMembers()
+            }
+        }
+    }
+
     override fun displayWlLogo() {
         Glide.with(this)
                 .load(R.drawable.wild_legion_full)
@@ -87,7 +99,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                 handleFabVisibility(position)
             }
 
-            private fun handleFabVisibility(position: Int) = when(position) {
+            private fun handleFabVisibility(position: Int) = when (position) {
                 1 -> mFab.visibility = VISIBLE
                 else -> mFab.visibility = INVISIBLE
             }
@@ -102,7 +114,8 @@ class MainActivity : BackgroundActivity(), MainContract.View {
 
     override fun setFabClickListener() {
         mFab.setOnClickListener {
-            startActivity(Intent(this, AddClanMemberActivity::class.java))
+            startActivityForResult(Intent(this, AddClanMemberActivity::class.java),
+                    REQUEST_ADD_CLAN_MEMBER)
         }
     }
 

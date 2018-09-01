@@ -1,6 +1,7 @@
 package com.developerxy.wildlegion.screens.addmember
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -45,10 +46,11 @@ class AddClanMemberActivity : BackgroundActivity(), AddClanMemberContract.View {
     }
 
     override fun exit() {
-        super.onBackPressed()
+        setResult(RESULT_OK)
+        finish()
     }
 
-    override fun onCreateMemberFailed(errorMessage: String) {
+    override fun showCreateMemberFailedError(errorMessage: String) {
         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
     }
 

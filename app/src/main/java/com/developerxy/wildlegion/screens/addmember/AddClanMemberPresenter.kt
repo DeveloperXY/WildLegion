@@ -76,7 +76,7 @@ class AddClanMemberPresenter(var mView: AddClanMemberContract.View) : AddClanMem
 
                             (it as HttpException).apply {
                                 val jsonObj = Gson().fromJson(response().errorBody()?.string(), JsonObject::class.java)
-                                mView.onCreateMemberFailed(jsonObj.get("message").asString)
+                                mView.showCreateMemberFailedError(jsonObj.get("message").asString)
                             }
                         }
                 )
