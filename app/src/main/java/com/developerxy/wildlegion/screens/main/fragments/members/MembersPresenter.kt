@@ -2,7 +2,6 @@ package com.developerxy.wildlegion.screens.main.fragments.members
 
 import com.developerxy.wildlegion.network.RetrofitModule
 import com.developerxy.wildlegion.network.WixAPI
-import com.developerxy.wildlegion.screens.main.fragments.members.di.DaggerMembersPresenterComponent
 import com.developerxy.wildlegion.screens.main.models.Member
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy

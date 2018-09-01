@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".screens.addmember.AddClanMemberActivity">
 
     <ImageView
@@ -139,6 +140,7 @@
             android:background="@drawable/button_background"
             android:backgroundTint="@color/secondaryColor"
             android:letterSpacing="0.3"
+            android:onClick="onCreateClanMember"
             android:text="Confirm new member"
             android:textColor="@drawable/button_background_text_color"
             app:customFont="asylum"
@@ -147,5 +149,18 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+
+    <com.developerxy.wildlegion.customviews.FullscreenLoadingView
+        android:id="@+id/fullscreenLoadingView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </android.support.constraint.ConstraintLayout>
