@@ -37,6 +37,16 @@ class AddClanMemberPresenter(var mView: AddClanMemberContract.View) : AddClanMem
     }
 
     override fun addNewClanMember(nickname: String, gamerangerId: String, rank: String) {
+        if (nickname.isEmpty()) {
+            mView.showMissingNickname()
+            return
+        }
+
+        if (gamerangerId.isEmpty()) {
+            mView.showMissingIdentifier()
+            return
+        }
+
         val request = NewClanMemberRequest(nickname, gamerangerId, rank)
         mWixAPI.createNewClanMember(request)
                 .subscribeOn(Schedulers.computation())

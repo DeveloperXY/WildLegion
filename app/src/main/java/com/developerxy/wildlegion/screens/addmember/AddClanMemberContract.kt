@@ -1,7 +1,6 @@
 package com.developerxy.wildlegion.screens.addmember
 
 import com.developerxy.wildlegion.BasePresenter
-import retrofit2.HttpException
 
 interface AddClanMemberContract {
     interface View {
@@ -13,9 +12,11 @@ interface AddClanMemberContract {
         fun setLoadingStatement(text: String)
         fun stopLoadingView()
         fun exit()
+        fun showMissingNickname()
+        fun showMissingIdentifier()
     }
 
-    interface Presenter: BasePresenter {
+    interface Presenter : BasePresenter {
         fun addNewClanMember(nickname: String, gamerangerId: String, rank: String)
         fun goBack()
     }

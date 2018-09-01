@@ -68,19 +68,18 @@ class AddClanMemberActivity : BackgroundActivity(), AddClanMemberContract.View {
         fullscreenLoadingView.stopLoading()
     }
 
+    override fun showMissingNickname() {
+        Toast.makeText(this, "A nickname is required.", Toast.LENGTH_LONG).show()
+    }
+
+    override fun showMissingIdentifier() {
+        Toast.makeText(this, "An ID is required.", Toast.LENGTH_LONG).show()
+    }
+
     fun onCreateClanMember(view: View?) {
         val nickname = nicknameField.text.toString()
-        if (nickname.isEmpty()) {
-            Toast.makeText(this, "A nickname is required.", Toast.LENGTH_LONG).show()
-            return
-        }
         val identifier = identifierField.text.toString()
-        if (identifier.isEmpty()) {
-            Toast.makeText(this, "An ID is required.", Toast.LENGTH_LONG).show()
-            return
-        }
         val rank = rankSpinner.selectedItem.toString().substring(0, 1)
-
         mPresenter.addNewClanMember(nickname, identifier, rank)
     }
 }
