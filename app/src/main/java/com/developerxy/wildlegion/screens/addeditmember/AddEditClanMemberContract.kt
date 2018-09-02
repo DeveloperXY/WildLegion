@@ -1,8 +1,8 @@
-package com.developerxy.wildlegion.screens.addmember
+package com.developerxy.wildlegion.screens.addeditmember
 
 import com.developerxy.wildlegion.BasePresenter
 
-interface AddClanMemberContract {
+interface AddEditClanMemberContract {
     interface View {
         fun initializeActionBar()
         fun setupRanksSpinner()

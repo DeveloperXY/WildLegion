@@ -1,4 +1,4 @@
-package com.developerxy.wildlegion.screens.addmember
+package com.developerxy.wildlegion.screens.addeditmember
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -12,15 +12,15 @@ import com.developerxy.wildlegion.screens.BackgroundActivity
 import kotlinx.android.synthetic.main.activity_add_clan_member.*
 
 
-class AddClanMemberActivity : BackgroundActivity(), AddClanMemberContract.View {
+class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContract.View {
 
-    private lateinit var mPresenter: AddClanMemberPresenter
+    private lateinit var mPresenter: AddEditClanMemberPresenter
 
     @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState, R.layout.activity_add_clan_member)
 
-        mPresenter = AddClanMemberPresenter(this)
+        mPresenter = AddEditClanMemberPresenter(this)
         mPresenter.start()
     }
 

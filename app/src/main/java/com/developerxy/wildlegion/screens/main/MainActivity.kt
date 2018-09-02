@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.BackgroundActivity
-import com.developerxy.wildlegion.screens.addmember.AddClanMemberActivity
+import com.developerxy.wildlegion.screens.addeditmember.AddEditClanMemberActivity
 import com.developerxy.wildlegion.screens.main.adapters.MainPagerAdapter
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -114,7 +114,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
 
     override fun setFabClickListener() {
         mFab.setOnClickListener {
-            startActivityForResult(Intent(this, AddClanMemberActivity::class.java),
+            startActivityForResult(Intent(this, AddEditClanMemberActivity::class.java),
                     REQUEST_ADD_CLAN_MEMBER)
         }
     }

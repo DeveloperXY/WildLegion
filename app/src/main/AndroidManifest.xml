@@ -24,7 +24,7 @@
             android:name=".screens.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".screens.addmember.AddClanMemberActivity"
+            android:name=".screens.addeditmember.AddEditClanMemberActivity"
             android:label="Add new clan member"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

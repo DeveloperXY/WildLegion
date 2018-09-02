@@ -1,4 +1,4 @@
-package com.developerxy.wildlegion.screens.addmember
+package com.developerxy.wildlegion.screens.addeditmember
 
 import com.developerxy.wildlegion.network.RetrofitModule
 import com.developerxy.wildlegion.network.WixAPI
@@ -13,7 +13,7 @@ import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class AddClanMemberPresenter(var mView: AddClanMemberContract.View) : AddClanMemberContract.Presenter {
+class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : AddEditClanMemberContract.Presenter {
 
     @Inject
     lateinit var mWixAPI: WixAPI
