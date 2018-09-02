@@ -71,6 +71,11 @@ class MembersFragment : Fragment(), MembersContract.View {
         itemTouchHelper.attachToRecyclerView(membersRecyclerview)
     }
 
+    override fun revertItemSwipe(position: Int) {
+        val adapter = membersRecyclerview.adapter as MembersAdapter
+        adapter.notifyItemChanged(position)
+    }
+
     override fun removeMember(position: Int) {
         val adapter = membersRecyclerview.adapter as MembersAdapter
         adapter.removeItem(position)

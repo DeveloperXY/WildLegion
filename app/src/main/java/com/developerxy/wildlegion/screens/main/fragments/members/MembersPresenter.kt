@@ -66,7 +66,10 @@ class MembersPresenter(var mView: MembersContract.View) : MembersContract.Presen
                             mView.removeMember(position)
                             mView.showMemberRemovedMessage(member.nickname)
                         },
-                        onError = { mView.showMemberRemovalFailedError() }
+                        onError = {
+                            mView.showMemberRemovalFailedError()
+                            mView.revertItemSwipe(position)
+                        }
                 )
     }
 }

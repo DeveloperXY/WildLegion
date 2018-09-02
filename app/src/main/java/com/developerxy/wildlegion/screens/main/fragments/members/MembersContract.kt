@@ -16,6 +16,7 @@ interface MembersContract {
         fun removeMember(position: Int)
         fun showMemberRemovalFailedError()
         fun showMemberRemovedMessage(memberName: String)
+        fun revertItemSwipe(position: Int)
     }
 
     interface Presenter : BasePresenter {
