@@ -15,7 +15,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import com.developerxy.wildlegion.R
-import com.developerxy.wildlegion.screens.main.adapters.MembersAdapter
 import com.developerxy.wildlegion.screens.main.models.Member
 import com.developerxy.wildlegion.utils.SpacesItemDecoration
 import com.developerxy.wildlegion.utils.SwipeToDeleteCallback
@@ -26,10 +25,13 @@ class MembersFragment : Fragment(), MembersContract.View {
 
     lateinit var mPresenter: MembersPresenter
     lateinit var mMembersAdapter: MembersAdapter
+    var membersFragmentDelegate: MembersFragmentDelegate? = null
     var visibility = false
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
+        if (context is MembersFragmentDelegate)
+            membersFragmentDelegate = context
         mPresenter = MembersPresenter(this)
     }
 
@@ -55,6 +57,9 @@ class MembersFragment : Fragment(), MembersContract.View {
 
     override fun setupRecyclerView() {
         mMembersAdapter = MembersAdapter(context!!, mutableListOf())
+        mMembersAdapter.onMemberSelected = { selectedMember, sharedViews ->
+            membersFragmentDelegate?.onMemberSelected(selectedMember, sharedViews)
+        }
         membersRecyclerview.layoutManager = LinearLayoutManager(activity)
         membersRecyclerview.addItemDecoration(SpacesItemDecoration(dpToPx(8)))
         membersRecyclerview.adapter = mMembersAdapter
@@ -127,5 +132,9 @@ class MembersFragment : Fragment(), MembersContract.View {
 
     private fun dpToPx(dp: Int): Int {
         return (dp * Resources.getSystem().displayMetrics.density).toInt()
+    }
+
+    interface MembersFragmentDelegate {
+        fun onMemberSelected(selectedMember: Member, sharedViews: Array<View>)
     }
 }

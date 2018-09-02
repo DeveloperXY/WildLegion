@@ -4,11 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.util.Pair
 import android.support.v4.view.MenuItemCompat
+import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.TextView
@@ -19,16 +23,18 @@ import com.developerxy.wildlegion.screens.BackgroundActivity
 import com.developerxy.wildlegion.screens.addeditmember.AddEditClanMemberActivity
 import com.developerxy.wildlegion.screens.main.adapters.MainPagerAdapter
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
+import com.developerxy.wildlegion.screens.main.models.Member
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BackgroundActivity(), MainContract.View {
+class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.MembersFragmentDelegate {
 
     private lateinit var mPagerAdapter: MainPagerAdapter
     private lateinit var mPresenter: MainPresenter
 
     companion object {
         const val REQUEST_ADD_CLAN_MEMBER = 100
+        const val REQUEST_EDIT_CLAN_MEMBER = 101
     }
 
     @SuppressLint("MissingSuperCall")
@@ -64,10 +70,12 @@ class MainActivity : BackgroundActivity(), MainContract.View {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_ADD_CLAN_MEMBER) {
-            if (resultCode == RESULT_OK) {
-                val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
-                membersFragment.mPresenter.loadClanMembers()
+        when(requestCode) {
+            REQUEST_ADD_CLAN_MEMBER, REQUEST_EDIT_CLAN_MEMBER -> {
+                if (resultCode == RESULT_OK) {
+                    val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
+                    membersFragment.mPresenter.loadClanMembers()
+                }
             }
         }
     }
@@ -119,7 +127,21 @@ class MainActivity : BackgroundActivity(), MainContract.View {
         }
     }
 
-    private fun ifSupportsLollipop(action: () -> Unit) {
+    override fun onMemberSelected(selectedMember: Member, sharedViews: Array<View>) {
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                *(sharedViews.map {
+                    view -> Pair.create(view, ViewCompat.getTransitionName(view))
+                }.toTypedArray())
+        )
+        val intent = Intent(this, AddEditClanMemberActivity::class.java)
+        intent.putExtra("member", selectedMember)
+        intent.putExtra("isEditing", true)
+
+        startActivityForResult(intent, REQUEST_EDIT_CLAN_MEMBER)
+    }
+
+    private inline fun ifSupportsLollipop(action: () -> Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             action()
     }

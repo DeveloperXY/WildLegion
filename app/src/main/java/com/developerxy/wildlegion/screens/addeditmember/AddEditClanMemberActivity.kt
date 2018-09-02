@@ -1,6 +1,7 @@
 package com.developerxy.wildlegion.screens.addeditmember
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -9,7 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.BackgroundActivity
-import kotlinx.android.synthetic.main.activity_add_clan_member.*
+import kotlinx.android.synthetic.main.activity_add_edit_clan_member.*
 
 
 class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContract.View {
@@ -18,17 +19,20 @@ class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContrac
 
     @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState, R.layout.activity_add_clan_member)
+        super.onCreate(savedInstanceState, R.layout.activity_add_edit_clan_member)
 
         mPresenter = AddEditClanMemberPresenter(this)
-        mPresenter.start()
+        mPresenter.start(intent)
     }
 
     override fun initializeActionBar() {
         setSupportActionBar(mToolbar)
-        supportActionBar?.title = "Add new clan member"
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun setActionbarTitle(title: String) {
+        supportActionBar?.title = title
     }
 
     override fun setupRanksSpinner() {
@@ -45,11 +49,15 @@ class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContrac
     }
 
     override fun exit() {
+        finish()
+    }
+
+    override fun exitAfterProcessing() {
         setResult(RESULT_OK)
         finish()
     }
 
-    override fun showCreateMemberFailedError(errorMessage: String) {
+    override fun showErrorMessage(errorMessage: String) {
         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
     }
 
@@ -77,10 +85,32 @@ class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContrac
         Toast.makeText(this, "An ID is required.", Toast.LENGTH_LONG).show()
     }
 
-    fun onCreateClanMember(view: View?) {
+    fun onSaveClanMember(view: View?) {
         val nickname = nicknameField.text.toString()
         val identifier = identifierField.text.toString()
         val rank = rankSpinner.selectedItem.toString().substring(0, 1)
-        mPresenter.addNewClanMember(nickname, identifier, rank)
+        mPresenter.saveClanMember(nickname, identifier, rank)
+    }
+
+    override fun setNickname(nickname: String) {
+        nicknameField.setText(nickname)
+    }
+
+    override fun setGamerangerId(gamerangerId: String) {
+        identifierField.setText(gamerangerId)
+    }
+
+    override fun setRank(rank: String) {
+        val selection = when {
+            rank.startsWith("A") -> 0
+            rank.startsWith("M") -> 1
+            else -> 2
+        }
+        rankSpinner.setSelection(selection, true)
+    }
+
+    private inline fun ifSupportsLollipop(action: () -> Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            action()
     }
 }

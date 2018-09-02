@@ -1,5 +1,6 @@
 package com.developerxy.wildlegion.network
 
+import com.developerxy.wildlegion.network.models.EditClanMemberRequest
 import com.developerxy.wildlegion.network.models.NewClanMemberRequest
 import com.developerxy.wildlegion.network.models.RemoveClanMemberRequest
 import com.developerxy.wildlegion.screens.main.models.Member
@@ -15,6 +16,9 @@ interface WixAPI {
 
     @POST("newClanMember")
     fun createNewClanMember(@Body request: NewClanMemberRequest): Completable
+
+    @POST("updateClanMember")
+    fun editClanMember(@Body request: EditClanMemberRequest): Completable
 
     @POST("removeClanMember")
     fun removeClanMember(@Body request: RemoveClanMemberRequest): Completable

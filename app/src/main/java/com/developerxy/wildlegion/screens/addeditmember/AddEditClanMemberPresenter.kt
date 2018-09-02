@@ -1,8 +1,11 @@
 package com.developerxy.wildlegion.screens.addeditmember
 
+import android.content.Intent
 import com.developerxy.wildlegion.network.RetrofitModule
 import com.developerxy.wildlegion.network.WixAPI
+import com.developerxy.wildlegion.network.models.EditClanMemberRequest
 import com.developerxy.wildlegion.network.models.NewClanMemberRequest
+import com.developerxy.wildlegion.screens.main.models.Member
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -17,10 +20,12 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
 
     @Inject
     lateinit var mWixAPI: WixAPI
-    var isProcessing = false
+    private var isProcessing = false
+    private var isEditing = false
+    private var currentMember: Member? = null
 
     init {
-        DaggerAddClanMemberPresenterComponent.builder()
+        DaggerAddEditClanMemberPresenterComponent.builder()
                 .retrofitModule(RetrofitModule())
                 .build()
                 .inject(this)
@@ -31,12 +36,27 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
         mView.setupRanksSpinner()
     }
 
+    override fun start(intent: Intent) {
+        start()
+
+        isEditing = intent.getBooleanExtra("isEditing", false)
+        if (isEditing) {
+            mView.setActionbarTitle("Edit clan member info")
+            currentMember = intent.getSerializableExtra("member") as Member
+            mView.setNickname(currentMember?.nickname!!)
+            mView.setGamerangerId(currentMember?.gamerangerId!!)
+            mView.setRank(currentMember?.rank!! + "")
+        } else {
+            mView.setActionbarTitle("Add a new clan member")
+        }
+    }
+
     override fun goBack() {
         if (!isProcessing)
             mView.exit()
     }
 
-    override fun addNewClanMember(nickname: String, gamerangerId: String, rank: String) {
+    override fun saveClanMember(nickname: String, gamerangerId: String, rank: String) {
         if (nickname.isEmpty()) {
             mView.showMissingNickname()
             return
@@ -47,38 +67,78 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
             return
         }
 
-        val request = NewClanMemberRequest(nickname, gamerangerId, rank)
+        currentMember?.nickname = nickname
+        currentMember?.gamerangerId = gamerangerId
+        currentMember?.rank = rank.toCharArray()[0]
+
+        if (isEditing) {
+            val request = EditClanMemberRequest(currentMember!!)
+            editClanMember(request)
+        } else {
+            val request = NewClanMemberRequest(nickname, gamerangerId, rank)
+            addNewClanMember(request)
+        }
+    }
+
+    private fun addNewClanMember(request: NewClanMemberRequest) {
         mWixAPI.createNewClanMember(request)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
-                    isProcessing = true
-                    mView.setLoadingStatement("Adding new clan member...")
-                    mView.showLoadingView()
+                    onSubscribe("Adding new clan member...")
                 }
                 .subscribeBy(
                         onComplete = {
-                            Observable.timer(1, TimeUnit.SECONDS)
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .doOnSubscribe {
-                                        mView.setLoadingStatement("$nickname was successfully added to the clan.")
-                                        mView.stopLoadingView()
-                                    }
-                                    .subscribe {
-                                        isProcessing = false
-                                        mView.exit()
-                                    }
+                            handleProcessingCompletion("${request.nickname} was successfully added to the clan.")
                         },
-                        onError = {
-                            isProcessing = false
-                            mView.setLoadingStatement("")
-                            mView.hideLoadingView()
-
-                            (it as HttpException).apply {
-                                val jsonObj = Gson().fromJson(response().errorBody()?.string(), JsonObject::class.java)
-                                mView.showCreateMemberFailedError(jsonObj.get("message").asString)
-                            }
-                        }
+                        onError = this::handleProcessingError
                 )
+    }
+
+    private fun editClanMember(request: EditClanMemberRequest) {
+        mWixAPI.editClanMember(request)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    onSubscribe("Updating info...")
+                }
+                .subscribeBy(
+                        onComplete = {
+                            handleProcessingCompletion("${request.nickname}'s info were successfully updated.")
+                        },
+                        onError = this::handleProcessingError
+                )
+    }
+
+    private fun handleProcessingCompletion(successMessage: String) {
+        Observable.timer(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    mView.setLoadingStatement(successMessage)
+                    mView.stopLoadingView()
+                }
+                .subscribe {
+                    isProcessing = false
+                    mView.exitAfterProcessing()
+                }
+    }
+
+    private fun handleProcessingError(throwable: Throwable) {
+        isProcessing = false
+        mView.setLoadingStatement("")
+        mView.hideLoadingView()
+
+        (throwable as HttpException).apply {
+            val jsonObj = Gson().fromJson(response().errorBody()?.string(), JsonObject::class.java)
+            val errorMessage = if (jsonObj == null) "Unexpected error." else
+                jsonObj.get("message").asString
+            mView.showErrorMessage(errorMessage)
+        }
+    }
+
+    private fun onSubscribe(loadingStatement: String) {
+        isProcessing = true
+        mView.setLoadingStatement(loadingStatement)
+        mView.showLoadingView()
     }
 }
