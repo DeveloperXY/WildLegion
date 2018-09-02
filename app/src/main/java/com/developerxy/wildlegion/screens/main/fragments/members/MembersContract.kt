@@ -13,11 +13,15 @@ interface MembersContract {
         fun showProgressbar()
         fun hideProgressbar()
         fun stopRefreshing()
+        fun removeMember(position: Int)
+        fun showMemberRemovalFailedError()
+        fun showMemberRemovedMessage(memberName: String)
     }
 
     interface Presenter : BasePresenter {
         fun onSearchQueryTextChange(newText: String?)
         fun loadClanMembers()
         fun showAllMembers()
+        fun removeClanMember(member: Member, position: Int)
     }
 }

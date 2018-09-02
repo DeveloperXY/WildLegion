@@ -1,6 +1,7 @@
 package com.developerxy.wildlegion.network
 
 import com.developerxy.wildlegion.network.models.NewClanMemberRequest
+import com.developerxy.wildlegion.network.models.RemoveClanMemberRequest
 import com.developerxy.wildlegion.screens.main.models.Member
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -14,4 +15,7 @@ interface WixAPI {
 
     @POST("newClanMember")
     fun createNewClanMember(@Body request: NewClanMemberRequest): Completable
+
+    @POST("removeClanMember")
+    fun removeClanMember(@Body request: RemoveClanMemberRequest): Completable
 }

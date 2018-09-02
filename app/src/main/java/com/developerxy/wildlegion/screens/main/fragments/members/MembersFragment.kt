@@ -6,15 +6,19 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.adapters.MembersAdapter
 import com.developerxy.wildlegion.screens.main.models.Member
 import com.developerxy.wildlegion.utils.SpacesItemDecoration
+import com.developerxy.wildlegion.utils.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.fragment_members.*
 
 
@@ -54,6 +58,32 @@ class MembersFragment : Fragment(), MembersContract.View {
         membersRecyclerview.layoutManager = LinearLayoutManager(activity)
         membersRecyclerview.addItemDecoration(SpacesItemDecoration(dpToPx(8)))
         membersRecyclerview.adapter = mMembersAdapter
+
+        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = membersRecyclerview.adapter as MembersAdapter
+                val position = viewHolder.adapterPosition
+                val member = adapter.items[position]
+                mPresenter.removeClanMember(member, position)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(membersRecyclerview)
+    }
+
+    override fun removeMember(position: Int) {
+        val adapter = membersRecyclerview.adapter as MembersAdapter
+        adapter.removeItem(position)
+    }
+
+    override fun showMemberRemovedMessage(memberName: String) {
+        Toast.makeText(activity, "$memberName was removed from the clan.",
+                Toast.LENGTH_LONG).show()
+    }
+
+    override fun showMemberRemovalFailedError() {
+        Toast.makeText(activity, "There was an error while trying to remove this clan member.",
+                Toast.LENGTH_LONG).show()
     }
 
     override fun showMembers(members: List<Member>) {
