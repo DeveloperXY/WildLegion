@@ -1,7 +1,6 @@
 package com.developerxy.wildlegion.screens.login
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.method.PasswordTransformationMethod
@@ -22,10 +21,8 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ifSupportsLollipop {
-            window.exitTransition = null
-        }
         setContentView(R.layout.activity_login)
+
         mPresenter = LoginPresenter(this, FirebaseAuth.getInstance())
         mPresenter.start()
     }
@@ -97,10 +94,5 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     override fun hidePassword() {
         passwordField.transformationMethod = null
         visibilityLabel.text = "Reveal password"
-    }
-
-    private inline fun ifSupportsLollipop(action: () -> Unit) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            action()
     }
 }

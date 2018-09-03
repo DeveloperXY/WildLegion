@@ -1,7 +1,6 @@
 package com.developerxy.wildlegion.screens.addeditmember
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -100,17 +99,7 @@ class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContrac
         identifierField.setText(gamerangerId)
     }
 
-    override fun setRank(rank: String) {
-        val selection = when {
-            rank.startsWith("A") -> 0
-            rank.startsWith("M") -> 1
-            else -> 2
-        }
+    override fun setRank(selection: Int) {
         rankSpinner.setSelection(selection, true)
-    }
-
-    private inline fun ifSupportsLollipop(action: () -> Unit) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            action()
     }
 }

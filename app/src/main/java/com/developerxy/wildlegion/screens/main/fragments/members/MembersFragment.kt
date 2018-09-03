@@ -18,6 +18,7 @@ import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.models.Member
 import com.developerxy.wildlegion.utils.SpacesItemDecoration
 import com.developerxy.wildlegion.utils.SwipeToDeleteCallback
+import com.developerxy.wildlegion.utils.dpToPx
 import kotlinx.android.synthetic.main.fragment_members.*
 
 
@@ -128,10 +129,6 @@ class MembersFragment : Fragment(), MembersContract.View {
     override fun onQueryTextChange(newText: String?): Boolean {
         mPresenter.onSearchQueryTextChange(newText)
         return true
-    }
-
-    private fun dpToPx(dp: Int): Int {
-        return (dp * Resources.getSystem().displayMetrics.density).toInt()
     }
 
     interface MembersFragmentDelegate {

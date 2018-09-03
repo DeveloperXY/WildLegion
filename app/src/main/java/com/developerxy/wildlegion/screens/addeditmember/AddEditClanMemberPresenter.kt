@@ -45,7 +45,13 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
             currentMember = intent.getSerializableExtra("member") as Member
             mView.setNickname(currentMember?.nickname!!)
             mView.setGamerangerId(currentMember?.gamerangerId!!)
-            mView.setRank(currentMember?.rank!! + "")
+
+            val selection = when(currentMember?.rank!!) {
+                'A' -> 0
+                'M' -> 1
+                else -> 2
+            }
+            mView.setRank(selection)
         } else {
             mView.setActionbarTitle("Add a new clan member")
         }

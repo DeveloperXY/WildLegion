@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.util.Pair
 import android.support.v4.view.MenuItemCompat
@@ -24,6 +25,7 @@ import com.developerxy.wildlegion.screens.addeditmember.AddEditClanMemberActivit
 import com.developerxy.wildlegion.screens.main.adapters.MainPagerAdapter
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
 import com.developerxy.wildlegion.screens.main.models.Member
+import com.developerxy.wildlegion.utils.ifSupportsLollipop
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -37,6 +39,7 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
         const val REQUEST_EDIT_CLAN_MEMBER = 101
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState, R.layout.activity_main)
@@ -139,10 +142,5 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
         intent.putExtra("isEditing", true)
 
         startActivityForResult(intent, REQUEST_EDIT_CLAN_MEMBER)
-    }
-
-    private inline fun ifSupportsLollipop(action: () -> Unit) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            action()
     }
 }
