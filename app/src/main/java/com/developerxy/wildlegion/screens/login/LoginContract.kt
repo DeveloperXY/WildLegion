@@ -17,6 +17,8 @@ interface LoginContract {
         fun setListenerOnVisibilitySwitch()
         fun showPassword()
         fun hidePassword()
+        fun showLoginButton()
+        fun hideLoginButton()
     }
 
     interface Presenter : BasePresenter {

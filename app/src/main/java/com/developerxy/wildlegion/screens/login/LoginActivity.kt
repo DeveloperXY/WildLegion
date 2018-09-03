@@ -65,6 +65,14 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         loginButton.isEnabled = true
     }
 
+    override fun showLoginButton() {
+        loginButton.visibility = VISIBLE
+    }
+
+    override fun hideLoginButton() {
+        loginButton.visibility = GONE
+    }
+
     override fun setLoginButtonText(text: String?) {
         text ?: return
         loginButton.text = text
@@ -87,12 +95,12 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     override fun showPassword() {
-        passwordField.transformationMethod = PasswordTransformationMethod()
-        visibilityLabel.text = "Hide password"
+        passwordField.transformationMethod = null
+        visibilitySwitch.setImageResource(R.drawable.baseline_visibility_24)
     }
 
     override fun hidePassword() {
-        passwordField.transformationMethod = null
-        visibilityLabel.text = "Reveal password"
+        passwordField.transformationMethod = PasswordTransformationMethod()
+        visibilitySwitch.setImageResource(R.drawable.baseline_visibility_off_24)
     }
 }

@@ -19,16 +19,17 @@ class LoginPresenter(var mView: LoginContract.View,
         if (email.isEmpty() || password.isEmpty())
             return
 
+        mView.hideLoginButton()
         mView.showProgressBar()
-        mView.disableLoginButton()
         mView.setLoginButtonText("Signing you in...")
         mFirebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
+                        mView.hideProgressBar()
                         mView.openMainActivity()
                     } else {
                         mView.hideProgressBar()
-                        mView.enableLoginButton()
+                        mView.showLoginButton()
                         mView.setLoginButtonText("Sign in")
                         mView.showLoginError()
                     }
