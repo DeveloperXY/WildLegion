@@ -33,6 +33,7 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
 
     private lateinit var mPagerAdapter: MainPagerAdapter
     private lateinit var mPresenter: MainPresenter
+    private lateinit var mSearchView: SearchView
 
     companion object {
         const val REQUEST_ADD_CLAN_MEMBER = 100
@@ -56,8 +57,8 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
 
         val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
         val item = menu?.findItem(R.id.action_search)
-        val searchView = MenuItemCompat.getActionView(item) as SearchView
-        searchView.setOnQueryTextListener(membersFragment)
+        mSearchView = MenuItemCompat.getActionView(item) as SearchView
+        mSearchView.setOnQueryTextListener(membersFragment)
         return true
     }
 
@@ -73,7 +74,7 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when(requestCode) {
+        when (requestCode) {
             REQUEST_ADD_CLAN_MEMBER, REQUEST_EDIT_CLAN_MEMBER -> {
                 if (resultCode == RESULT_OK) {
                     val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
@@ -81,6 +82,16 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if (mSearchView.isIconified.not()) {
+            mSearchView.setQuery("", false)
+            mSearchView.clearFocus()
+            mSearchView.isIconified = true
+        }
+        else
+            super.onBackPressed()
     }
 
     override fun displayWlLogo() {
@@ -133,8 +144,8 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
     override fun onMemberSelected(selectedMember: Member, sharedViews: Array<View>) {
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 this,
-                *(sharedViews.map {
-                    view -> Pair.create(view, ViewCompat.getTransitionName(view))
+                *(sharedViews.map { view ->
+                    Pair.create(view, ViewCompat.getTransitionName(view))
                 }.toTypedArray())
         )
         val intent = Intent(this, AddEditClanMemberActivity::class.java)
