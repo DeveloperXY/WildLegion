@@ -2,6 +2,7 @@ package com.developerxy.wildlegion.screens.addeditmember
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -45,6 +46,14 @@ class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContrac
 
     override fun onBackPressed() {
         mPresenter.goBack()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
+        android.R.id.home -> {
+            onBackPressed()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun exit() {
