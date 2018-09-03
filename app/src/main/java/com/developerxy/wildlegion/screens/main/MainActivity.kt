@@ -3,7 +3,6 @@ package com.developerxy.wildlegion.screens.main
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -149,8 +148,8 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
             }
 
             private fun handleFabVisibility(position: Int) = when (position) {
-                1 -> mFab.visibility = VISIBLE
-                else -> mFab.visibility = INVISIBLE
+                1 -> mFab.show()
+                else -> mFab.hide()
             }
 
         })
