@@ -39,118 +39,125 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mToolbar" />
 
-    <android.support.constraint.ConstraintLayout
+    <ScrollView
+        android:id="@+id/textInputsLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/saveButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dropShadow">
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
-            android:id="@+id/tv_nickname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="GAMERANGER NICKNAME"
-            android:textColor="#ffffff"
-            android:textSize="24sp"
-            app:customFont="roboto"
-            app:customStyle="light"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.developerxy.wildlegion.customviews.FontEnabledEditText
-            android:id="@+id/nicknameField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/edittext_background"
-            android:hint="Type nickname here"
-            android:inputType="textEmailAddress"
-            android:padding="16dp"
-            android:textColor="@color/field_text_color"
-            android:textColorHint="@color/field_text_color"
-            android:transitionName="gr_nickname_transition"
-            app:customFont="roboto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
+            <com.developerxy.wildlegion.customviews.FontEnabledTextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="GAMERANGER NICKNAME"
+                android:textColor="#ffffff"
+                android:textSize="24sp"
+                app:customFont="roboto"
+                app:customStyle="light"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
-            android:id="@+id/tv_identifier"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:text="GAMERANGER ID"
-            android:textColor="#ffffff"
-            android:textSize="24sp"
-            app:customFont="roboto"
-            app:customStyle="light"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nicknameField" />
+            <com.developerxy.wildlegion.customviews.FontEnabledEditText
+                android:id="@+id/nicknameField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_background"
+                android:hint="Type nickname here"
+                android:inputType="textEmailAddress"
+                android:padding="16dp"
+                android:textColor="@color/field_text_color"
+                android:textColorHint="@color/field_text_color"
+                android:transitionName="gr_nickname_transition"
+                app:customFont="roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
 
-        <com.developerxy.wildlegion.customviews.FontEnabledEditText
-            android:id="@+id/identifierField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/edittext_background"
-            android:hint="Type ID here"
-            android:inputType="number"
-            android:padding="16dp"
-            android:textColor="@color/field_text_color"
-            android:textColorHint="@color/field_text_color"
-            android:transitionName="gr_id_transition"
-            app:customFont="roboto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_identifier" />
+            <com.developerxy.wildlegion.customviews.FontEnabledTextView
+                android:id="@+id/tv_identifier"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:text="GAMERANGER ID"
+                android:textColor="#ffffff"
+                android:textSize="24sp"
+                app:customFont="roboto"
+                app:customStyle="light"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nicknameField" />
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
-            android:id="@+id/tv_rank"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:text="RANK"
-            android:textColor="#ffffff"
-            android:textSize="24sp"
-            app:customFont="roboto"
-            app:customStyle="light"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/identifierField" />
+            <com.developerxy.wildlegion.customviews.FontEnabledEditText
+                android:id="@+id/identifierField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_background"
+                android:hint="Type ID here"
+                android:inputType="number"
+                android:padding="16dp"
+                android:textColor="@color/field_text_color"
+                android:textColorHint="@color/field_text_color"
+                android:transitionName="gr_id_transition"
+                app:customFont="roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_identifier" />
 
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/rankSpinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/down_arrow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_rank" />
+            <com.developerxy.wildlegion.customviews.FontEnabledTextView
+                android:id="@+id/tv_rank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:text="RANK"
+                android:textColor="#ffffff"
+                android:textSize="24sp"
+                app:customFont="roboto"
+                app:customStyle="light"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/identifierField" />
 
-        <com.developerxy.wildlegion.customviews.FontEnabledButton
-            android:id="@+id/loginButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/button_background"
-            android:backgroundTint="@color/secondaryColor"
-            android:letterSpacing="0.3"
-            android:onClick="onSaveClanMember"
-            android:text="Save"
-            android:textColor="@drawable/button_background_text_color"
-            app:customFont="asylum"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/rankSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/down_arrow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_rank" />
 
-    </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.developerxy.wildlegion.customviews.FontEnabledButton
+        android:id="@+id/saveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/button_background"
+        android:backgroundTint="@color/secondaryColor"
+        android:letterSpacing="0.3"
+        android:onClick="onSaveClanMember"
+        android:text="Save"
+        android:textColor="@drawable/button_background_text_color"
+        app:customFont="asylum"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.developerxy.wildlegion.customviews.FullscreenLoadingView
         android:id="@+id/fullscreenLoadingView"

@@ -20,6 +20,8 @@ interface AddEditClanMemberContract {
         fun setNickname(nickname: String)
         fun setGamerangerId(gamerangerId: String)
         fun setRank(selection: Int)
+        fun showSaveButton()
+        fun hideSaveButton()
     }
 
     interface Presenter : BasePresenter {

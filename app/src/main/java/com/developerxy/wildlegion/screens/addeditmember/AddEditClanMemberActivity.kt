@@ -102,4 +102,12 @@ class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContrac
     override fun setRank(selection: Int) {
         rankSpinner.setSelection(selection, true)
     }
+
+    override fun showSaveButton() {
+        saveButton.visibility = VISIBLE
+    }
+
+    override fun hideSaveButton() {
+        saveButton.visibility = GONE
+    }
 }

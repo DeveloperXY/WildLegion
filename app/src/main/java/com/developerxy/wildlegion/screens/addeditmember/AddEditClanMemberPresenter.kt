@@ -133,6 +133,7 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
         isProcessing = false
         mView.setLoadingStatement("")
         mView.hideLoadingView()
+        mView.showSaveButton()
 
         (throwable as HttpException).apply {
             val jsonObj = Gson().fromJson(response().errorBody()?.string(), JsonObject::class.java)
@@ -144,6 +145,7 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
 
     private fun onSubscribe(loadingStatement: String) {
         isProcessing = true
+        mView.hideSaveButton()
         mView.setLoadingStatement(loadingStatement)
         mView.showLoadingView()
     }
