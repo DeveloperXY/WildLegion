@@ -7,11 +7,21 @@
     <color name="primaryColor">#000000</color>
     <color name="primaryLightColor">#ff7961</color>
     <color name="primaryDarkColor">#ba000d</color>
-    <color name="alphaBlack">#55000000</color>
+    <color name="alphaBlack">#BB000000</color>
     <color name="secondaryColor">#d32f2f</color>
     <color name="secondaryLightColor">#ff6659</color>
     <color name="secondaryDarkColor">#9a0007</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
     <color name="field_text_color">#b0bec5</color>
+
+    <color name="material_light_primary_text">#DE000000</color>
+    <color name="material_light_hint_text">#61000000</color>
+    <color name="material_light_active_icon">#8A000000</color>
+    <color name="material_ripple_light">#1F000000</color>
+    <color name="divider_color">#1F000000</color>
+    <color name="active_icon_color">#8A000000</color>
+    <color name="cards_and_dialogs_color">@android:color/white</color>
+    <color name="quantum_grey_600">#757575</color>
+    <color name="search_toolbar_bg">#333333</color>
 </resources>

@@ -48,7 +48,7 @@ class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContrac
         mPresenter.goBack()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
         android.R.id.home -> {
             onBackPressed()
             true
