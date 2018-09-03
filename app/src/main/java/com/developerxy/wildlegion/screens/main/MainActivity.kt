@@ -27,6 +27,8 @@ import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
 import com.developerxy.wildlegion.screens.main.models.Member
 import com.developerxy.wildlegion.utils.ifSupportsLollipop
 import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.EditText
+import com.developerxy.wildlegion.utils.fonts.Typefaces
 
 
 class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.MembersFragmentDelegate {
@@ -59,6 +61,13 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
         val item = menu?.findItem(R.id.action_search)
         mSearchView = MenuItemCompat.getActionView(item) as SearchView
         mSearchView.setOnQueryTextListener(membersFragment)
+
+        val searchPlate = mSearchView.findViewById(android.support.v7.appcompat.R.id.search_plate) as View
+        searchPlate.setBackgroundResource(R.drawable.searchview_background)
+
+        val searchBox = mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as TextView
+        searchBox.typeface = Typefaces.getFont(assets, "Light")
+        searchBox.setTextColor(resources.getColor(R.color.field_text_color))
         return true
     }
 

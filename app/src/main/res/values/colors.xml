@@ -7,6 +7,7 @@
     <color name="primaryColor">#000000</color>
     <color name="primaryLightColor">#ff7961</color>
     <color name="primaryDarkColor">#ba000d</color>
+    <color name="alphaBlack">#55000000</color>
     <color name="secondaryColor">#d32f2f</color>
     <color name="secondaryLightColor">#ff6659</color>
     <color name="secondaryDarkColor">#9a0007</color>
