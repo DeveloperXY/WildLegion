@@ -1,7 +1,11 @@
 package com.developerxy.wildlegion.screens.main.adapters.base;
 
 import android.content.Context;
+import android.support.v7.util.AdapterListUpdateCallback;
+import android.support.v7.util.DiffUtil;
+import android.support.v7.util.ListUpdateCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,9 +36,38 @@ public abstract class BaseSearchAdapter<T extends BinderViewHolder<U>, U>
     }
 
     public void animateTo(List<U> items) {
-        applyAndAnimateRemovals(items);
+        final List<U> oldData = new ArrayList<>(mItems);
+        mItems.clear();
+
+        if (items != null) {
+            mItems.addAll(items);
+        }
+
+        DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return oldData.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return mItems.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldData.get(oldItemPosition).equals(mItems.get(newItemPosition));
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldData.get(oldItemPosition).equals(mItems.get(newItemPosition));
+            }
+        }).dispatchUpdatesTo(this);
+
+        /*applyAndAnimateRemovals(items);
         applyAndAnimateAdditions(items);
-        applyAndAnimateMovedItems(items);
+        applyAndAnimateMovedItems(items);*/
     }
 
     private void applyAndAnimateRemovals(List<U> newItems) {

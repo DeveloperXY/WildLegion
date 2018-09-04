@@ -21,9 +21,8 @@ import kotlinx.android.synthetic.main.fragment_members.*
 class NewsFragment : Fragment(), NewsContract.View {
 
     lateinit var mPresenter: NewsPresenter
-    lateinit var mMembersAdapter: NewsAdapter
+    lateinit var mNewsAdapter: NewsAdapter
     var newsFragmentDelegate: NewsFragmentDelegate? = null
-    var visibility = false
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -43,23 +42,15 @@ class NewsFragment : Fragment(), NewsContract.View {
         }
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-
-        if (!isVisibleToUser && visibility)
-            mPresenter.showAllNews()
-
-        visibility = isVisibleToUser
-    }
-
     override fun setupRecyclerView() {
-        mMembersAdapter = NewsAdapter(context!!, mutableListOf())
-        mMembersAdapter.onNewsSelected = { selectedNews, sharedViews ->
+        mNewsAdapter = NewsAdapter(context!!, mutableListOf())
+        mNewsAdapter.setHasStableIds(true)
+        mNewsAdapter.onNewsSelected = { selectedNews, sharedViews ->
             newsFragmentDelegate?.onNewsSelected(selectedNews, sharedViews)
         }
         membersRecyclerview.layoutManager = LinearLayoutManager(activity)
         membersRecyclerview.addItemDecoration(SpacesItemDecoration(dpToPx(8)))
-        membersRecyclerview.adapter = mMembersAdapter
+        membersRecyclerview.adapter = mNewsAdapter
     }
 
     override fun revertItemSwipe(position: Int) {
@@ -83,7 +74,7 @@ class NewsFragment : Fragment(), NewsContract.View {
     }
 
     override fun showNews(news: List<News>) {
-        mMembersAdapter.animateTo(news)
+        mNewsAdapter.animateTo(news)
         membersRecyclerview.scrollToPosition(0)
     }
 

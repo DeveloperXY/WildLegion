@@ -20,6 +20,8 @@ class NewsAdapter(context: Context, items: MutableList<News>) :
             NewsViewHolder(LayoutInflater.from(parent.context)
                     .inflate(R.layout.news_row_layout, parent, false))
 
+    override fun getItemId(position: Int): Long = position.toLong()
+
     inner class NewsViewHolder(itemView: View) : BinderViewHolder<News>(itemView) {
 
         var tvTitle: TextView = itemView.tvTitle
