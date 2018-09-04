@@ -8,14 +8,12 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.DrawableRes
 import android.support.annotation.RequiresApi
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
-import android.support.v4.util.Pair
 import android.support.v4.view.MenuItemCompat
-import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.view.ViewPager.*
 import android.support.v7.widget.SearchView
+import android.util.Log
 import android.view.*
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -27,15 +25,24 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.BackgroundActivity
 import com.developerxy.wildlegion.screens.addeditmember.AddEditClanMemberActivity
+import com.developerxy.wildlegion.screens.addeditstory.AddEditNewsStoryActivity
 import com.developerxy.wildlegion.screens.main.adapters.MainPagerAdapter
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
+import com.developerxy.wildlegion.screens.main.fragments.news.NewsFragment
 import com.developerxy.wildlegion.screens.main.models.Member
+import com.developerxy.wildlegion.screens.main.models.News
+import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_ADDED
+import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_DELETED
+import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_UPDATED
+import com.developerxy.wildlegion.utils.ResultCodes.Companion.NEWS_ADDED
+import com.developerxy.wildlegion.utils.ResultCodes.Companion.NEWS_DELETED
+import com.developerxy.wildlegion.utils.ResultCodes.Companion.NEWS_UPDATED
 import com.developerxy.wildlegion.utils.fonts.Typefaces
 import com.developerxy.wildlegion.utils.ifSupportsLollipop
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.MembersFragmentDelegate {
+class MainActivity : BackgroundActivity(), MainContract.View {
 
     private lateinit var mPagerAdapter: MainPagerAdapter
     private lateinit var mPresenter: MainPresenter
@@ -44,6 +51,8 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
     companion object {
         const val REQUEST_ADD_CLAN_MEMBER = 100
         const val REQUEST_EDIT_CLAN_MEMBER = 101
+        const val REQUEST_ADD_NEWS_STORY = 102
+        const val REQUEST_EDIT_NEWS_STORY = 103
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -103,9 +112,27 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQUEST_ADD_CLAN_MEMBER, REQUEST_EDIT_CLAN_MEMBER -> {
-                if (resultCode == RESULT_OK) {
-                    val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
-                    membersFragment.mPresenter.loadClanMembers()
+                val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
+                when(resultCode) {
+                    MEMBER_ADDED, MEMBER_UPDATED -> membersFragment.mPresenter.loadClanMembers()
+                    MEMBER_DELETED -> {
+                        val deletedPosition = data?.getIntExtra("position", -1)!!
+                        if (deletedPosition != -1)
+                            membersFragment.removeMember(deletedPosition)
+                    }
+                }
+            }
+            REQUEST_ADD_NEWS_STORY, REQUEST_EDIT_NEWS_STORY -> {
+                val newsFragment = mPagerAdapter.instantiateItem(mViewPager, 0) as NewsFragment
+                when(resultCode) {
+                    NEWS_ADDED, NEWS_UPDATED -> newsFragment.mPresenter.loadNews()
+                    NEWS_DELETED -> {
+                        val deletedPosition = data?.getIntExtra("position", -1)!!
+                        if (deletedPosition != -1) {
+                            Log.i("IMPORTANT", "#$deletedPosition")
+                            newsFragment.removeNews(deletedPosition)
+                        }
+                    }
                 }
             }
         }
@@ -180,8 +207,17 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
 
     override fun setFabClickListener() {
         mFab.setOnClickListener {
-            startActivityForResult(Intent(this, AddEditClanMemberActivity::class.java),
-                    REQUEST_ADD_CLAN_MEMBER)
+            val currentPage = mViewPager.currentItem
+            when (currentPage) {
+                0 -> {
+                    startActivityForResult(Intent(this, AddEditNewsStoryActivity::class.java),
+                            REQUEST_ADD_NEWS_STORY)
+                }
+                1 -> {
+                    startActivityForResult(Intent(this, AddEditClanMemberActivity::class.java),
+                            REQUEST_ADD_CLAN_MEMBER)
+                }
+            }
         }
     }
 
@@ -193,16 +229,26 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
         mFab.hide()
     }
 
-    override fun onMemberSelected(selectedMember: Member, sharedViews: Array<View>) {
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+    override fun onNewsSelected(position: Int, selectedNews: News, sharedViews: Array<View>) {
+        val intent = Intent(this, AddEditNewsStoryActivity::class.java)
+        intent.putExtra("news", selectedNews)
+        intent.putExtra("isEditing", true)
+        intent.putExtra("position", position)
+
+        startActivityForResult(intent, REQUEST_EDIT_NEWS_STORY)
+    }
+
+    override fun onMemberSelected(position: Int, selectedMember: Member, sharedViews: Array<View>) {
+        /*val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 this,
                 *(sharedViews.map { view ->
                     Pair.create(view, ViewCompat.getTransitionName(view))
                 }.toTypedArray())
-        )
+        )*/
         val intent = Intent(this, AddEditClanMemberActivity::class.java)
         intent.putExtra("member", selectedMember)
         intent.putExtra("isEditing", true)
+        intent.putExtra("position", position)
 
         startActivityForResult(intent, REQUEST_EDIT_CLAN_MEMBER)
     }

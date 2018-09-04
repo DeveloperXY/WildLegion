@@ -1,6 +1,7 @@
 package com.developerxy.wildlegion.screens.main.fragments.news
 
-import com.developerxy.wildlegion.network.RetrofitModule
+import com.developerxy.wildlegion.di.components.DaggerNewsPresenterComponent
+import com.developerxy.wildlegion.di.modules.RetrofitModule
 import com.developerxy.wildlegion.network.WixAPI
 import com.developerxy.wildlegion.screens.main.models.News
 import io.reactivex.android.schedulers.AndroidSchedulers

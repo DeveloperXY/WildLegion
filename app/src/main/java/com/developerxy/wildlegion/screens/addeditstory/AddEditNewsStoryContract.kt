@@ -1,13 +1,12 @@
-package com.developerxy.wildlegion.screens.addeditmember
+package com.developerxy.wildlegion.screens.addeditstory
 
 import android.content.Intent
 import com.developerxy.wildlegion.BasePresenter
 
-interface AddEditClanMemberContract {
+interface AddEditNewsStoryContract {
     interface View {
         fun initializeActionBar()
         fun setActionbarTitle(title: String)
-        fun setupRanksSpinner()
         fun showErrorMessage(errorMessage: String)
         fun showLoadingView()
         fun hideLoadingView()
@@ -15,19 +14,20 @@ interface AddEditClanMemberContract {
         fun stopLoadingView()
         fun exit()
         fun exit(resultCode: Int, data: Intent?)
-        fun showMissingNickname()
-        fun showMissingIdentifier()
-        fun setNickname(nickname: String)
-        fun setGamerangerId(gamerangerId: String)
-        fun setRank(selection: Int)
+        fun showMissingTitle()
+        fun showMissingDate()
+        fun showMissingStory()
+        fun setTitle(title: String)
+        fun setPostDate(postDate: String)
+        fun setNewsStory(newsStory: String)
         fun showSaveButton()
         fun hideSaveButton()
     }
 
     interface Presenter : BasePresenter {
         fun start(intent: Intent)
-        fun saveClanMember(nickname: String, gamerangerId: String, rank: String)
-        fun deleteClanMember()
+        fun saveNewsStory(title: String, date: String, newsStory: String)
+        fun deleteNews()
         fun goBack()
     }
 }

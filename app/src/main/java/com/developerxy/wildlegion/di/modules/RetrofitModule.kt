@@ -1,5 +1,6 @@
-package com.developerxy.wildlegion.network
+package com.developerxy.wildlegion.di.modules
 
+import com.developerxy.wildlegion.network.WixAPI
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

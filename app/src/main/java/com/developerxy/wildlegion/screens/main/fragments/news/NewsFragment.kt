@@ -16,6 +16,8 @@ import com.developerxy.wildlegion.screens.main.models.News
 import com.developerxy.wildlegion.utils.SpacesItemDecoration
 import com.developerxy.wildlegion.utils.dpToPx
 import kotlinx.android.synthetic.main.fragment_members.*
+import android.support.v7.widget.GridLayoutManager
+import android.util.AttributeSet
 
 
 class NewsFragment : Fragment(), NewsContract.View {
@@ -45,27 +47,17 @@ class NewsFragment : Fragment(), NewsContract.View {
     override fun setupRecyclerView() {
         mNewsAdapter = NewsAdapter(context!!, mutableListOf())
         mNewsAdapter.setHasStableIds(true)
-        mNewsAdapter.onNewsSelected = { selectedNews, sharedViews ->
-            newsFragmentDelegate?.onNewsSelected(selectedNews, sharedViews)
+        mNewsAdapter.onNewsSelected = { position, selectedNews, sharedViews ->
+            newsFragmentDelegate?.onNewsSelected(position, selectedNews, sharedViews)
         }
-        membersRecyclerview.layoutManager = LinearLayoutManager(activity)
+        membersRecyclerview.layoutManager = NpaLinearLayoutManager(context!!)
         membersRecyclerview.addItemDecoration(SpacesItemDecoration(dpToPx(8)))
         membersRecyclerview.adapter = mNewsAdapter
     }
 
-    override fun revertItemSwipe(position: Int) {
-        val adapter = membersRecyclerview.adapter as NewsAdapter
-        adapter.notifyItemChanged(position)
-    }
-
-    override fun removeMember(position: Int) {
+    override fun removeNews(position: Int) {
         val adapter = membersRecyclerview.adapter as NewsAdapter
         adapter.removeItem(position)
-    }
-
-    override fun showMemberRemovedMessage(memberName: String) {
-        Toast.makeText(activity, "$memberName was removed from the clan.",
-                Toast.LENGTH_LONG).show()
     }
 
     override fun showMemberRemovalFailedError() {
@@ -101,6 +93,21 @@ class NewsFragment : Fragment(), NewsContract.View {
     }
 
     interface NewsFragmentDelegate {
-        fun onNewsSelected(selectedNews: News, sharedViews: Array<View>)
+        fun onNewsSelected(position: Int, selectedNews: News, sharedViews: Array<View>)
+    }
+
+    /**
+     * Fixes a RecyclerView consistency error.
+     * No idea how it works though lol
+     */
+    private class NpaLinearLayoutManager(context: Context) : LinearLayoutManager(context) {
+        /**
+         * Disable predictive animations. There is a bug in RecyclerView which causes views that
+         * are being reloaded to pull invalid ViewHolders from the internal recycler stack if the
+         * adapter size has decreased since the ViewHolder was recycled.
+         */
+        override fun supportsPredictiveItemAnimations(): Boolean {
+            return false
+        }
     }
 }

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.member_row_layout.view.*
 class MembersAdapter(context: Context, items: MutableList<Member>) :
         BaseSearchAdapter<MembersAdapter.MembersViewHolder, Member>(context, items) {
 
-    var onMemberSelected: ((selectedMember: Member, sharedViews: Array<View>) -> Unit)? = null
+    var onMemberSelected: ((position: Int, selectedMember: Member, sharedViews: Array<View>) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             MembersViewHolder(LayoutInflater.from(parent.context)
@@ -28,7 +28,7 @@ class MembersAdapter(context: Context, items: MutableList<Member>) :
 
         init {
             itemView.setOnClickListener {
-                onMemberSelected?.invoke(mItems[adapterPosition],
+                onMemberSelected?.invoke(adapterPosition, mItems[adapterPosition],
                         arrayOf(tvGamerangerId, tvGamerangerNickname))
             }
         }

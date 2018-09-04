@@ -9,7 +9,7 @@ import com.developerxy.wildlegion.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 abstract class BackgroundActivity: AppCompatActivity() {
-    fun onCreate(savedInstanceState: Bundle?, @LayoutRes layout: Int) {
+    open fun onCreate(savedInstanceState: Bundle?, @LayoutRes layout: Int) {
         super.onCreate(savedInstanceState)
         setContentView(layout)
 

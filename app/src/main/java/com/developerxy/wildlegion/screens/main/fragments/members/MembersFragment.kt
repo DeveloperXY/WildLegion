@@ -58,8 +58,8 @@ class MembersFragment : Fragment(), MembersContract.View {
 
     override fun setupRecyclerView() {
         mMembersAdapter = MembersAdapter(context!!, mutableListOf())
-        mMembersAdapter.onMemberSelected = { selectedMember, sharedViews ->
-            membersFragmentDelegate?.onMemberSelected(selectedMember, sharedViews)
+        mMembersAdapter.onMemberSelected = { position, selectedMember, sharedViews ->
+            membersFragmentDelegate?.onMemberSelected(position, selectedMember, sharedViews)
         }
         membersRecyclerview.layoutManager = LinearLayoutManager(activity)
         membersRecyclerview.addItemDecoration(SpacesItemDecoration(dpToPx(8)))
@@ -85,11 +85,6 @@ class MembersFragment : Fragment(), MembersContract.View {
     override fun removeMember(position: Int) {
         val adapter = membersRecyclerview.adapter as MembersAdapter
         adapter.removeItem(position)
-    }
-
-    override fun showMemberRemovedMessage(memberName: String) {
-        Toast.makeText(activity, "$memberName was removed from the clan.",
-                Toast.LENGTH_LONG).show()
     }
 
     override fun showMemberRemovalFailedError() {
@@ -132,6 +127,6 @@ class MembersFragment : Fragment(), MembersContract.View {
     }
 
     interface MembersFragmentDelegate {
-        fun onMemberSelected(selectedMember: Member, sharedViews: Array<View>)
+        fun onMemberSelected(position: Int, selectedMember: Member, sharedViews: Array<View>)
     }
 }

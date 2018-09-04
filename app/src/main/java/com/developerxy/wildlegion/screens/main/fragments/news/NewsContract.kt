@@ -12,10 +12,8 @@ interface NewsContract {
         fun showProgressbar()
         fun hideProgressbar()
         fun stopRefreshing()
-        fun removeMember(position: Int)
+        fun removeNews(position: Int)
         fun showMemberRemovalFailedError()
-        fun showMemberRemovedMessage(memberName: String)
-        fun revertItemSwipe(position: Int)
     }
 
     interface Presenter : BasePresenter {

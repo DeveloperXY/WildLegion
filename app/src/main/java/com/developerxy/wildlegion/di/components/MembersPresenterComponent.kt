@@ -1,6 +1,7 @@
-package com.developerxy.wildlegion.screens.main.fragments.members
+package com.developerxy.wildlegion.di.components
 
-import com.developerxy.wildlegion.network.RetrofitModule
+import com.developerxy.wildlegion.di.modules.RetrofitModule
+import com.developerxy.wildlegion.screens.main.fragments.members.MembersPresenter
 import dagger.Component
 import javax.inject.Singleton
 

@@ -1,6 +1,7 @@
 package com.developerxy.wildlegion.screens.addeditmember
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -9,11 +10,11 @@ import android.view.View.VISIBLE
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.developerxy.wildlegion.R
-import com.developerxy.wildlegion.screens.BackgroundActivity
+import com.developerxy.wildlegion.screens.CrudActivity
 import kotlinx.android.synthetic.main.activity_add_edit_clan_member.*
 
 
-class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContract.View {
+class AddEditClanMemberActivity : CrudActivity(), AddEditClanMemberContract.View {
 
     private lateinit var mPresenter: AddEditClanMemberPresenter
 
@@ -44,6 +45,12 @@ class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContrac
         rankSpinner.adapter = spinnerAdapter
     }
 
+    override fun getBottomSheetMessage() = "Are you sure that you want to remove this member from the clan ?"
+
+    override fun onDeleteConfirmed() {
+        mPresenter.deleteClanMember()
+    }
+
     override fun onBackPressed() {
         mPresenter.goBack()
     }
@@ -60,8 +67,8 @@ class AddEditClanMemberActivity : BackgroundActivity(), AddEditClanMemberContrac
         finish()
     }
 
-    override fun exitAfterProcessing() {
-        setResult(RESULT_OK)
+    override fun exit(resultCode: Int, data: Intent?) {
+        setResult(resultCode, data)
         finish()
     }
 

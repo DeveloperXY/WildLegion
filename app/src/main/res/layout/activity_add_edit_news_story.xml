@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        tools:context=".screens.addeditmember.AddEditClanMemberActivity">
+
+        <ImageView
+            android:id="@+id/backgroundImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/activity_background" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/mToolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/toolbar_bg"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_collapseMode="pin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <View
+            android:id="@+id/dropShadow"
+            android:layout_width="0dp"
+            android:layout_height="5dp"
+            android:background="@drawable/toolbar_dropshadow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mToolbar" />
+
+        <ScrollView
+            android:id="@+id/textInputsLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@id/saveButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dropShadow">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true">
+
+                <com.developerxy.wildlegion.customviews.FontEnabledTextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Story headline :"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    app:customFont="roboto"
+                    app:customStyle="light"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <com.developerxy.wildlegion.customviews.FontEnabledEditText
+                    android:id="@+id/titleField"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edittext_background"
+                    android:hint="Type title here"
+                    android:inputType="textMultiLine"
+                    android:padding="16dp"
+                    android:textColor="@color/field_text_color"
+                    android:textColorHint="@color/field_text_color"
+                    app:customFont="roboto"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+                <com.developerxy.wildlegion.customviews.FontEnabledTextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="When did this happen ?"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    app:customFont="roboto"
+                    app:customStyle="light"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/titleField" />
+
+                <com.developerxy.wildlegion.customviews.FontEnabledEditText
+                    android:id="@+id/dateField"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edittext_background"
+                    android:hint="Type date here"
+                    android:inputType="date"
+                    android:padding="16dp"
+                    android:textColor="@color/field_text_color"
+                    android:textColorHint="@color/field_text_color"
+                    app:customFont="roboto"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_date" />
+
+                <com.developerxy.wildlegion.customviews.FontEnabledTextView
+                    android:id="@+id/tv_news_story"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Details, details, details."
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    app:customFont="roboto"
+                    app:customStyle="light"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dateField" />
+
+                <com.developerxy.wildlegion.customviews.FontEnabledEditText
+                    android:id="@+id/newsStoryField"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edittext_background"
+                    android:hint="Type your news story here"
+                    android:inputType="textMultiLine"
+                    android:padding="16dp"
+                    android:textColor="@color/field_text_color"
+                    android:textColorHint="@color/field_text_color"
+                    app:customFont="roboto"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_news_story" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+
+        <com.developerxy.wildlegion.customviews.FontEnabledButton
+            android:id="@+id/saveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/button_background"
+            android:backgroundTint="@color/secondaryColor"
+            android:letterSpacing="0.3"
+            android:onClick="onSaveStory"
+            android:text="Save"
+            android:textColor="@drawable/button_background_text_color"
+            app:customFont="asylum"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.developerxy.wildlegion.customviews.FullscreenLoadingView
+            android:id="@+id/fullscreenLoadingView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/bottom_sheet_behavior" />
+
+</android.support.design.widget.CoordinatorLayout>

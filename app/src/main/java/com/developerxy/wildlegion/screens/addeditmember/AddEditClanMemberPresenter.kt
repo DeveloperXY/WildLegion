@@ -1,11 +1,16 @@
 package com.developerxy.wildlegion.screens.addeditmember
 
 import android.content.Intent
-import com.developerxy.wildlegion.network.RetrofitModule
+import com.developerxy.wildlegion.di.components.DaggerAddEditClanMemberPresenterComponent
+import com.developerxy.wildlegion.di.modules.RetrofitModule
 import com.developerxy.wildlegion.network.WixAPI
+import com.developerxy.wildlegion.network.models.DeleteRequest
 import com.developerxy.wildlegion.network.models.EditClanMemberRequest
 import com.developerxy.wildlegion.network.models.NewClanMemberRequest
 import com.developerxy.wildlegion.screens.main.models.Member
+import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_ADDED
+import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_DELETED
+import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_UPDATED
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -22,6 +27,7 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
     lateinit var mWixAPI: WixAPI
     private var isProcessing = false
     private var isEditing = false
+    private var currentMemberPosition = -1
     private var currentMember: Member? = null
 
     init {
@@ -41,12 +47,13 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
 
         isEditing = intent.getBooleanExtra("isEditing", false)
         if (isEditing) {
+            currentMemberPosition = intent.getIntExtra("position", -1)
             mView.setActionbarTitle("Edit clan member info")
             currentMember = intent.getSerializableExtra("member") as Member
             mView.setNickname(currentMember?.nickname!!)
             mView.setGamerangerId(currentMember?.gamerangerId!!)
 
-            val selection = when(currentMember?.rank!!) {
+            val selection = when (currentMember?.rank!!) {
                 'A' -> 0
                 'M' -> 1
                 else -> 2
@@ -73,17 +80,35 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
             return
         }
 
-        currentMember?.nickname = nickname
-        currentMember?.gamerangerId = gamerangerId
-        currentMember?.rank = rank.toCharArray()[0]
-
         if (isEditing) {
+            currentMember?.nickname = nickname
+            currentMember?.gamerangerId = gamerangerId
+            currentMember?.rank = rank.toCharArray()[0]
             val request = EditClanMemberRequest(currentMember!!)
             editClanMember(request)
         } else {
             val request = NewClanMemberRequest(nickname, gamerangerId, rank)
             addNewClanMember(request)
         }
+    }
+
+    override fun deleteClanMember() {
+        val member = currentMember!!
+        mWixAPI.removeClanMember(DeleteRequest(member._id))
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    onSubscribe("Deleting...")
+                }
+                .subscribeBy(
+                        onComplete = {
+                            val data = Intent()
+                            data.putExtra("position", currentMemberPosition)
+                            handleProcessingCompletion("${member.nickname} was removed from the clan.",
+                                    MEMBER_DELETED, data)
+                        },
+                        onError = this::handleProcessingError
+                )
     }
 
     private fun addNewClanMember(request: NewClanMemberRequest) {
@@ -95,7 +120,8 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
                 }
                 .subscribeBy(
                         onComplete = {
-                            handleProcessingCompletion("${request.nickname} was successfully added to the clan.")
+                            handleProcessingCompletion("${request.nickname} was successfully added to the clan.",
+                                    MEMBER_ADDED)
                         },
                         onError = this::handleProcessingError
                 )
@@ -110,13 +136,14 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
                 }
                 .subscribeBy(
                         onComplete = {
-                            handleProcessingCompletion("${request.nickname}'s info were successfully updated.")
+                            handleProcessingCompletion("${request.nickname}'s info were successfully updated.",
+                                    MEMBER_UPDATED)
                         },
                         onError = this::handleProcessingError
                 )
     }
 
-    private fun handleProcessingCompletion(successMessage: String) {
+    private fun handleProcessingCompletion(successMessage: String, resultCode: Int, data: Intent? = null) {
         Observable.timer(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
@@ -125,7 +152,7 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
                 }
                 .subscribe {
                     isProcessing = false
-                    mView.exitAfterProcessing()
+                    mView.exit(resultCode, data)
                 }
     }
 
