@@ -40,8 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@drawable/toolbar_bg"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:theme="@style/ToolbarTheme" />
 
             <View
@@ -67,9 +67,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:tint="@color/field_text_color"
-        android:visibility="invisible"
-        app:srcCompat="@drawable/baseline_add_24"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_create_post"
         tools:visibility="visible" />
 
     <android.support.v4.view.ViewPager

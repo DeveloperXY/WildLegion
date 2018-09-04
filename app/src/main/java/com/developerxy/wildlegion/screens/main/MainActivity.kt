@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.annotation.DrawableRes
 import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
@@ -13,10 +14,10 @@ import android.support.v4.util.Pair
 import android.support.v4.view.MenuItemCompat
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
+import android.support.v4.view.ViewPager.SCROLL_STATE_DRAGGING
+import android.support.v4.view.ViewPager.SCROLL_STATE_IDLE
 import android.support.v7.widget.SearchView
 import android.view.*
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
@@ -138,20 +139,32 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
         mTabLayout.setupWithViewPager(mViewPager)
         mViewPager.offscreenPageLimit = 6
         mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
+
+            var lastPosition = 0
+
+            override fun onPageScrollStateChanged(state: Int) {
+                when(state) {
+                    SCROLL_STATE_DRAGGING -> mFab.hide()
+                    SCROLL_STATE_IDLE -> {
+                        when (lastPosition) {
+                            0 -> showFabWithIcon(R.drawable.ic_create_post)
+                            1 -> showFabWithIcon(R.drawable.baseline_add_24)
+                        }
+                    }
+                }
+            }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
             override fun onPageSelected(position: Int) {
+                lastPosition = position
                 invalidateOptionsMenu()
-                handleFabVisibility(position)
             }
 
-            private fun handleFabVisibility(position: Int) = when (position) {
-                1 -> mFab.show()
-                else -> mFab.hide()
+            private fun showFabWithIcon(@DrawableRes fabIcon: Int) {
+                mFab.setImageResource(fabIcon)
+                mFab.show()
             }
-
         })
 
         for (index in 1..mTabLayout.tabCount) {
@@ -165,6 +178,10 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
             startActivityForResult(Intent(this, AddEditClanMemberActivity::class.java),
                     REQUEST_ADD_CLAN_MEMBER)
         }
+    }
+
+    override fun showFab() {
+        mFab.show()
     }
 
     override fun onMemberSelected(selectedMember: Member, sharedViews: Array<View>) {
