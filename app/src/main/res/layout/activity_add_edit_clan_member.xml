@@ -51,7 +51,8 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
 
             <com.developerxy.wildlegion.customviews.FontEnabledTextView
                 android:id="@+id/tv_nickname"

@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.developerxy.wildlegion.screens.main.fragments.home.HomeFragment
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
+import com.developerxy.wildlegion.screens.main.fragments.news.NewsFragment
 
 class MainPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
@@ -13,6 +14,7 @@ class MainPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
     }
 
     override fun getItem(position: Int) = when (position) {
+        0 -> NewsFragment()
         1 -> MembersFragment()
         else -> HomeFragment()
     }

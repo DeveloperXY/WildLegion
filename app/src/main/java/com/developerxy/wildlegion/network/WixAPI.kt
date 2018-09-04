@@ -4,6 +4,7 @@ import com.developerxy.wildlegion.network.models.EditClanMemberRequest
 import com.developerxy.wildlegion.network.models.NewClanMemberRequest
 import com.developerxy.wildlegion.network.models.RemoveClanMemberRequest
 import com.developerxy.wildlegion.screens.main.models.Member
+import com.developerxy.wildlegion.screens.main.models.News
 import io.reactivex.Completable
 import io.reactivex.Observable
 import retrofit2.http.Body
@@ -22,4 +23,7 @@ interface WixAPI {
 
     @POST("removeClanMember")
     fun removeClanMember(@Body request: RemoveClanMemberRequest): Completable
+
+    @GET("news")
+    fun getNews(): Observable<List<News>>
 }
