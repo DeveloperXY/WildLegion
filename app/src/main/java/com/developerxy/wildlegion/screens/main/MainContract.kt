@@ -9,6 +9,7 @@ interface MainContract {
         fun setupTabLayout()
         fun setFabClickListener()
         fun showFab()
+        fun hideFab()
     }
 
     interface Presenter: BasePresenter {

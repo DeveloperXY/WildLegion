@@ -14,8 +14,7 @@ import android.support.v4.util.Pair
 import android.support.v4.view.MenuItemCompat
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
-import android.support.v4.view.ViewPager.SCROLL_STATE_DRAGGING
-import android.support.v4.view.ViewPager.SCROLL_STATE_IDLE
+import android.support.v4.view.ViewPager.*
 import android.support.v7.widget.SearchView
 import android.view.*
 import android.view.animation.AlphaAnimation
@@ -143,18 +142,24 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
             var lastPosition = 0
 
             override fun onPageScrollStateChanged(state: Int) {
-                when(state) {
+                when (state) {
                     SCROLL_STATE_DRAGGING -> mFab.hide()
                     SCROLL_STATE_IDLE -> {
                         when (lastPosition) {
                             0 -> showFabWithIcon(R.drawable.ic_create_post)
                             1 -> showFabWithIcon(R.drawable.baseline_add_24)
+                            else -> hideFab()
                         }
                     }
                 }
             }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                if (positionOffset != 0f && positionOffset != 1f) {
+                    if (mFab.visibility == VISIBLE)
+                        hideFab()
+                }
+            }
 
             override fun onPageSelected(position: Int) {
                 lastPosition = position
@@ -182,6 +187,10 @@ class MainActivity : BackgroundActivity(), MainContract.View, MembersFragment.Me
 
     override fun showFab() {
         mFab.show()
+    }
+
+    override fun hideFab() {
+        mFab.hide()
     }
 
     override fun onMemberSelected(selectedMember: Member, sharedViews: Array<View>) {
