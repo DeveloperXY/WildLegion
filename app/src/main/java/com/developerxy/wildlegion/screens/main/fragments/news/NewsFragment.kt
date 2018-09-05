@@ -15,9 +15,8 @@ import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.models.News
 import com.developerxy.wildlegion.utils.SpacesItemDecoration
 import com.developerxy.wildlegion.utils.dpToPx
+import com.developerxy.wildlegion.utils.ifSupportsLollipop
 import kotlinx.android.synthetic.main.fragment_members.*
-import android.support.v7.widget.GridLayoutManager
-import android.util.AttributeSet
 
 
 class NewsFragment : Fragment(), NewsContract.View {

@@ -266,7 +266,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                 createCircularReveal.duration = 250
                 createCircularReveal.start()
             } else {
-                val translateAnimation = TranslateAnimation(0.0f, 0.0f, -mToolbar.height as Float, 0.0f)
+                val translateAnimation = TranslateAnimation(0.0f, 0.0f, (-mToolbar.height).toFloat(), 0.0f)
                 translateAnimation.duration = 220
                 mToolbar.clearAnimation()
                 mToolbar.startAnimation(translateAnimation)
@@ -288,7 +288,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                 createCircularReveal.start()
             } else {
                 val alphaAnimation = AlphaAnimation(1.0f, 0.0f)
-                val translateAnimation = TranslateAnimation(0.0f, 0.0f, 0.0f, -mToolbar.height as Float)
+                val translateAnimation = TranslateAnimation(0.0f, 0.0f, 0.0f, (-mToolbar.height).toFloat())
                 val animationSet = AnimationSet(true)
                 animationSet.addAnimation(alphaAnimation)
                 animationSet.addAnimation(translateAnimation)

@@ -1,6 +1,8 @@
 package com.developerxy.wildlegion.screens.main.fragments.news
 
 import android.content.Context
+import android.os.Build
+import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.adapters.base.BaseSearchAdapter
 import com.developerxy.wildlegion.screens.main.adapters.base.BinderViewHolder
 import com.developerxy.wildlegion.screens.main.models.News
+import com.developerxy.wildlegion.utils.dpToPx
 import kotlinx.android.synthetic.main.news_row_layout.view.*
 
 class NewsAdapter(context: Context, items: MutableList<News>) :
@@ -31,6 +34,12 @@ class NewsAdapter(context: Context, items: MutableList<News>) :
         var tvPostedBy: TextView = itemView.tvPostedBy
 
         init {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                (itemView as CardView).apply {
+                    cardElevation = dpToPx(8).toFloat()
+                }
+            }
+
             itemView.setOnClickListener {
                 onNewsSelected?.invoke(adapterPosition, mItems[adapterPosition],
                         arrayOf(tvTitle, tvDate, tvStoryNews))
