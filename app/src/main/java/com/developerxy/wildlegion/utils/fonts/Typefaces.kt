@@ -23,7 +23,7 @@ class Typefaces {
          * If the requested font was already requested (is already in the [map of loaded fonts][Typefaces.map]),
          * it returns that existing typeface; If not, it loads the font, saves it before returning it.
          */
-        fun getFont(assets: AssetManager, name: String): Typeface {
+        fun getFont(assets: AssetManager, name: String = "Regular"): Typeface {
             val fontName = if (name == "asylum") asylumTemplate else
                 String.format(robotoTemplate, name)
             if (map.containsKey(fontName))
