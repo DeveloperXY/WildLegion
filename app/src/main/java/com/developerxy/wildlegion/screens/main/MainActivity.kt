@@ -31,6 +31,7 @@ import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
 import com.developerxy.wildlegion.screens.main.fragments.news.NewsFragment
 import com.developerxy.wildlegion.screens.main.models.Member
 import com.developerxy.wildlegion.screens.main.models.News
+import com.developerxy.wildlegion.screens.settings.SettingsActivity
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_ADDED
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_DELETED
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_UPDATED
@@ -107,6 +108,14 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                 searchItem.isVisible = false
         }
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
+        R.id.action_settings -> {
+            startActivity(Intent(this, SettingsActivity::class.java))
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

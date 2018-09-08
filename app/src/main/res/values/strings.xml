@@ -3,6 +3,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pref_key_play_music">pref_key_play_music</string>
+    <string name="pref_key_media_settings">pref_key_media_settings</string>
     <string-array name="ranks_array">
         <item>ACADEMY</item>
         <item>MEDIUM</item>

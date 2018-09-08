@@ -14,4 +14,10 @@
         app:actionLayout="@layout/search_view_layout"
         app:showAsAction="ifRoom|collapseActionView" />
 
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="101"
+        android:title="Settings"
+        app:showAsAction="never" />
+
 </menu>

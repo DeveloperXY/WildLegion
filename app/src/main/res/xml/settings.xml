@@ -1,0 +1,12 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.developerxy.wildlegion.customviews.MyPreferenceCategory
+        android:key="@string/pref_key_media_settings"
+        android:title="Media">
+        <com.developerxy.wildlegion.customviews.MySwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_play_music"
+            android:summaryOff="Music playback is disabled"
+            android:summaryOn="Music playback is enabled"
+            android:title="Play music in background" />
+    </com.developerxy.wildlegion.customviews.MyPreferenceCategory>
+</PreferenceScreen>
