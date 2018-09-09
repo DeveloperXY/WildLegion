@@ -13,13 +13,25 @@ ext {
     supportVersion = '27.1.1'
     versionMajor = 0
     versionMinor = 1
-    versionPatch = 0
+    versionPatch = 1
     versionClassifier = null
     isSnapshot = false
     minimumSdkVersion = 19
 }
 
 android {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    signingConfigs {
+        release {
+            storeFile file(properties.getProperty("storeFile"))
+            storePassword properties.getProperty("storePassword")
+            keyAlias properties.getProperty("keyAlias")
+            keyPassword properties.getProperty("keyPassword")
+        }
+    }
+
     compileSdkVersion 27
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
@@ -32,8 +44,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            signingConfig signingConfigs.release
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -52,7 +64,7 @@ private String generateVersionName() {
     if (ext.versionClassifier != null) {
         versionName += "-" + ext.versionClassifier
     }
-    return versionName;
+    return versionName
 }
 
 dependencies {
