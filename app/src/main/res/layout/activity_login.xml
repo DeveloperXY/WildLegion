@@ -43,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp"
-            android:transitionName="wild_legion_logo_trans"
             tools:src="@drawable/wild_legion_full" />
 
     </RelativeLayout>
@@ -88,8 +87,6 @@
         android:inputType="textPassword"
         android:paddingBottom="16dp"
         android:paddingEnd="52dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="52dp"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:textColor="@color/field_text_color"
@@ -105,7 +102,6 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginRight="16dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"

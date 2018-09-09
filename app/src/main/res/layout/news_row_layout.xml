@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="04.09.2018"
             android:textColor="@color/primaryDarkColor"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:customFont="roboto"
             app:customStyle="light"
             app:layout_constraintEnd_toEndOf="parent"

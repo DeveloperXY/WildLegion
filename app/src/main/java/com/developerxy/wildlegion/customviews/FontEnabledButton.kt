@@ -1,6 +1,7 @@
 package com.developerxy.wildlegion.customviews
 
 import android.content.Context
+import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
 import android.widget.Button
 import com.developerxy.wildlegion.R
@@ -12,7 +13,7 @@ import com.developerxy.wildlegion.R
  *
  *  @author Mohammed Aouf ZOUAG
  */
-class FontEnabledButton : Button, FontEnabledView {
+class FontEnabledButton : AppCompatButton, FontEnabledView {
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {

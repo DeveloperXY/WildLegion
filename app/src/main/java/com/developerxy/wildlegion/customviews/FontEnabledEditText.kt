@@ -1,6 +1,7 @@
 package com.developerxy.wildlegion.customviews
 
 import android.content.Context
+import android.support.v7.widget.AppCompatEditText
 import android.util.AttributeSet
 import android.widget.Button
 import android.widget.EditText
@@ -13,7 +14,7 @@ import com.developerxy.wildlegion.R
  *
  *  @author Mohammed Aouf ZOUAG
  */
-class FontEnabledEditText : EditText, FontEnabledView {
+class FontEnabledEditText : AppCompatEditText, FontEnabledView {
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {

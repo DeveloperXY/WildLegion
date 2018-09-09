@@ -1,6 +1,7 @@
 package com.developerxy.wildlegion.customviews
 
 import android.content.Context
+import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import android.widget.TextView
 import com.developerxy.wildlegion.R
@@ -12,7 +13,7 @@ import com.developerxy.wildlegion.R
  *
  *  @author Mohammed Aouf ZOUAG
  */
-class FontEnabledTextView : TextView, FontEnabledView {
+class FontEnabledTextView : AppCompatTextView, FontEnabledView {
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
