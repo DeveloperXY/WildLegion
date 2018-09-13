@@ -24,14 +24,18 @@ interface FontEnabledView {
             val font = typedArray.getInt(getCustomFont(), -1)
             if (font == 0)
                 setTypeface(Typefaces.getFont(context.assets, "asylum"))
-            else if (font == 1) {
-                val style = when (typedArray.getInt(getCustomFont(), -1)) {
-                    0 -> "Regular"
+            else {
+                val style = when (typedArray.getInt(getCustomFontStyle(), -1)) {
                     1 -> "Light"
                     2 -> "Bold"
                     else -> "Regular"
                 }
-                setTypeface(Typefaces.getFont(context.assets, style))
+                val fontName = when(font) {
+                    2 -> "opensans"
+                    3 -> "oswald"
+                    else -> "roboto"
+                }
+                setTypeface(Typefaces.getFont(context.assets, fontName, style))
             }
 
         } finally {

@@ -12,6 +12,8 @@ class Typefaces {
     companion object {
         val asylumTemplate = "black_asylum.ttf"
         val robotoTemplate = "Roboto-%s.ttf"
+        val openSansTemplate = "OpenSans-%s.ttf"
+        val oswaldTemplate = "Oswald-%s.ttf"
         /**
          * A map of typefaces that were loaded, indexed by their names.
          */
@@ -23,9 +25,14 @@ class Typefaces {
          * If the requested font was already requested (is already in the [map of loaded fonts][Typefaces.map]),
          * it returns that existing typeface; If not, it loads the font, saves it before returning it.
          */
-        fun getFont(assets: AssetManager, name: String = "Regular"): Typeface {
-            val fontName = if (name == "asylum") asylumTemplate else
-                String.format(robotoTemplate, name)
+        fun getFont(assets: AssetManager, name: String = "", style: String = "Regular"): Typeface {
+            val fontName = when (name) {
+                "asylum" -> asylumTemplate
+                "opensans" -> String.format(openSansTemplate, style)
+                "oswald" -> String.format(oswaldTemplate, style)
+                else -> String.format(robotoTemplate, style)
+            }
+
             if (map.containsKey(fontName))
                 return map[fontName]!!
 
