@@ -15,8 +15,7 @@ import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.models.News
 import com.developerxy.wildlegion.utils.SpacesItemDecoration
 import com.developerxy.wildlegion.utils.dpToPx
-import com.developerxy.wildlegion.utils.ifSupportsLollipop
-import kotlinx.android.synthetic.main.fragment_members.*
+import kotlinx.android.synthetic.main.fragment_news.*
 
 
 class NewsFragment : Fragment(), NewsContract.View {
@@ -54,6 +53,16 @@ class NewsFragment : Fragment(), NewsContract.View {
         membersRecyclerview.adapter = mNewsAdapter
     }
 
+    override fun onResume() {
+        super.onResume()
+        mShimmerLayout.startShimmer()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mShimmerLayout.stopShimmer()
+    }
+
     override fun removeNews(position: Int) {
         val adapter = membersRecyclerview.adapter as NewsAdapter
         adapter.removeItem(position)
@@ -69,6 +78,16 @@ class NewsFragment : Fragment(), NewsContract.View {
         membersRecyclerview.scrollToPosition(0)
     }
 
+    override fun showShimmer() {
+        mShimmerLayout.visibility = VISIBLE
+        mShimmerLayout.startShimmer()
+    }
+
+    override fun stopShimmer() {
+        mShimmerLayout.visibility = GONE
+        mShimmerLayout.stopShimmer()
+    }
+
     override fun showLoadingError(error: Throwable) {
         backgroundText.visibility = VISIBLE
     }
@@ -76,15 +95,6 @@ class NewsFragment : Fragment(), NewsContract.View {
     override fun hideLoadingError() {
         if (backgroundText.visibility == VISIBLE)
             backgroundText.visibility = GONE
-    }
-
-    override fun showProgressbar() {
-        progressBar.visibility = VISIBLE
-    }
-
-    override fun hideProgressbar() {
-        if (progressBar.visibility == VISIBLE)
-            progressBar.visibility = GONE
     }
 
     override fun stopRefreshing() {

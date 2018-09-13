@@ -42,10 +42,9 @@ class NewsPresenter(var mView: NewsContract.View) : NewsContract.Presenter {
                         },
                         onError = {
                             mView.showNews(arrayListOf())
-                            mView.hideProgressbar()
                             mView.showLoadingError(it)
                         },
-                        onComplete = mView::hideProgressbar
+                        onComplete = mView::stopShimmer
                 )
     }
 
