@@ -33,6 +33,7 @@ interface FontEnabledView {
                 val fontName = when(font) {
                     2 -> "opensans"
                     3 -> "oswald"
+                    4 -> "kellyslab"
                     else -> "roboto"
                 }
                 setTypeface(Typefaces.getFont(context.assets, fontName, style))

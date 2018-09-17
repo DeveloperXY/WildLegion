@@ -2,12 +2,9 @@ package com.developerxy.wildlegion.screens.main.fragments.members
 
 
 import android.content.Context
-import android.content.res.Resources
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -17,7 +14,6 @@ import android.widget.Toast
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.models.Member
 import com.developerxy.wildlegion.utils.SpacesItemDecoration
-import com.developerxy.wildlegion.utils.SwipeToDeleteCallback
 import com.developerxy.wildlegion.utils.dpToPx
 import kotlinx.android.synthetic.main.fragment_members.*
 

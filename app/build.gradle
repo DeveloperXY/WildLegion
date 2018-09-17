@@ -34,6 +34,7 @@ android {
 
     compileSdkVersion 27
     defaultConfig {
+        buildConfigField 'String', "YOUTUBE_API_KEY", properties.getProperty("youtubeApiKey")
         vectorDrawables.useSupportLibrary = true
         applicationId "com.developerxy.wildlegion"
         minSdkVersion 19
@@ -68,7 +69,7 @@ private String generateVersionName() {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "com.android.support:support-v4:$supportVersion"
@@ -80,24 +81,20 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
-
     implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
-
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-
-
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.20.0'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'

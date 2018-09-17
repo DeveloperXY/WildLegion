@@ -54,4 +54,16 @@ class App : Application(), LifeCycleDelegate {
         registerActivityLifecycleCallbacks(lifeCycleHandler)
         registerComponentCallbacks(lifeCycleHandler)
     }
+
+    fun isBackgroundMusicPlaying() = mediaPlayer.isPlaying
+
+    fun playBackgroundMusic() {
+        if (!isBackgroundMusicPlaying())
+            mediaPlayer.start()
+    }
+
+    fun pauseBackgroundMusic() {
+        if (isBackgroundMusicPlaying())
+            mediaPlayer.pause()
+    }
 }

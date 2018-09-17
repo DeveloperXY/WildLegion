@@ -14,6 +14,7 @@ class Typefaces {
         val robotoTemplate = "Roboto-%s.ttf"
         val openSansTemplate = "OpenSans-%s.ttf"
         val oswaldTemplate = "Oswald-%s.ttf"
+        val kellySlabTemplate = "KellySlab-%s.otf"
         /**
          * A map of typefaces that were loaded, indexed by their names.
          */
@@ -30,6 +31,7 @@ class Typefaces {
                 "asylum" -> asylumTemplate
                 "opensans" -> String.format(openSansTemplate, style)
                 "oswald" -> String.format(oswaldTemplate, style)
+                "kellyslab" -> String.format(kellySlabTemplate, style)
                 else -> String.format(robotoTemplate, style)
             }
 

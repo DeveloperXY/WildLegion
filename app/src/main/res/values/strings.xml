@@ -5,9 +5,26 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pref_key_play_music">pref_key_play_music</string>
     <string name="pref_key_media_settings">pref_key_media_settings</string>
+    <string name="about_clan_part_1">Our clan is international, we have players from different countries. We recruit only persons, who we like. That\'s why we haven\'t any conflicts in clan. Only good relationships between players and common interests make our clan solid. We don\'t need in skilled players, we need in good persons, who wanna learn SHC game.</string>
+    <string name="about_clan_part_2">Clan was created for training beginners, but our main assignment is making chaos in battles. If u wanna be like us - join. We like fair and honest games and hate liars and braggers. One of the most important things in our clan - discipline. Whoever loves discipline loves knowledge, but he who hates reproof is stupid.</string>
     <string-array name="ranks_array">
         <item>ACADEMY</item>
         <item>MEDIUM</item>
         <item>EXPERT</item>
+    </string-array>
+    <string-array name="rules">
+        <item>All players must wear our tag\n
+            Experts: -=W.L=- nickname |Ex|\n
+            Mediums: -=W.L=- nickname |M|\n
+            Academy: -=W.L=- nickname |A|\n
+            - Academy must wear rank (A). |M| and |Ex| mustn\'t wear rank, if they want, they can delete it. </item>
+        <item>Cheats - not allowed</item>
+        <item>TurboMouse (2x or 3x and more clicks) and ShieldMaker - not allowed </item>
+        <item>Using few accounts in GR - not allowed</item>
+        <item>Insults clanmates and ur opponents in the game - not allowed</item>
+        <item>Leaving games like a rat - not allowed</item>
+        <item>Going inactive without informing Leader, Founder or Council - Not allowed</item>
+        <item>If you inactive for long time, we will put you out of our clan. But when you are active again and if you wanna join maybe we can recruit you one more time in clan.</item>
+        <item>If you left -=W.L=-, you left it forever.</item>
     </string-array>
 </resources>

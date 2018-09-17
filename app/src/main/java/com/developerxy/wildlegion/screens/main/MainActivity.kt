@@ -27,6 +27,7 @@ import com.developerxy.wildlegion.screens.BackgroundActivity
 import com.developerxy.wildlegion.screens.addeditmember.AddEditClanMemberActivity
 import com.developerxy.wildlegion.screens.addeditstory.AddEditNewsStoryActivity
 import com.developerxy.wildlegion.screens.main.adapters.MainPagerAdapter
+import com.developerxy.wildlegion.screens.main.fragments.aboutclan.AboutClanFragment
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
 import com.developerxy.wildlegion.screens.main.fragments.news.NewsFragment
 import com.developerxy.wildlegion.screens.main.models.Member
@@ -200,6 +201,10 @@ class MainActivity : BackgroundActivity(), MainContract.View {
             override fun onPageSelected(position: Int) {
                 lastPosition = position
                 invalidateOptionsMenu()
+                if (position == 3 && !AboutClanFragment.isYoutubeInitialized) {
+                    val aboutClanFragment = mPagerAdapter.instantiateItem(mViewPager, 3) as AboutClanFragment
+                    aboutClanFragment.initializeYoutubePlayer()
+                }
             }
 
             private fun showFabWithIcon(@DrawableRes fabIcon: Int) {
@@ -248,12 +253,6 @@ class MainActivity : BackgroundActivity(), MainContract.View {
     }
 
     override fun onMemberSelected(position: Int, selectedMember: Member, sharedViews: Array<View>) {
-        /*val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                this,
-                *(sharedViews.map { view ->
-                    Pair.create(view, ViewCompat.getTransitionName(view))
-                }.toTypedArray())
-        )*/
         val intent = Intent(this, AddEditClanMemberActivity::class.java)
         intent.putExtra("member", selectedMember)
         intent.putExtra("isEditing", true)
