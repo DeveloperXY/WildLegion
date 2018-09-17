@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.developerxy.wildlegion.App
@@ -18,6 +19,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_about_clan.*
 import java.util.concurrent.TimeUnit
+
 
 class AboutClanFragment : Fragment(), YouTubePlayer.OnInitializedListener {
 
@@ -42,12 +44,18 @@ class AboutClanFragment : Fragment(), YouTubePlayer.OnInitializedListener {
             youtubePlayerFragment = YouTubePlayerSupportFragment.newInstance()
             childFragmentManager.beginTransaction().add(R.id.mYoutubeContainer, youtubePlayerFragment).commit()
         }
+
+        val progressDrawable = mProgressbar.indeterminateDrawable.mutate()
+        progressDrawable.setColorFilter(resources.getColor(R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN)
+        mProgressbar.indeterminateDrawable = progressDrawable
     }
 
     override fun onInitializationSuccess(provider: YouTubePlayer.Provider?,
                                          youtubePlayer: YouTubePlayer?, wasRestored: Boolean) {
         if (!wasRestored) {
             mYoutubeContainer.visibility = VISIBLE
+            mPlaceholder.visibility = GONE
+            mProgressbar.visibility = GONE
 
             youtubePlayer?.setPlaybackEventListener(object : YouTubePlayer.PlaybackEventListener {
 
@@ -99,6 +107,15 @@ class AboutClanFragment : Fragment(), YouTubePlayer.OnInitializedListener {
 
     fun initializeYoutubePlayer() {
         isYoutubeInitialized = true
+
+        Observable.timer(500, TimeUnit.MILLISECONDS)
+                .doOnSubscribe {
+                    mRulesSection.visibility = VISIBLE
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    mRedSection.visibility = VISIBLE
+                }
 
         Observable.timer(3, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())

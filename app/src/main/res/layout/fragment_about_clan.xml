@@ -22,10 +22,12 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:textColor="@color/colorAccent"
+                android:visibility="gone"
                 app:customFont="kellyslab"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
             <com.developerxy.wildlegion.customviews.FontEnabledTextView
                 android:id="@+id/mRulesSection"
@@ -34,10 +36,12 @@
                 android:layout_marginTop="16dp"
                 android:padding="16dp"
                 android:textColor="@android:color/white"
+                android:visibility="gone"
                 app:customFont="kellyslab"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mRedSection" />
+                app:layout_constraintTop_toBottomOf="@id/mRedSection"
+                tools:visibility="visible" />
 
             <FrameLayout
                 android:id="@+id/mYoutubeContainer"
@@ -49,9 +53,37 @@
                 app:layout_constraintTop_toBottomOf="@id/mRulesSection"
                 tools:visibility="visible" />
 
+            <com.developerxy.wildlegion.customviews.FontEnabledTextView
+                android:id="@+id/mPlaceholder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Loading promo video..."
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp"
+                app:customFont="kellyslab"
+                app:layout_constraintBottom_toBottomOf="@id/mYoutubeContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/mYoutubeContainer" />
+
+            <ProgressBar
+                android:id="@+id/mProgressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:indeterminateOnly="true"
+                android:progressBackgroundTint="@color/colorAccent"
+                android:progressBackgroundTintMode="multiply"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mPlaceholder" />
+
             <Space
+                android:id="@+id/space"
                 android:layout_width="0dp"
                 android:layout_height="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mYoutubeContainer" />
