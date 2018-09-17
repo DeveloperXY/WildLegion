@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.adapters.base.BaseSearchAdapter
 import com.developerxy.wildlegion.screens.main.adapters.base.BinderViewHolder
