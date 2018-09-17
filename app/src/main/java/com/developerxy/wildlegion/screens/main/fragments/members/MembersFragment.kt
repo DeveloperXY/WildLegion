@@ -65,7 +65,7 @@ class MembersFragment : Fragment(), MembersContract.View {
         membersRecyclerview.addItemDecoration(SpacesItemDecoration(dpToPx(8)))
         membersRecyclerview.adapter = mMembersAdapter
 
-        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+        /*val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = membersRecyclerview.adapter as MembersAdapter
                 val position = viewHolder.adapterPosition
@@ -74,7 +74,7 @@ class MembersFragment : Fragment(), MembersContract.View {
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
-        itemTouchHelper.attachToRecyclerView(membersRecyclerview)
+        itemTouchHelper.attachToRecyclerView(membersRecyclerview)*/
     }
 
     override fun revertItemSwipe(position: Int) {

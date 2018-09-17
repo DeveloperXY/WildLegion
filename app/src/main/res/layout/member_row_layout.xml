@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="MysticaL"
         android:textColor="@color/primaryDarkColor"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:transitionName="gr_nickname_transition"
         app:customFont="roboto"
         app:customStyle="bold"
