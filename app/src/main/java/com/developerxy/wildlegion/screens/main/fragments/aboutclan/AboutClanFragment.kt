@@ -123,4 +123,9 @@ class AboutClanFragment : Fragment(), YouTubePlayer.OnInitializedListener {
                     youtubePlayerFragment?.initialize(BuildConfig.YOUTUBE_API_KEY, this)
                 }
     }
+
+    override fun onDetach() {
+        super.onDetach()
+        isYoutubeInitialized = false
+    }
 }
