@@ -12,8 +12,8 @@ ext {
     daggerVersion = '2.17'
     supportVersion = '27.1.1'
     versionMajor = 0
-    versionMinor = 2
-    versionPatch = 1
+    versionMinor = 3
+    versionPatch = 0
     versionClassifier = null
     isSnapshot = false
     minimumSdkVersion = 19
