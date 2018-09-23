@@ -33,4 +33,7 @@ interface WixAPI {
 
     @POST("removeNews")
     fun deleteNews(@Body request: DeleteRequest): Completable
+
+    @GET("recruitmentStatus")
+    fun getRecruitmentStatus(): Observable<RecruitmentStatus>
 }

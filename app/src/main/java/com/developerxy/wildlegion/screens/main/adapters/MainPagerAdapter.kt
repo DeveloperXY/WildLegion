@@ -6,6 +6,7 @@ import com.developerxy.wildlegion.screens.main.fragments.aboutclan.AboutClanFrag
 import com.developerxy.wildlegion.screens.main.fragments.home.HomeFragment
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
 import com.developerxy.wildlegion.screens.main.fragments.news.NewsFragment
+import com.developerxy.wildlegion.screens.main.fragments.recruiting.RecruitingFragment
 
 class MainPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
@@ -18,6 +19,7 @@ class MainPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
         0 -> NewsFragment()
         1 -> MembersFragment()
         3 -> AboutClanFragment()
+        5 -> RecruitingFragment()
         else -> HomeFragment()
     }
 
