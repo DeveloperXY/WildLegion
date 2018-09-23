@@ -1,5 +1,5 @@
 package com.developerxy.wildlegion
 
 interface BasePresenter {
-    fun start()
+    fun start() {}
 }

@@ -201,7 +201,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
             override fun onPageSelected(position: Int) {
                 lastPosition = position
                 invalidateOptionsMenu()
-                if (position == 3 && !AboutClanFragment.isYoutubeInitialized) {
+                if (position == 3) {
                     val aboutClanFragment = mPagerAdapter.instantiateItem(mViewPager, 3) as AboutClanFragment
                     aboutClanFragment.initializeYoutubePlayer()
                 }

@@ -1,38 +1,31 @@
 package com.developerxy.wildlegion.screens.main.fragments.aboutclan
 
 
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.developerxy.wildlegion.App
-import com.developerxy.wildlegion.BuildConfig
 import com.developerxy.wildlegion.R
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_about_clan.*
-import java.util.concurrent.TimeUnit
 
 
-class AboutClanFragment : Fragment(), YouTubePlayer.OnInitializedListener {
+class AboutClanFragment : Fragment(), AboutClanContract.View {
 
-    companion object {
-        const val WILD_LEGION_ABOUT_US_VIDEO_ID = "ahkLkIwJgtI"
-        var isYoutubeInitialized = false
+    private lateinit var mPresenter: AboutClanPresenter
+    private var youtubePlayerFragment: YouTubePlayerSupportFragment? = null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mPresenter = AboutClanPresenter(this)
     }
-
-    var youtubePlayerFragment: YouTubePlayerSupportFragment? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_about_clan, container, false)
     }
 
@@ -50,50 +43,6 @@ class AboutClanFragment : Fragment(), YouTubePlayer.OnInitializedListener {
         mProgressbar.indeterminateDrawable = progressDrawable
     }
 
-    override fun onInitializationSuccess(provider: YouTubePlayer.Provider?,
-                                         youtubePlayer: YouTubePlayer?, wasRestored: Boolean) {
-        if (!wasRestored) {
-            mYoutubeContainer.visibility = VISIBLE
-            mPlaceholder.visibility = GONE
-            mProgressbar.visibility = GONE
-
-            youtubePlayer?.setPlaybackEventListener(object : YouTubePlayer.PlaybackEventListener {
-
-                val app = (activity?.application) as App
-                var wasPlayingMusic = app.isBackgroundMusicPlaying()
-
-                override fun onSeekTo(p0: Int) {}
-
-                override fun onBuffering(p0: Boolean) {}
-
-                override fun onPlaying() {
-                    if (wasPlayingMusic)
-                        app.pauseBackgroundMusic()
-                }
-
-                override fun onStopped() {
-                    if (wasPlayingMusic)
-                        app.playBackgroundMusic()
-                }
-
-                override fun onPaused() {
-                    if (wasPlayingMusic)
-                        app.playBackgroundMusic()
-                }
-            })
-            youtubePlayer?.setOnFullscreenListener {
-                if (!it) {
-                    activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                }
-            }
-            youtubePlayer?.cueVideo(WILD_LEGION_ABOUT_US_VIDEO_ID)
-        }
-    }
-
-    override fun onInitializationFailure(p0: YouTubePlayer.Provider?, p1: YouTubeInitializationResult?) {
-
-    }
-
     private fun setBodyText() {
         mRedSection.text = getString(R.string.about_clan_part_1)
         mRedSection.append("\n\n")
@@ -106,26 +55,39 @@ class AboutClanFragment : Fragment(), YouTubePlayer.OnInitializedListener {
     }
 
     fun initializeYoutubePlayer() {
-        isYoutubeInitialized = true
-
-        Observable.timer(500, TimeUnit.MILLISECONDS)
-                .doOnSubscribe {
-                    mRulesSection.visibility = VISIBLE
-                }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    mRedSection.visibility = VISIBLE
-                }
-
-        Observable.timer(3, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    youtubePlayerFragment?.initialize(BuildConfig.YOUTUBE_API_KEY, this)
-                }
+        mPresenter.initYoutubePlayer()
     }
+
+    override fun showYoutubeContainer() {
+        mYoutubeContainer.visibility = View.VISIBLE
+    }
+
+    override fun hidePlaceholder() {
+        mPlaceholder.visibility = View.GONE
+    }
+
+    override fun hideProgressbar() {
+        mProgressbar.visibility = View.GONE
+    }
+
+    override fun showRedSection() {
+        mRedSection.visibility = View.VISIBLE
+    }
+
+    override fun showRulesSection() {
+        mRulesSection.visibility = View.VISIBLE
+    }
+
+    override fun switchOrientationToPortrait() {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    }
+
+    override fun getYoutubeFragment() = youtubePlayerFragment
+
+    override fun getApp() = (activity?.application) as App
 
     override fun onDetach() {
         super.onDetach()
-        isYoutubeInitialized = false
+        mPresenter.detachYoutubePlayer()
     }
 }
