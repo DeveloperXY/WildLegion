@@ -2,6 +2,7 @@ package com.developerxy.wildlegion.screens.main.fragments.recruiting
 
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.developerxy.wildlegion.R
+import com.developerxy.wildlegion.screens.guestbook.GuestBookActivity
 import kotlinx.android.synthetic.main.fragment_recruiting.*
 
 class RecruitingFragment : Fragment(), RecruitingContract.View {
@@ -51,5 +53,11 @@ class RecruitingFragment : Fragment(), RecruitingContract.View {
 
     override fun showGuestbookButton() {
         openGuestBookBtn.visibility = VISIBLE
+    }
+
+    override fun setListenerOnGuestBookButton() {
+        openGuestBookBtn.setOnClickListener {
+            startActivity(Intent(activity, GuestBookActivity::class.java))
+        }
     }
 }

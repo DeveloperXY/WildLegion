@@ -37,6 +37,9 @@
         <activity
             android:name=".screens.addeditstory.AddEditNewsStoryActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".screens.guestbook.GuestBookActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#212121"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp">
+
+        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            android:id="@+id/dateLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="Date:"
+            android:textColor="@color/field_text_color"
+            app:customFont="roboto"
+            app:customStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/numberLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            android:id="@+id/tvDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="2018-09-29 08:38:52"
+            android:textColor="@color/field_text_color"
+            app:customFont="roboto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/numberLabel"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            android:id="@+id/nameLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:textColor="@color/field_text_color"
+            app:customFont="roboto"
+            app:customStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/numberLabel"
+            app:layout_constraintStart_toStartOf="@id/dateLabel"
+            app:layout_constraintTop_toBottomOf="@id/tvDate" />
+
+        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="-=W.L=- MysticaL"
+            android:textColor="@color/field_text_color"
+            app:customFont="roboto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/numberLabel"
+            app:layout_constraintTop_toBottomOf="@id/tvDate" />
+
+        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            android:id="@+id/numberLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Number:"
+            android:textColor="@color/field_text_color"
+            app:customFont="roboto"
+            app:customStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/dateLabel"
+            app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            android:id="@+id/tvNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="745"
+            android:textColor="@color/field_text_color"
+            app:customFont="roboto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/numberLabel"
+            app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+        <View
+            android:id="@+id/horizontalLine"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/field_text_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNumber" />
+
+        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            android:id="@+id/tvBody"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:text="i wanna WL clan my skills acdemy mediam or iam play 3 5 nffs ha 50 noafp rules and 3 10pt nffs i learning so"
+            android:textColor="@color/field_text_color"
+            app:customFont="roboto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/horizontalLine" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

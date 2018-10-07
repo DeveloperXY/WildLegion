@@ -21,6 +21,7 @@ class RecruitingPresenter(var mView: RecruitingContract.View) : RecruitingContra
     }
 
     override fun start() {
+        mView.setListenerOnGuestBookButton()
         mWixAPI.getRecruitmentStatus()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())

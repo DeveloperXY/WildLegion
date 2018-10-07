@@ -10,6 +10,7 @@ interface RecruitingContract {
         fun showErrorMessage()
         fun hideGuestbookButton()
         fun showGuestbookButton()
+        fun setListenerOnGuestBookButton()
     }
 
     interface Presenter : BasePresenter {
