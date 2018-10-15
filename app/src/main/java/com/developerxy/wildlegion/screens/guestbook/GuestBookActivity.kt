@@ -2,6 +2,7 @@ package com.developerxy.wildlegion.screens.guestbook
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import android.widget.Toast
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.BackgroundActivity
@@ -21,6 +22,14 @@ class GuestBookActivity : BackgroundActivity(), GuestBookContract.View {
 
         mPresenter = GuestBookPresenter(this)
         mPresenter.start()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
+        android.R.id.home -> {
+            onBackPressed()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun initializeActionBar() {
