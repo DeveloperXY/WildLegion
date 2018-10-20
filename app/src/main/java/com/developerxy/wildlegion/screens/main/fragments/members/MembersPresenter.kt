@@ -1,28 +1,18 @@
 package com.developerxy.wildlegion.screens.main.fragments.members
 
-import com.developerxy.wildlegion.di.components.DaggerMembersPresenterComponent
-import com.developerxy.wildlegion.di.modules.RetrofitModule
 import com.developerxy.wildlegion.network.WixAPI
 import com.developerxy.wildlegion.network.models.DeleteRequest
 import com.developerxy.wildlegion.screens.main.models.Member
+import com.developerxy.wildlegion.utils.ServiceGenerator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
 class MembersPresenter(var mView: MembersContract.View) : MembersContract.Presenter {
 
-    @Inject
-    lateinit var mWixAPI: WixAPI
+    private var mWixAPI = ServiceGenerator.createService(WixAPI::class.java)
 
-    var membersList: List<Member> = emptyList()
-
-    init {
-        DaggerMembersPresenterComponent.builder()
-                .retrofitModule(RetrofitModule())
-                .build()
-                .inject(this)
-    }
+    private var membersList: List<Member> = emptyList()
 
     override fun start() {
         mView.setupRecyclerView()

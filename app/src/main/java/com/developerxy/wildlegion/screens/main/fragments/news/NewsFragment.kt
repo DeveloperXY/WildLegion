@@ -91,6 +91,8 @@ class NewsFragment : Fragment(), NewsContract.View {
         mShimmerLayout.stopShimmer()
     }
 
+    override fun getContext() = activity!!
+
     override fun showLoadingError(error: Throwable) {
         backgroundText.visibility = VISIBLE
     }

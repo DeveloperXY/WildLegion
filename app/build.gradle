@@ -94,8 +94,6 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$room_version"
     kapt "android.arch.persistence.room:compiler:$room_version"
 
-    implementation "com.google.dagger:dagger:$daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.20.0'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'

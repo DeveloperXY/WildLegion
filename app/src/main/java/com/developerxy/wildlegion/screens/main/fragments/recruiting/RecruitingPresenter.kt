@@ -1,24 +1,14 @@
 package com.developerxy.wildlegion.screens.main.fragments.recruiting
 
-import com.developerxy.wildlegion.di.components.DaggerRecruitingPresenterComponent
-import com.developerxy.wildlegion.di.modules.RetrofitModule
 import com.developerxy.wildlegion.network.WixAPI
+import com.developerxy.wildlegion.utils.ServiceGenerator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
 class RecruitingPresenter(var mView: RecruitingContract.View) : RecruitingContract.Presenter {
 
-    @Inject
-    lateinit var mWixAPI: WixAPI
-
-    init {
-        DaggerRecruitingPresenterComponent.builder()
-                .retrofitModule(RetrofitModule())
-                .build()
-                .inject(this)
-    }
+    private var mWixAPI = ServiceGenerator.createService(WixAPI::class.java)
 
     override fun start() {
         mView.setListenerOnGuestBookButton()

@@ -1,8 +1,6 @@
 package com.developerxy.wildlegion.screens.addeditstory
 
 import android.content.Intent
-import com.developerxy.wildlegion.di.components.DaggerAddEditNewsStoryPresenterComponent
-import com.developerxy.wildlegion.di.modules.RetrofitModule
 import com.developerxy.wildlegion.network.WixAPI
 import com.developerxy.wildlegion.network.models.DeleteRequest
 import com.developerxy.wildlegion.network.models.EditStoryRequest
@@ -11,7 +9,7 @@ import com.developerxy.wildlegion.screens.main.models.News
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.NEWS_ADDED
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.NEWS_DELETED
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.NEWS_UPDATED
-import com.google.firebase.auth.FirebaseAuth
+import com.developerxy.wildlegion.utils.ServiceGenerator
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -20,26 +18,15 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 class AddEditNewsStoryPresenter(var mView: AddEditNewsStoryContract.View) : AddEditNewsStoryContract.Presenter {
 
-    @Inject
-    lateinit var mWixAPI: WixAPI
-    @Inject
-    lateinit var mFirebaseAuth: FirebaseAuth
+    private var mWixAPI = ServiceGenerator.createService(WixAPI::class.java)
 
     private var currentMemberPosition = -1
     private var isProcessing = false
     private var isEditing = false
     private var currentNews: News? = null
-
-    init {
-        DaggerAddEditNewsStoryPresenterComponent.builder()
-                .retrofitModule(RetrofitModule())
-                .build()
-                .inject(this)
-    }
 
     override fun start() {
         mView.initializeActionBar()

@@ -1,8 +1,6 @@
 package com.developerxy.wildlegion.screens.addeditmember
 
 import android.content.Intent
-import com.developerxy.wildlegion.di.components.DaggerAddEditClanMemberPresenterComponent
-import com.developerxy.wildlegion.di.modules.RetrofitModule
 import com.developerxy.wildlegion.network.WixAPI
 import com.developerxy.wildlegion.network.models.DeleteRequest
 import com.developerxy.wildlegion.network.models.EditClanMemberRequest
@@ -11,6 +9,7 @@ import com.developerxy.wildlegion.screens.main.models.Member
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_ADDED
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_DELETED
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_UPDATED
+import com.developerxy.wildlegion.utils.ServiceGenerator
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -19,23 +18,14 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : AddEditClanMemberContract.Presenter {
 
-    @Inject
-    lateinit var mWixAPI: WixAPI
+    private var mWixAPI = ServiceGenerator.createService(WixAPI::class.java)
     private var isProcessing = false
     private var isEditing = false
     private var currentMemberPosition = -1
     private var currentMember: Member? = null
-
-    init {
-        DaggerAddEditClanMemberPresenterComponent.builder()
-                .retrofitModule(RetrofitModule())
-                .build()
-                .inject(this)
-    }
 
     override fun start() {
         mView.initializeActionBar()

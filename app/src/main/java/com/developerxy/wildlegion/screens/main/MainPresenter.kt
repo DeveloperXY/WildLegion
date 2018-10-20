@@ -1,26 +1,13 @@
 package com.developerxy.wildlegion.screens.main
 
 import android.widget.Toast
-import com.developerxy.wildlegion.ApplicationModule
 import com.developerxy.wildlegion.data.UserRepository
-import com.developerxy.wildlegion.data.di.DaggerUserRepositoryComponent
-import com.developerxy.wildlegion.data.di.DatabaseModule
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-class MainPresenter(var mView: MainContract.View): MainContract.Presenter {
+class MainPresenter(var mView: MainContract.View) : MainContract.Presenter {
 
-    @Inject
-    lateinit var mUserRepository: UserRepository
-
-    init {
-        DaggerUserRepositoryComponent.builder()
-                .applicationModule(ApplicationModule(mView.getApplication()))
-                .databaseModule(DatabaseModule())
-                .build()
-                .inject(this)
-    }
+    private var mUserRepository = UserRepository.getInstance(mView.getContext())
 
     override fun start() {
         mView.displayWlLogo()

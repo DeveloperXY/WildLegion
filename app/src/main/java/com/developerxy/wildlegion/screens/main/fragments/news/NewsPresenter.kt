@@ -1,40 +1,19 @@
 package com.developerxy.wildlegion.screens.main.fragments.news
 
-import com.developerxy.wildlegion.ApplicationModule
 import com.developerxy.wildlegion.data.UserRepository
-import com.developerxy.wildlegion.data.di.DaggerUserRepositoryComponent
-import com.developerxy.wildlegion.data.di.DatabaseModule
-import com.developerxy.wildlegion.di.components.DaggerNewsPresenterComponent
-import com.developerxy.wildlegion.di.modules.RetrofitModule
 import com.developerxy.wildlegion.network.WixAPI
 import com.developerxy.wildlegion.screens.main.models.News
+import com.developerxy.wildlegion.utils.ServiceGenerator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
 class NewsPresenter(var mView: NewsContract.View) : NewsContract.Presenter {
 
     private var newsList: List<News> = emptyList()
 
-    @Inject
-    lateinit var mWixAPI: WixAPI
-
-    @Inject
-    lateinit var mUserRepository: UserRepository
-
-    init {
-        DaggerUserRepositoryComponent.builder()
-                .applicationModule(ApplicationModule(mView.getApplication()))
-                .databaseModule(DatabaseModule())
-                .build()
-                .inject(this)
-
-        DaggerNewsPresenterComponent.builder()
-                .retrofitModule(RetrofitModule())
-                .build()
-                .inject(this)
-    }
+    private var mWixAPI = ServiceGenerator.createService(WixAPI::class.java)
+    private var mUserRepository = UserRepository.getInstance(mView.getContext())
 
     override fun start() {
         mView.setupRecyclerView()
