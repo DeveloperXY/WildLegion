@@ -3,6 +3,7 @@ package com.developerxy.wildlegion.screens.main
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -174,44 +175,6 @@ class MainActivity : BackgroundActivity(), MainContract.View {
         mViewPager.adapter = mPagerAdapter
         mTabLayout.setupWithViewPager(mViewPager)
         mViewPager.offscreenPageLimit = 6
-        mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-
-            var lastPosition = 0
-
-            override fun onPageScrollStateChanged(state: Int) {
-                when (state) {
-                    SCROLL_STATE_DRAGGING -> mFab.hide()
-                    SCROLL_STATE_IDLE -> {
-                        when (lastPosition) {
-                            0 -> showFabWithIcon(R.drawable.ic_create_post)
-                            1 -> showFabWithIcon(R.drawable.baseline_add_24)
-                            else -> hideFab()
-                        }
-                    }
-                }
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                if (positionOffset != 0f && positionOffset != 1f) {
-                    if (mFab.visibility == VISIBLE)
-                        hideFab()
-                }
-            }
-
-            override fun onPageSelected(position: Int) {
-                lastPosition = position
-                invalidateOptionsMenu()
-                if (position == 3) {
-                    val aboutClanFragment = mPagerAdapter.instantiateItem(mViewPager, 3) as AboutClanFragment
-                    aboutClanFragment.initializeYoutubePlayer()
-                }
-            }
-
-            private fun showFabWithIcon(@DrawableRes fabIcon: Int) {
-                mFab.setImageResource(fabIcon)
-                mFab.show()
-            }
-        })
 
         for (index in 1..mTabLayout.tabCount) {
             val textView = LayoutInflater.from(this).inflate(R.layout.single_tab_layout, null) as TextView
@@ -317,5 +280,56 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                 mToolbar.startAnimation(animationSet)
             }
         }
+    }
+
+    override fun getContext() = this
+
+    override fun clearViewPagerChangeListeners() {
+        mViewPager.clearOnPageChangeListeners()
+    }
+
+    override fun addViewPagerChangeListener() {
+        mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+            var lastPosition = 0
+
+            override fun onPageScrollStateChanged(state: Int) {
+                mPresenter.doIfLoggedIn {
+                    when (state) {
+                        SCROLL_STATE_DRAGGING -> mFab.hide()
+                        SCROLL_STATE_IDLE -> {
+                            when (lastPosition) {
+                                0 -> showFabWithIcon(R.drawable.ic_create_post)
+                                1 -> showFabWithIcon(R.drawable.baseline_add_24)
+                                else -> hideFab()
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                mPresenter.doIfLoggedIn {
+                    if (positionOffset != 0f && positionOffset != 1f) {
+                        if (mFab.visibility == VISIBLE)
+                            hideFab()
+                    }
+                }
+            }
+
+            override fun onPageSelected(position: Int) {
+                lastPosition = position
+                invalidateOptionsMenu()
+                if (position == 3) {
+                    val aboutClanFragment = mPagerAdapter.instantiateItem(mViewPager, 3) as AboutClanFragment
+                    aboutClanFragment.initializeYoutubePlayer()
+                }
+            }
+
+            private fun showFabWithIcon(@DrawableRes fabIcon: Int) {
+                mFab.setImageResource(fabIcon)
+                mFab.show()
+            }
+        })
     }
 }

@@ -1,5 +1,6 @@
 package com.developerxy.wildlegion.screens.main.fragments.news
 
+import android.app.Application
 import com.developerxy.wildlegion.BasePresenter
 import com.developerxy.wildlegion.screens.main.models.News
 
@@ -14,6 +15,7 @@ interface NewsContract {
         fun showMemberRemovalFailedError()
         fun showShimmer()
         fun stopShimmer()
+        fun getApplication(): Application
     }
 
     interface Presenter : BasePresenter {

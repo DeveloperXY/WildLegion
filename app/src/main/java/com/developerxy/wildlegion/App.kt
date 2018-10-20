@@ -5,10 +5,16 @@ import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatDelegate
+import com.developerxy.wildlegion.data.UserRepository
+import com.developerxy.wildlegion.data.di.DaggerUserRepositoryComponent
+import com.developerxy.wildlegion.data.di.DatabaseModule
+import javax.inject.Inject
 
 
 class App : Application(), LifeCycleDelegate {
 
+    @Inject
+    lateinit var mUserRepository: UserRepository
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var mSharedPrefListener: SharedPreferences.OnSharedPreferenceChangeListener
@@ -16,6 +22,12 @@ class App : Application(), LifeCycleDelegate {
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
+        DaggerUserRepositoryComponent.builder()
+                .applicationModule(ApplicationModule(this))
+                .databaseModule(DatabaseModule())
+                .build()
+                .inject(this)
 
         val lifeCycleHandler = AppLifecycleHandler(this)
         registerLifecycleHandler(lifeCycleHandler)
@@ -66,4 +78,6 @@ class App : Application(), LifeCycleDelegate {
         if (isBackgroundMusicPlaying())
             mediaPlayer.pause()
     }
+
+    fun isUserLoggedIn() = mUserRepository.isUserLoggedIn()
 }

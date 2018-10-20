@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_news.*
 
 
 class NewsFragment : Fragment(), NewsContract.View {
+    override fun getApplication() = activity?.application!!
 
     lateinit var mPresenter: NewsPresenter
     lateinit var mNewsAdapter: NewsAdapter
@@ -46,7 +47,9 @@ class NewsFragment : Fragment(), NewsContract.View {
         mNewsAdapter = NewsAdapter(context!!, mutableListOf())
         mNewsAdapter.setHasStableIds(true)
         mNewsAdapter.onNewsSelected = { position, selectedNews, sharedViews ->
-            newsFragmentDelegate?.onNewsSelected(position, selectedNews, sharedViews)
+            mPresenter.doIfLoggedIn {
+                newsFragmentDelegate?.onNewsSelected(position, selectedNews, sharedViews)
+            }
         }
         membersRecyclerview.layoutManager = NpaLinearLayoutManager(context!!)
         membersRecyclerview.addItemDecoration(SpacesItemDecoration(dpToPx(8)))
