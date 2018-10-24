@@ -21,7 +21,7 @@ interface LoginContract {
         fun showLoginButton()
         fun hideLoginButton()
         fun isLoginOngoing(): Boolean
-        fun finish()
+        fun finish(nickname: String)
     }
 
     interface Presenter : BasePresenter {

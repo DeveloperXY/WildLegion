@@ -1,7 +1,9 @@
 package com.developerxy.wildlegion.screens.login
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.support.v7.app.AppCompatActivity
 import android.text.method.PasswordTransformationMethod
 import android.view.View.GONE
@@ -56,6 +58,13 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
                     email = emailField.text.toString(),
                     password = passwordField.text.toString())
         }
+    }
+
+    override fun finish(nickname: String) {
+        val data = Intent()
+        data.putExtra("nickname", nickname)
+        setResult(RESULT_OK, data)
+        super.finish()
     }
 
     override fun hideProgressBar() {

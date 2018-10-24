@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.DrawableRes
 import android.support.annotation.RequiresApi
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v4.view.ViewPager
@@ -62,6 +63,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
         const val REQUEST_EDIT_CLAN_MEMBER = 101
         const val REQUEST_ADD_NEWS_STORY = 102
         const val REQUEST_EDIT_NEWS_STORY = 103
+        const val REQUEST_LOGIN_ONGOING = 104
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -168,7 +170,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                     ifLoggedOut = {
                         val intent = Intent(this, LoginActivity::class.java)
                         intent.putExtra("ongoing", true)
-                        startActivity(intent)
+                        startActivityForResult(intent, REQUEST_LOGIN_ONGOING)
                     }
             )
             true
@@ -199,6 +201,18 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                             Log.i("IMPORTANT", "#$deletedPosition")
                             newsFragment.removeNews(deletedPosition)
                         }
+                    }
+                }
+            }
+            REQUEST_LOGIN_ONGOING -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        val snackbar = Snackbar.make(window.decorView.findViewById(android.R.id.content),
+                                "Logged in as ${data?.getStringExtra("nickname")}.",
+                                Snackbar.LENGTH_LONG)
+                        snackbar.setAction("Hide") {
+                            snackbar.dismiss()
+                        }.show()
                     }
                 }
             }

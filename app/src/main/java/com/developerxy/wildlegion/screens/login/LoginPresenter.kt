@@ -59,7 +59,7 @@ class LoginPresenter(var mView: LoginContract.View,
                                                         onComplete = {
                                                             mView.hideProgressBar()
                                                             if (mView.isLoginOngoing())
-                                                                mView.finish()
+                                                                mView.finish(nickname)
                                                             else
                                                                 mView.openMainActivity()
                                                         }
