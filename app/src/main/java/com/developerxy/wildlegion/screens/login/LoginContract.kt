@@ -1,9 +1,10 @@
 package com.developerxy.wildlegion.screens.login
 
 import com.developerxy.wildlegion.BasePresenter
+import com.developerxy.wildlegion.BaseView
 
 interface LoginContract {
-    interface View {
+    interface View : BaseView {
         fun displayWlLogo()
         fun displayShcBackground()
         fun setListenerOnLoginButton()
@@ -19,6 +20,8 @@ interface LoginContract {
         fun hidePassword()
         fun showLoginButton()
         fun hideLoginButton()
+        fun isLoginOngoing(): Boolean
+        fun finish()
     }
 
     interface Presenter : BasePresenter {

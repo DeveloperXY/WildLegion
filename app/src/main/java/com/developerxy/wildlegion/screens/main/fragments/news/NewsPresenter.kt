@@ -15,6 +15,8 @@ class NewsPresenter(var mView: NewsContract.View) : NewsContract.Presenter {
     private var mWixAPI = ServiceGenerator.createService(WixAPI::class.java)
     private var mUserRepository = UserRepository.getInstance(mView.getContext())
 
+    override fun getUserRepository() = mUserRepository
+
     override fun start() {
         mView.setupRecyclerView()
         loadNews()
@@ -41,15 +43,4 @@ class NewsPresenter(var mView: NewsContract.View) : NewsContract.Presenter {
     }
 
     override fun showAllNews() = mView.showNews(newsList)
-
-    override fun doIfLoggedIn(action: () -> Unit) {
-        mUserRepository.isUserLoggedIn()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { status ->
-                    if (status) {
-                        action()
-                    }
-                }
-    }
 }

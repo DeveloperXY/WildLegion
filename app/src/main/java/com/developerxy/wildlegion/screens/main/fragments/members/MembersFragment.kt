@@ -43,6 +43,8 @@ class MembersFragment : Fragment(), MembersContract.View {
         }
     }
 
+    override fun getContext() = activity!!
+
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
 
@@ -55,7 +57,9 @@ class MembersFragment : Fragment(), MembersContract.View {
     override fun setupRecyclerView() {
         mMembersAdapter = MembersAdapter(context!!, mutableListOf())
         mMembersAdapter.onMemberSelected = { position, selectedMember, sharedViews ->
-            membersFragmentDelegate?.onMemberSelected(position, selectedMember, sharedViews)
+            mPresenter.doIfLoggedIn {
+                membersFragmentDelegate?.onMemberSelected(position, selectedMember, sharedViews)
+            }
         }
         membersRecyclerview.layoutManager = LinearLayoutManager(activity)
         membersRecyclerview.addItemDecoration(SpacesItemDecoration(dpToPx(8)))

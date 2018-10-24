@@ -1,5 +1,6 @@
 package com.developerxy.wildlegion.screens.main.fragments.members
 
+import com.developerxy.wildlegion.data.UserRepository
 import com.developerxy.wildlegion.network.WixAPI
 import com.developerxy.wildlegion.network.models.DeleteRequest
 import com.developerxy.wildlegion.screens.main.models.Member
@@ -13,6 +14,9 @@ class MembersPresenter(var mView: MembersContract.View) : MembersContract.Presen
     private var mWixAPI = ServiceGenerator.createService(WixAPI::class.java)
 
     private var membersList: List<Member> = emptyList()
+    private var mUserRepository = UserRepository.getInstance(mView.getContext())
+
+    override fun getUserRepository() = mUserRepository
 
     override fun start() {
         mView.setupRecyclerView()

@@ -13,4 +13,7 @@ interface UserDao {
 
     @Query("SELECT * FROM users LIMIT 1")
     fun getFirst(): Maybe<User>
+
+    @Query("DELETE FROM users")
+    fun deleteAll()
 }

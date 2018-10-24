@@ -3,7 +3,6 @@ package com.developerxy.wildlegion.screens.main
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -21,12 +20,15 @@ import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.TranslateAnimation
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.developerxy.wildlegion.R
+import com.developerxy.wildlegion.data.UserRepository
 import com.developerxy.wildlegion.screens.BackgroundActivity
 import com.developerxy.wildlegion.screens.addeditmember.AddEditClanMemberActivity
 import com.developerxy.wildlegion.screens.addeditstory.AddEditNewsStoryActivity
+import com.developerxy.wildlegion.screens.login.LoginActivity
 import com.developerxy.wildlegion.screens.main.adapters.MainPagerAdapter
 import com.developerxy.wildlegion.screens.main.fragments.aboutclan.AboutClanFragment
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
@@ -42,6 +44,8 @@ import com.developerxy.wildlegion.utils.ResultCodes.Companion.NEWS_DELETED
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.NEWS_UPDATED
 import com.developerxy.wildlegion.utils.fonts.Typefaces
 import com.developerxy.wildlegion.utils.ifSupportsLollipop
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -50,6 +54,8 @@ class MainActivity : BackgroundActivity(), MainContract.View {
     private lateinit var mPagerAdapter: MainPagerAdapter
     private lateinit var mPresenter: MainPresenter
     private lateinit var mSearchView: SearchView
+    private lateinit var mUserRepository: UserRepository
+    private var mAuthItem: MenuItem? = null
 
     companion object {
         const val REQUEST_ADD_CLAN_MEMBER = 100
@@ -66,6 +72,8 @@ class MainActivity : BackgroundActivity(), MainContract.View {
             window.enterTransition = null
         }
 
+        mUserRepository = UserRepository.getInstance(this)
+
         mPresenter = MainPresenter(this)
         mPresenter.start()
     }
@@ -75,6 +83,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
 
         val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
         val searchViewItem = menu?.findItem(R.id.action_search)
+        mAuthItem = menu?.findItem(R.id.action_auth)!!
         mSearchView = MenuItemCompat.getActionView(searchViewItem) as SearchView
         mSearchView.setOnQueryTextListener(membersFragment)
 
@@ -109,12 +118,59 @@ class MainActivity : BackgroundActivity(), MainContract.View {
             if (searchItem?.isVisible!!)
                 searchItem.isVisible = false
         }
+
+        mPresenter.doIf(
+                ifLoggedIn = {
+                    mAuthItem?.title = "Sign out"
+                },
+                ifLoggedOut = {
+                    mAuthItem?.title = "Sign in"
+                }
+        )
+
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
+    override fun onResume() {
+        super.onResume()
+
+        mPresenter.doIf(
+                ifLoggedIn = {
+                    showFab()
+                    mAuthItem?.title = "Sign out"
+                },
+                ifLoggedOut = {
+                    hideFab()
+                    mAuthItem?.title = "Sign in"
+                }
+        )
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
         R.id.action_settings -> {
             startActivity(Intent(this, SettingsActivity::class.java))
+            true
+        }
+        R.id.action_auth -> {
+            mPresenter.doIf(
+                    ifLoggedIn = {
+                        mUserRepository.removeAll()
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeBy(
+                                        onError = {
+                                            Toast.makeText(this, "Unexpected error.", Toast.LENGTH_LONG).show()
+                                        },
+                                        onComplete = {
+                                            finish()
+                                        }
+                                )
+                    },
+                    ifLoggedOut = {
+                        val intent = Intent(this, LoginActivity::class.java)
+                        intent.putExtra("ongoing", true)
+                        startActivity(intent)
+                    }
+            )
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -124,7 +180,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
         when (requestCode) {
             REQUEST_ADD_CLAN_MEMBER, REQUEST_EDIT_CLAN_MEMBER -> {
                 val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
-                when(resultCode) {
+                when (resultCode) {
                     MEMBER_ADDED, MEMBER_UPDATED -> membersFragment.mPresenter.loadClanMembers()
                     MEMBER_DELETED -> {
                         val deletedPosition = data?.getIntExtra("position", -1)!!
@@ -135,7 +191,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
             }
             REQUEST_ADD_NEWS_STORY, REQUEST_EDIT_NEWS_STORY -> {
                 val newsFragment = mPagerAdapter.instantiateItem(mViewPager, 0) as NewsFragment
-                when(resultCode) {
+                when (resultCode) {
                     NEWS_ADDED, NEWS_UPDATED -> newsFragment.mPresenter.loadNews()
                     NEWS_DELETED -> {
                         val deletedPosition = data?.getIntExtra("position", -1)!!

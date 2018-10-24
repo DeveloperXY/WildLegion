@@ -12,20 +12,29 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.developerxy.wildlegion.R
 import com.developerxy.wildlegion.screens.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     lateinit var mPresenter: LoginPresenter
+    var onGoing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        mPresenter = LoginPresenter(this, FirebaseAuth.getInstance())
+        onGoing = intent.getBooleanExtra("ongoing", false)
+
+        mPresenter = LoginPresenter(this, FirebaseAuth.getInstance(),
+                FirebaseDatabase.getInstance())
         mPresenter.start()
     }
+
+    override fun getContext() = this
+
+    override fun isLoginOngoing() = onGoing
 
     override fun displayWlLogo() {
         Glide.with(this)

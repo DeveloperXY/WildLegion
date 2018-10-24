@@ -2,9 +2,10 @@ package com.developerxy.wildlegion.screens.addeditmember
 
 import android.content.Intent
 import com.developerxy.wildlegion.BasePresenter
+import com.developerxy.wildlegion.BaseView
 
 interface AddEditClanMemberContract {
-    interface View {
+    interface View: BaseView {
         fun initializeActionBar()
         fun setActionbarTitle(title: String)
         fun setupRanksSpinner()

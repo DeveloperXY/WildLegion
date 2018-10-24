@@ -43,6 +43,8 @@ class AboutClanFragment : Fragment(), AboutClanContract.View {
         mProgressbar.indeterminateDrawable = progressDrawable
     }
 
+    override fun getContext() = activity!!
+
     private fun setBodyText() {
         mRedSection.text = getString(R.string.about_clan_part_1)
         mRedSection.append("\n\n")

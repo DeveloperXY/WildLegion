@@ -4,6 +4,8 @@ import android.content.Context
 import com.developerxy.wildlegion.data.database.UserDao
 import com.developerxy.wildlegion.data.database.UserDatabase
 import com.developerxy.wildlegion.data.models.User
+import io.reactivex.Completable
+import io.reactivex.schedulers.Schedulers
 
 class UserRepository private constructor(var userDao: UserDao) : UserDataSource {
 
@@ -21,11 +23,15 @@ class UserRepository private constructor(var userDao: UserDao) : UserDataSource 
                 UserDatabase.getInstance(context).userDao())
     }
 
-    override fun insert(user: User) {
+    override fun insert(user: User) = Completable.fromAction {
         userDao.insert(user)
-    }
+    }.subscribeOn(Schedulers.io())
 
     override fun getFirst() = userDao.getFirst()
+
+    override fun removeAll() = Completable.fromAction {
+        userDao.deleteAll()
+    }.subscribeOn(Schedulers.io())
 
     fun isUserLoggedIn() = getFirst().isEmpty.map { !it }
 }

@@ -1,6 +1,7 @@
 package com.developerxy.wildlegion.screens.addeditmember
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -44,6 +45,8 @@ class AddEditClanMemberActivity : CrudActivity(), AddEditClanMemberContract.View
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         rankSpinner.adapter = spinnerAdapter
     }
+
+    override fun getContext() = this
 
     override fun getBottomSheetMessage() = "Are you sure that you want to remove this member from the clan ?"
 

@@ -1,6 +1,5 @@
 package com.developerxy.wildlegion.screens.main
 
-import android.app.Application
 import android.content.Context
 import com.developerxy.wildlegion.BasePresenter
 import com.developerxy.wildlegion.screens.main.fragments.members.MembersFragment
@@ -15,12 +14,10 @@ interface MainContract {
         fun setFabClickListener()
         fun showFab()
         fun hideFab()
-        fun getApplication(): Application
         fun getContext(): Context
         fun addViewPagerChangeListener()
         fun clearViewPagerChangeListeners()
     }
 
-    interface Presenter : BasePresenter {
-    }
+    interface Presenter : BasePresenter
 }

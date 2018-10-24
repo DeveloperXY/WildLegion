@@ -9,6 +9,8 @@ class MainPresenter(var mView: MainContract.View) : MainContract.Presenter {
 
     private var mUserRepository = UserRepository.getInstance(mView.getContext())
 
+    override fun getUserRepository() = mUserRepository
+
     override fun start() {
         mView.displayWlLogo()
         mView.initializeActionBar()
@@ -25,17 +27,6 @@ class MainPresenter(var mView: MainContract.View) : MainContract.Presenter {
                         mView.showFab()
                     } else {
                         Toast.makeText(mView.getContext(), "LOGIN FAILURE", Toast.LENGTH_LONG).show()
-                    }
-                }
-    }
-
-    override fun doIfLoggedIn(action: () -> Unit) {
-        mUserRepository.isUserLoggedIn()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { status ->
-                    if (status) {
-                        action()
                     }
                 }
     }

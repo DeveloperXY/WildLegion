@@ -34,6 +34,8 @@ class AddEditNewsStoryActivity : CrudActivity(), AddEditNewsStoryContract.View {
         supportActionBar?.title = title
     }
 
+    override fun getContext() = this
+
     override fun getBottomSheetMessage() = "Are you sure that you want to remove this post from the news feed ?"
 
     override fun onDeleteConfirmed() {
