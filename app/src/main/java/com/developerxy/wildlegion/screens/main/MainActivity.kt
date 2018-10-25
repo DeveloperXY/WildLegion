@@ -183,7 +183,24 @@ class MainActivity : BackgroundActivity(), MainContract.View {
             REQUEST_ADD_CLAN_MEMBER, REQUEST_EDIT_CLAN_MEMBER -> {
                 val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
                 when (resultCode) {
-                    MEMBER_ADDED, MEMBER_UPDATED -> membersFragment.mPresenter.loadClanMembers()
+                    MEMBER_ADDED -> {
+                        val snackbar = Snackbar.make(window.decorView.findViewById(android.R.id.content),
+                                "Would you like to publish a news story about this recruitment ?",
+                                Snackbar.LENGTH_LONG)
+                        snackbar.setAction("YES") {
+                            val i = Intent(this, AddEditNewsStoryActivity::class.java)
+                            i.putExtra("nickname", data?.getStringExtra("nickname"))
+                            i.putExtra("gamerangerId", data?.getStringExtra("gamerangerId"))
+                            i.putExtra("rank", data?.getStringExtra("rank"))
+                            // this process is chained to a member addition operation
+                            i.putExtra("chained", true)
+                            startActivityForResult(i, REQUEST_ADD_NEWS_STORY)
+                        }.show()
+                        membersFragment.mPresenter.loadClanMembers()
+                    }
+                    MEMBER_UPDATED -> {
+                        membersFragment.mPresenter.loadClanMembers()
+                    }
                     MEMBER_DELETED -> {
                         val deletedPosition = data?.getIntExtra("position", -1)!!
                         if (deletedPosition != -1)

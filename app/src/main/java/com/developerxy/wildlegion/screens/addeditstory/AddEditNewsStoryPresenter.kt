@@ -17,6 +17,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class AddEditNewsStoryPresenter(var mView: AddEditNewsStoryContract.View) : AddEditNewsStoryContract.Presenter {
@@ -45,6 +47,26 @@ class AddEditNewsStoryPresenter(var mView: AddEditNewsStoryContract.View) : AddE
             mView.setNewsStory(currentNews?.newsStory!!)
         } else {
             mView.setActionbarTitle("Create a new post")
+            val chained = intent.getBooleanExtra("chained", false)
+            if (chained) {
+                val rank = intent.getStringExtra("rank")
+                val gamerangerId = intent.getStringExtra("gamerangerId")
+                val nickname = intent.getStringExtra("nickname")
+
+                mView.setTitle("New " +
+                        when (rank) {
+                            "A" -> "academy"
+                            "M" -> "medium"
+                            else -> "expert"
+                        } + " player")
+                mView.setPostDate(SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()))
+                mView.setNewsStory("$nickname (ID $gamerangerId) joined WL as " +
+                        when (rank) {
+                            "A" -> "an academy member"
+                            "M" -> "a medium member"
+                            else -> "an expert"
+                        } + ". Welcome !")
+            }
         }
     }
 

@@ -16,7 +16,7 @@ ext {
     supportVersion = '27.1.1'
     versionMajor = 0
     versionMinor = 3
-    versionPatch = 0
+    versionPatch = 1
     versionClassifier = null
     isSnapshot = false
     minimumSdkVersion = 19

@@ -6,6 +6,7 @@ import com.developerxy.wildlegion.network.models.DeleteRequest
 import com.developerxy.wildlegion.network.models.EditClanMemberRequest
 import com.developerxy.wildlegion.network.models.NewClanMemberRequest
 import com.developerxy.wildlegion.screens.main.models.Member
+import com.developerxy.wildlegion.utils.ResultCodes
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_ADDED
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_DELETED
 import com.developerxy.wildlegion.utils.ResultCodes.Companion.MEMBER_UPDATED
@@ -110,8 +111,13 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
                 }
                 .subscribeBy(
                         onComplete = {
-                            handleProcessingCompletion("${request.nickname} was successfully added to the clan.",
-                                    MEMBER_ADDED)
+                            val data = Intent()
+                            data.putExtra("nickname", request.nickname)
+                            data.putExtra("gamerangerId", request.gamerangerId)
+                            data.putExtra("rank", request.rank)
+                            handleProcessingCompletion(
+                                    "${request.nickname} was successfully added to the clan.",
+                                    MEMBER_ADDED, data)
                         },
                         onError = this::handleProcessingError
                 )
