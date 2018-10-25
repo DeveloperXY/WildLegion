@@ -184,7 +184,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                 val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
                 when (resultCode) {
                     MEMBER_ADDED -> {
-                        val snackbar = Snackbar.make(window.decorView.findViewById(android.R.id.content),
+                        val snackbar = Snackbar.make(mFab,
                                 "Would you like to publish a news story about this recruitment ?",
                                 Snackbar.LENGTH_LONG)
                         snackbar.setAction("YES") {
@@ -224,7 +224,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
             REQUEST_LOGIN_ONGOING -> {
                 when (resultCode) {
                     RESULT_OK -> {
-                        val snackbar = Snackbar.make(window.decorView.findViewById(android.R.id.content),
+                        val snackbar = Snackbar.make(mFab,
                                 "Logged in as ${data?.getStringExtra("nickname")}.",
                                 Snackbar.LENGTH_LONG)
                         snackbar.setAction("Hide") {

@@ -30,6 +30,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:textColor="@color/field_text_color"
             android:textSize="24sp"
             app:customFont="roboto"
