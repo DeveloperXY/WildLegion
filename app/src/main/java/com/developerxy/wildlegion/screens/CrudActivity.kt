@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_dialog.view.*
 abstract class CrudActivity : BackgroundActivity() {
 
     private lateinit var mBottomSheetDialog: BottomSheetDialog
+    private var deleteItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?, layout: Int) {
         super.onCreate(savedInstanceState, layout)
@@ -18,6 +19,11 @@ abstract class CrudActivity : BackgroundActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.crud_menu, menu)
+        deleteItem = menu?.findItem(R.id.action_delete)
+
+        val isEditing = intent.getBooleanExtra("isEditing", false)
+        if (!isEditing)
+            hideDeleteMenuItem()
         return true
     }
 
@@ -50,6 +56,10 @@ abstract class CrudActivity : BackgroundActivity() {
 
     private fun onDeleteMenuItemPressed() {
         mBottomSheetDialog.show()
+    }
+
+    fun hideDeleteMenuItem() {
+        deleteItem?.isVisible = false
     }
 
     abstract fun getBottomSheetMessage(): String
