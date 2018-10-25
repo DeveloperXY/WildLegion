@@ -1,6 +1,7 @@
 package com.developerxy.wildlegion.screens.addeditstory
 
 import android.content.Intent
+import com.developerxy.wildlegion.data.UserRepository
 import com.developerxy.wildlegion.network.WixAPI
 import com.developerxy.wildlegion.network.models.DeleteRequest
 import com.developerxy.wildlegion.network.models.EditStoryRequest
@@ -24,6 +25,9 @@ import java.util.concurrent.TimeUnit
 class AddEditNewsStoryPresenter(var mView: AddEditNewsStoryContract.View) : AddEditNewsStoryContract.Presenter {
 
     private var mWixAPI = ServiceGenerator.createService(WixAPI::class.java)
+    private var mUserRepository = UserRepository.getInstance(mView.getContext())
+
+    override fun getUserRepository() = mUserRepository
 
     private var currentMemberPosition = -1
     private var isProcessing = false
@@ -98,8 +102,12 @@ class AddEditNewsStoryPresenter(var mView: AddEditNewsStoryContract.View) : AddE
             val request = EditStoryRequest(currentNews!!)
             editStory(request)
         } else {
-            val request = NewStoryRequest(title, date, newsStory)
-            addNewStory(request)
+            mUserRepository.getCurrentUser()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        val request = NewStoryRequest(title, date, newsStory, it.nickname)
+                        addNewStory(request)
+                    }
         }
     }
 

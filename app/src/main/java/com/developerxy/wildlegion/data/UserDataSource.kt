@@ -7,7 +7,7 @@ import io.reactivex.Maybe
 interface UserDataSource {
     fun insert(user: User): Completable
 
-    fun getFirst(): Maybe<User>
+    fun getCurrentUser(): Maybe<User>
 
     fun removeAll(): Completable
 }
