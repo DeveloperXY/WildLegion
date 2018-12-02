@@ -2,7 +2,7 @@
     <PreferenceCategory
         android:key="@string/pref_key_media_settings"
         android:title="Media">
-        <com.developerxy.wildlegion.customviews.MySwitchPreference
+        <com.mystical.wildlegion.customviews.MySwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_play_music"
             android:summaryOff="Music playback is disabled"

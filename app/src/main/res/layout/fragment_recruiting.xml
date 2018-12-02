@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        <com.mystical.wildlegion.customviews.FontEnabledTextView
             android:id="@+id/mErrorLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible">
 
-            <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            <com.mystical.wildlegion.customviews.FontEnabledTextView
                 android:id="@+id/mRecruitmentOpenTextArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
 
         </android.support.v4.widget.NestedScrollView>
 
-        <com.developerxy.wildlegion.customviews.FontEnabledButton
+        <com.mystical.wildlegion.customviews.FontEnabledButton
             android:id="@+id/openGuestBookBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

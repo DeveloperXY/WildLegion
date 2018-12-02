@@ -40,7 +40,7 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        <com.mystical.wildlegion.customviews.FontEnabledTextView
             android:id="@+id/statsHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,5 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.developerxy.wildlegion.customviews.MyPreferenceCategory
+    <com.mystical.wildlegion.customviews.MyPreferenceCategory
         android:key="@string/pref_key_media_settings"
         android:title="Media">
         <CheckBoxPreference
@@ -9,5 +9,5 @@
             android:summaryOff="Music playback is disabled"
             android:summaryOn="Music playback is enabled"
             android:title="Playground music" />
-    </com.developerxy.wildlegion.customviews.MyPreferenceCategory>
+    </com.mystical.wildlegion.customviews.MyPreferenceCategory>
 </PreferenceScreen>

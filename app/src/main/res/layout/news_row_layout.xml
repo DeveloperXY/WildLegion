@@ -13,7 +13,7 @@
         android:background="#212121"
         android:padding="16dp">
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        <com.mystical.wildlegion.customviews.FontEnabledTextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        <com.mystical.wildlegion.customviews.FontEnabledTextView
             android:id="@+id/tvDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        <com.mystical.wildlegion.customviews.FontEnabledTextView
             android:id="@+id/tvStoryNews"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvDate" />
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        <com.mystical.wildlegion.customviews.FontEnabledTextView
             android:id="@+id/tvPostedBy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

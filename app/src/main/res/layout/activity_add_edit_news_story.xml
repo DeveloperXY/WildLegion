@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true">
 
-                <com.developerxy.wildlegion.customviews.FontEnabledTextView
+                <com.mystical.wildlegion.customviews.FontEnabledTextView
                     android:id="@+id/tv_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.developerxy.wildlegion.customviews.FontEnabledEditText
+                <com.mystical.wildlegion.customviews.FontEnabledEditText
                     android:id="@+id/titleField"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-                <com.developerxy.wildlegion.customviews.FontEnabledTextView
+                <com.mystical.wildlegion.customviews.FontEnabledTextView
                     android:id="@+id/tv_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/titleField" />
 
-                <com.developerxy.wildlegion.customviews.FontEnabledEditText
+                <com.mystical.wildlegion.customviews.FontEnabledEditText
                     android:id="@+id/dateField"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_date" />
 
-                <com.developerxy.wildlegion.customviews.FontEnabledTextView
+                <com.mystical.wildlegion.customviews.FontEnabledTextView
                     android:id="@+id/tv_news_story"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dateField" />
 
-                <com.developerxy.wildlegion.customviews.FontEnabledEditText
+                <com.mystical.wildlegion.customviews.FontEnabledEditText
                     android:id="@+id/newsStoryField"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
 
         </ScrollView>
 
-        <com.developerxy.wildlegion.customviews.FontEnabledButton
+        <com.mystical.wildlegion.customviews.FontEnabledButton
             android:id="@+id/saveButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.developerxy.wildlegion.customviews.FullscreenLoadingView
+        <com.mystical.wildlegion.customviews.FullscreenLoadingView
             android:id="@+id/fullscreenLoadingView"
             android:layout_width="0dp"
             android:layout_height="0dp"

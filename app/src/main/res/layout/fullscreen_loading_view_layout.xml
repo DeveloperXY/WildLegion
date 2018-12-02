@@ -25,7 +25,7 @@
             app:layout_constraintRight_toLeftOf="@id/right_guideline"
             app:layout_constraintTop_toBottomOf="@id/top_guideline" />
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        <com.mystical.wildlegion.customviews.FontEnabledTextView
             android:id="@+id/tvStatus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

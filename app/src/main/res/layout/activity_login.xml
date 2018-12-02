@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline_30" />
 
-    <com.developerxy.wildlegion.customviews.FontEnabledEditText
+    <com.mystical.wildlegion.customviews.FontEnabledEditText
         android:id="@+id/emailField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spacer" />
 
-    <com.developerxy.wildlegion.customviews.FontEnabledEditText
+    <com.mystical.wildlegion.customviews.FontEnabledEditText
         android:id="@+id/passwordField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
         app:layout_constraintTop_toTopOf="@id/passwordField"
         app:srcCompat="@drawable/baseline_visibility_off_24" />
 
-    <com.developerxy.wildlegion.customviews.FontEnabledButton
+    <com.mystical.wildlegion.customviews.FontEnabledButton
         android:id="@+id/loginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

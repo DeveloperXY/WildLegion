@@ -27,7 +27,7 @@ layout. -->
         android:layout_marginTop="6dip"
         android:layout_weight="1">
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        <com.mystical.wildlegion.customviews.FontEnabledTextView
             android:id="@+android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@ layout. -->
             android:textColor="@color/field_text_color"
             app:customFont="roboto" />
 
-        <com.developerxy.wildlegion.customviews.FontEnabledTextView
+        <com.mystical.wildlegion.customviews.FontEnabledTextView
             android:id="@+android:id/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

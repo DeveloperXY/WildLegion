@@ -38,7 +38,7 @@
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <com.developerxy.wildlegion.customviews.FontEnabledTextView
+    <com.mystical.wildlegion.customviews.FontEnabledTextView
         android:id="@+id/backgroundText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

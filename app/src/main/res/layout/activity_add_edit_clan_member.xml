@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true">
 
-            <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            <com.mystical.wildlegion.customviews.FontEnabledTextView
                 android:id="@+id/tv_nickname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.developerxy.wildlegion.customviews.FontEnabledEditText
+            <com.mystical.wildlegion.customviews.FontEnabledEditText
                 android:id="@+id/nicknameField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
 
-            <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            <com.mystical.wildlegion.customviews.FontEnabledTextView
                 android:id="@+id/tv_identifier"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nicknameField" />
 
-            <com.developerxy.wildlegion.customviews.FontEnabledEditText
+            <com.mystical.wildlegion.customviews.FontEnabledEditText
                 android:id="@+id/identifierField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_identifier" />
 
-            <com.developerxy.wildlegion.customviews.FontEnabledTextView
+            <com.mystical.wildlegion.customviews.FontEnabledTextView
                 android:id="@+id/tv_rank"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
 
     </ScrollView>
 
-    <com.developerxy.wildlegion.customviews.FontEnabledButton
+    <com.mystical.wildlegion.customviews.FontEnabledButton
         android:id="@+id/saveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.developerxy.wildlegion.customviews.FullscreenLoadingView
+    <com.mystical.wildlegion.customviews.FullscreenLoadingView
         android:id="@+id/fullscreenLoadingView"
         android:layout_width="0dp"
         android:layout_height="0dp"
