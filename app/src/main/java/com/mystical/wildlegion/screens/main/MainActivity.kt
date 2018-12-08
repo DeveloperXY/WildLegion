@@ -138,7 +138,8 @@ class MainActivity : BackgroundActivity(), MainContract.View {
 
         mPresenter.doIf(
                 ifLoggedIn = {
-                    showFab()
+                    if (mViewPager.currentItem == 0 || mViewPager.currentItem == 1)
+                        showFab()
                     mAuthItem?.title = "Sign out"
                 },
                 ifLoggedOut = {
