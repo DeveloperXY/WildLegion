@@ -4,6 +4,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -19,6 +20,8 @@ class LoginPresenterTest {
     @Mock
     lateinit var mFirebaseAuth: FirebaseAuth
     @Mock
+    lateinit var mFirebaseDatabase: FirebaseDatabase
+    @Mock
     lateinit var mFirebaseAuthTask: Task<AuthResult>
     @Captor
     lateinit var loginButtonTextCaptor: ArgumentCaptor<String>
@@ -30,7 +33,7 @@ class LoginPresenterTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        mPresenter = LoginPresenter(mView, mFirebaseAuth)
+        mPresenter = LoginPresenter(mView, mFirebaseAuth, mFirebaseDatabase)
 
         `when`(mFirebaseAuth.signInWithEmailAndPassword(anyString(), anyString()))
                 .thenReturn(mFirebaseAuthTask)

@@ -13,9 +13,9 @@ class MainPresenter(var mView: MainContract.View) : MainContract.Presenter {
         mView.initializeActionBar()
         mView.setupTabLayout()
         mView.addViewPagerChangeListener()
+        mView.setFabClickListener()
 
         doIfLoggedIn {
-            mView.setFabClickListener()
             mView.showFab()
         }
     }
