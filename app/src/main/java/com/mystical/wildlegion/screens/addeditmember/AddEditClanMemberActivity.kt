@@ -32,6 +32,16 @@ class AddEditClanMemberActivity : CrudActivity(), AddEditClanMemberContract.View
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun setActivityCheckboxListener() {
+        activityCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            activityCheckbox.text = if (isChecked) "is active" else "is inactive"
+        }
+    }
+
+    override fun setActivity(state: Boolean) {
+        activityCheckbox.isChecked = state
+    }
+
     override fun setActionbarTitle(title: String) {
         supportActionBar?.title = title
     }
@@ -106,7 +116,8 @@ class AddEditClanMemberActivity : CrudActivity(), AddEditClanMemberContract.View
         val nickname = nicknameField.text.toString()
         val identifier = identifierField.text.toString()
         val rank = rankSpinner.selectedItem.toString().substring(0, 1)
-        mPresenter.saveClanMember(nickname, identifier, rank)
+        val isActive = activityCheckbox.isChecked
+        mPresenter.saveClanMember(nickname, identifier, rank, isActive)
     }
 
     override fun setNickname(nickname: String) {

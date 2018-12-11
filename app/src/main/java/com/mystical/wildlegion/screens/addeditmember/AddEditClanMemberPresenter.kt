@@ -30,6 +30,7 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
     override fun start() {
         mView.initializeActionBar()
         mView.setupRanksSpinner()
+        mView.setActivityCheckboxListener()
     }
 
     override fun start(intent: Intent) {
@@ -49,6 +50,7 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
                 else -> 2
             }
             mView.setRank(selection)
+            mView.setActivity(currentMember?.isActive!!)
         } else {
             mView.setActionbarTitle("Add a new clan member")
         }
@@ -59,7 +61,7 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
             mView.exit()
     }
 
-    override fun saveClanMember(nickname: String, gamerangerId: String, rank: String) {
+    override fun saveClanMember(nickname: String, gamerangerId: String, rank: String, active: Boolean) {
         if (nickname.isEmpty()) {
             mView.showMissingNickname()
             return
@@ -74,10 +76,11 @@ class AddEditClanMemberPresenter(var mView: AddEditClanMemberContract.View) : Ad
             currentMember?.nickname = nickname
             currentMember?.gamerangerId = gamerangerId
             currentMember?.rank = rank.toCharArray()[0]
+            currentMember?.isActive = active
             val request = EditClanMemberRequest(currentMember!!)
             editClanMember(request)
         } else {
-            val request = NewClanMemberRequest(nickname, gamerangerId, rank)
+            val request = NewClanMemberRequest(nickname, gamerangerId, rank, active)
             addNewClanMember(request)
         }
     }

@@ -4,7 +4,11 @@ import com.mystical.wildlegion.data.UserRepository
 import com.mystical.wildlegion.network.WixAPI
 import com.mystical.wildlegion.network.models.DeleteRequest
 import com.mystical.wildlegion.screens.main.models.Member
+import com.mystical.wildlegion.screens.main.models.MemberHeader
+import com.mystical.wildlegion.screens.main.models.MemberItem
 import com.mystical.wildlegion.utils.ServiceGenerator
+import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -29,11 +33,14 @@ class MembersPresenter(var mView: MembersContract.View) : MembersContract.Presen
 
         mWixAPI.getClanMembers()
                 .subscribeOn(Schedulers.computation())
+                .map {
+                    membersList = it
+                    setupCategorizedList(membersList)
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {
                             mView.showMembers(it)
-                            membersList = it
                         },
                         onError = {
                             mView.showMembers(arrayListOf())
@@ -45,12 +52,47 @@ class MembersPresenter(var mView: MembersContract.View) : MembersContract.Presen
     }
 
     override fun onSearchQueryTextChange(newText: String?) {
-        mView.showMembers(membersList.filter {
-            it.nickname.contains(newText!!, ignoreCase = true)
-        })
+        Single.fromCallable {
+            val filtered = membersList.filter {
+                it.nickname.contains(newText!!, ignoreCase = true)
+            }
+            setupCategorizedList(filtered)
+        }.observeOn(AndroidSchedulers.mainThread())
+                .subscribe { list ->
+                    mView.showMembers(list)
+                }
     }
 
-    override fun showAllMembers() = mView.showMembers(membersList)
+    private fun setupCategorizedList(originalList: List<Member>): MutableList<MemberItem> {
+        val list = mutableListOf<MemberItem>()
+        val academy = originalList.filter { it.rank == 'A' && it.isActive }
+        val medium = originalList.filter { it.rank == 'M' && it.isActive }
+        val expert = originalList.filter { it.rank == 'E' && it.isActive }
+        val inactive = originalList.filter { !it.isActive }
+        if (expert.isNotEmpty()) {
+            list.add(MemberHeader("EXPERTS"))
+            list.addAll(expert)
+        }
+        if (medium.isNotEmpty()) {
+            list.add(MemberHeader("MEDIUMS"))
+            list.addAll(medium)
+        }
+        if (academy.isNotEmpty()) {
+            list.add(MemberHeader("ACADEMY"))
+            list.addAll(academy)
+        }
+        if (inactive.isNotEmpty()) {
+            list.add(MemberHeader("INACTIVE"))
+            list.addAll(inactive)
+        }
+
+        return list
+    }
+
+    override fun showAllMembers() {
+        val list = setupCategorizedList(membersList)
+        mView.showMembers(list)
+    }
 
     override fun removeClanMember(member: Member, position: Int) {
         mWixAPI.removeClanMember(DeleteRequest(member._id))

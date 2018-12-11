@@ -23,11 +23,13 @@ interface AddEditClanMemberContract {
         fun setRank(selection: Int)
         fun showSaveButton()
         fun hideSaveButton()
+        fun setActivityCheckboxListener()
+        fun setActivity(state: Boolean)
     }
 
     interface Presenter : BasePresenter {
         fun start(intent: Intent)
-        fun saveClanMember(nickname: String, gamerangerId: String, rank: String)
+        fun saveClanMember(nickname: String, gamerangerId: String, rank: String, active: Boolean)
         fun deleteClanMember()
         fun goBack()
     }

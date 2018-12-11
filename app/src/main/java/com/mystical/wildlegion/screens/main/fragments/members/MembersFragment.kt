@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -13,6 +14,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.mystical.wildlegion.R
 import com.mystical.wildlegion.screens.main.models.Member
+import com.mystical.wildlegion.screens.main.models.MemberHeader
+import com.mystical.wildlegion.screens.main.models.MemberItem
 import com.mystical.wildlegion.utils.SpacesItemDecoration
 import com.mystical.wildlegion.utils.dpToPx
 import kotlinx.android.synthetic.main.fragment_members.*
@@ -55,7 +58,7 @@ class MembersFragment : Fragment(), MembersContract.View {
     }
 
     override fun setupRecyclerView() {
-        mMembersAdapter = MembersAdapter(context!!, mutableListOf())
+        mMembersAdapter = MembersAdapter(context, mutableListOf())
         mMembersAdapter.onMemberSelected = { position, selectedMember, sharedViews ->
             mPresenter.doIfLoggedIn {
                 membersFragmentDelegate?.onMemberSelected(position, selectedMember, sharedViews)
@@ -92,7 +95,7 @@ class MembersFragment : Fragment(), MembersContract.View {
                 Toast.LENGTH_LONG).show()
     }
 
-    override fun showMembers(members: List<Member>) {
+    override fun showMembers(members: MutableList<MemberItem>) {
         mMembersAdapter.animateTo(members)
         membersRecyclerview.scrollToPosition(0)
     }

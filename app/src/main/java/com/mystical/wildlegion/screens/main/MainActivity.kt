@@ -103,6 +103,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
             }
 
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                appbar.setExpanded(false)
                 // Called when SearchView is expanding
                 animateSearchToolbar(1, true, true)
                 return true

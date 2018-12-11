@@ -4,11 +4,12 @@ import android.support.v7.widget.SearchView
 import com.mystical.wildlegion.BasePresenter
 import com.mystical.wildlegion.BaseView
 import com.mystical.wildlegion.screens.main.models.Member
+import com.mystical.wildlegion.screens.main.models.MemberItem
 
 interface MembersContract {
     interface View : BaseView, SearchView.OnQueryTextListener {
         fun setupRecyclerView()
-        fun showMembers(members: List<Member>)
+        fun showMembers(members: MutableList<MemberItem>)
         fun showLoadingError(error: Throwable)
         fun hideLoadingError()
         fun showProgressbar()

@@ -25,4 +25,8 @@
         <attr name="customFont" />
         <attr name="customStyle" />
     </declare-styleable>
+    <declare-styleable name="FontEnabledCheckbox">
+        <attr name="customFont" />
+        <attr name="customStyle" />
+    </declare-styleable>
 </resources>
