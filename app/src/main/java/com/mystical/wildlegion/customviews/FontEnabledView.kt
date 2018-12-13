@@ -23,7 +23,7 @@ interface FontEnabledView {
         try {
             val font = typedArray.getInt(getCustomFont(), -1)
             if (font == 0)
-                setTypeface(Typefaces.getFont(context.assets, "asylum"))
+                setTypeface(Typefaces.getFont(context, "asylum"))
             else {
                 val style = when (typedArray.getInt(getCustomFontStyle(), -1)) {
                     1 -> "Light"
@@ -36,7 +36,7 @@ interface FontEnabledView {
                     4 -> "kellyslab"
                     else -> "roboto"
                 }
-                setTypeface(Typefaces.getFont(context.assets, fontName, style))
+                setTypeface(Typefaces.getFont(context, fontName, style))
             }
 
         } finally {

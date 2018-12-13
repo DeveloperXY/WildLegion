@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/grey_bg_color"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?selectableItemBackground"
-    android:padding="16dp">
+    android:foreground="?selectableItemBackground">
 
     <com.mystical.wildlegion.customviews.FontEnabledTextView
         android:id="@+id/tvGamerangerId"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:text="5621520"
         android:textColor="@android:color/white"
         android:textSize="12sp"
@@ -26,14 +28,31 @@
         android:id="@+id/tvGamerangerNickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:text="MysticaL"
         android:textColor="@color/primaryDarkColor"
         android:textSize="24sp"
-        android:transitionName="gr_nickname_transition"
         app:customFont="roboto"
         app:customStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvGamerangerId" />
+
+    <com.mystical.wildlegion.customviews.FontEnabledTextView
+        android:id="@+id/tvGovernment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/red_rectangle"
+        android:padding="8dp"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:customFont="asylum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="LEADER" />
 
 </android.support.constraint.ConstraintLayout>

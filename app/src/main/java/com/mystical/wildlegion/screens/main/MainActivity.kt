@@ -4,15 +4,20 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.DrawableRes
 import android.support.annotation.RequiresApi
+import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.GravityCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.view.ViewPager.*
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
@@ -48,15 +53,21 @@ import com.mystical.wildlegion.utils.ifSupportsLollipop
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header_items.view.*
 
 
-class MainActivity : BackgroundActivity(), MainContract.View {
+class MainActivity : BackgroundActivity(), MainContract.View,
+        NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mPagerAdapter: MainPagerAdapter
     private lateinit var mPresenter: MainPresenter
     private lateinit var mSearchView: SearchView
     private lateinit var mUserRepository: UserRepository
-    private var mAuthItem: MenuItem? = null
+    private lateinit var mNewsItem: MenuItem
+    private lateinit var mMembersItem: MenuItem
+    private lateinit var mAboutClanItem: MenuItem
+    private lateinit var mRecruitingItem: MenuItem
+    private lateinit var mAuthItem: MenuItem
 
     companion object {
         const val REQUEST_ADD_CLAN_MEMBER = 100
@@ -80,17 +91,56 @@ class MainActivity : BackgroundActivity(), MainContract.View {
         mPresenter.start()
     }
 
+    override fun displayCurrentUsername(username: String) {
+        val header = mNavigationView.getHeaderView(0)
+        header.tvNickname.text = username
+    }
+
+    override fun displayCurrentUserEmail(email: String) {
+        val header = mNavigationView.getHeaderView(0)
+        header.tvEmail.text = email
+    }
+
+    override fun setupNavigationView() {
+        val toggle = ActionBarDrawerToggle(
+                this, mDrawerLayout, mToolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        mDrawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        mNavigationView.setNavigationItemSelectedListener(this)
+        mNewsItem = mNavigationView.menu.findItem(R.id.nav_news)
+        mMembersItem = mNavigationView.menu.findItem(R.id.nav_members)
+        mAboutClanItem = mNavigationView.menu.findItem(R.id.nav_about_clan)
+        mRecruitingItem = mNavigationView.menu.findItem(R.id.nav_recruiting)
+        mAuthItem = mNavigationView.menu.findItem(R.id.nav_sign_out)
+
+        val states = Array(5) { IntArray(1) }
+        states[0][0] = android.R.attr.state_checked
+        states[1][0] = android.R.attr.state_enabled
+        states[2][0] = android.R.attr.state_pressed
+        states[3][0] = android.R.attr.state_focused
+        states[4][0] = android.R.attr.state_pressed
+        val colors = IntArray(5)
+        colors[0] = Color.parseColor("#ffffff")
+        colors[1] = Color.parseColor(getString(R.color.primaryDarkColor))
+        colors[2] = Color.parseColor("#ffffff")
+        colors[3] = Color.parseColor("#ffffff")
+        colors[4] = Color.parseColor("#ffffff")
+        val navMenuTextList = ColorStateList(states, colors)
+        mNavigationView.itemTextColor = navMenuTextList
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
 
         val membersFragment = mPagerAdapter.instantiateItem(mViewPager, 1) as MembersFragment
         val searchViewItem = menu?.findItem(R.id.action_search)
-        mAuthItem = menu?.findItem(R.id.action_auth)!!
         mSearchView = MenuItemCompat.getActionView(searchViewItem) as SearchView
         mSearchView.setOnQueryTextListener(membersFragment)
 
         val searchBox = mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as TextView
-        searchBox.typeface = Typefaces.getFont(assets, "Light")
+        searchBox.typeface = Typefaces.getFont(this, "Light")
         searchBox.setTextColor(resources.getColor(R.color.field_text_color))
 
         MenuItemCompat.setOnActionExpandListener(searchViewItem, object : MenuItemCompat.OnActionExpandListener {
@@ -122,15 +172,6 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                 searchItem.isVisible = false
         }
 
-        mPresenter.doIf(
-                ifLoggedIn = {
-                    mAuthItem?.title = "Sign out"
-                },
-                ifLoggedOut = {
-                    mAuthItem?.title = "Sign in"
-                }
-        )
-
         return true
     }
 
@@ -148,36 +189,6 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                     mAuthItem?.title = "Sign in"
                 }
         )
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
-        R.id.action_settings -> {
-            startActivity(Intent(this, SettingsActivity::class.java))
-            true
-        }
-        R.id.action_auth -> {
-            mPresenter.doIf(
-                    ifLoggedIn = {
-                        mUserRepository.removeAll()
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribeBy(
-                                        onError = {
-                                            Toast.makeText(this, "Unexpected error.", Toast.LENGTH_LONG).show()
-                                        },
-                                        onComplete = {
-                                            finish()
-                                        }
-                                )
-                    },
-                    ifLoggedOut = {
-                        val intent = Intent(this, LoginActivity::class.java)
-                        intent.putExtra("ongoing", true)
-                        startActivityForResult(intent, REQUEST_LOGIN_ONGOING)
-                    }
-            )
-            true
-        }
-        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -226,6 +237,7 @@ class MainActivity : BackgroundActivity(), MainContract.View {
             REQUEST_LOGIN_ONGOING -> {
                 when (resultCode) {
                     RESULT_OK -> {
+                        mPresenter.updateNavigationHeaderInfo()
                         val snackbar = Snackbar.make(mFab,
                                 "Logged in as ${data?.getStringExtra("nickname")}.",
                                 Snackbar.LENGTH_LONG)
@@ -239,12 +251,15 @@ class MainActivity : BackgroundActivity(), MainContract.View {
     }
 
     override fun onBackPressed() {
-        if (mSearchView.isIconified.not()) {
-            mSearchView.setQuery("", false)
-            mSearchView.clearFocus()
-            mSearchView.isIconified = true
-        } else
-            super.onBackPressed()
+        when {
+            mSearchView.isIconified.not() -> {
+                mSearchView.setQuery("", false)
+                mSearchView.clearFocus()
+                mSearchView.isIconified = true
+            }
+            mDrawerLayout.isDrawerOpen(GravityCompat.START) -> mDrawerLayout.closeDrawer(GravityCompat.START)
+            else -> super.onBackPressed()
+        }
     }
 
     override fun displayWlLogo() {
@@ -407,12 +422,21 @@ class MainActivity : BackgroundActivity(), MainContract.View {
             }
 
             override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> mNewsItem.isChecked = true
+                    1 -> mMembersItem.isChecked = true
+                    2 -> {
+                        mAboutClanItem.isChecked = true
+                        val aboutClanFragment = mPagerAdapter.instantiateItem(mViewPager, 2) as AboutClanFragment
+                        aboutClanFragment.initializeYoutubePlayer()
+                    }
+                    3 -> {
+                        mRecruitingItem.isChecked = true
+                        appbar.setExpanded(false, true)
+                    }
+                }
                 lastPosition = position
                 invalidateOptionsMenu()
-                if (position == 3) {
-                    val aboutClanFragment = mPagerAdapter.instantiateItem(mViewPager, 3) as AboutClanFragment
-                    aboutClanFragment.initializeYoutubePlayer()
-                }
             }
 
             private fun showFabWithIcon(@DrawableRes fabIcon: Int) {
@@ -420,5 +444,45 @@ class MainActivity : BackgroundActivity(), MainContract.View {
                 mFab.show()
             }
         })
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val currentItem = when (item.itemId) {
+            R.id.nav_news -> 0
+            R.id.nav_members -> 1
+            R.id.nav_about_clan -> 2
+            R.id.nav_recruiting -> 3
+            else -> -1
+        }
+        if (currentItem != -1)
+            mViewPager.setCurrentItem(currentItem, true)
+
+        when (item.itemId) {
+            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.nav_sign_out -> {
+                mPresenter.doIf(
+                        ifLoggedIn = {
+                            mUserRepository.removeAll()
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeBy(
+                                            onError = {
+                                                Toast.makeText(this, "Unexpected error.", Toast.LENGTH_LONG).show()
+                                            },
+                                            onComplete = {
+                                                finish()
+                                            }
+                                    )
+                        },
+                        ifLoggedOut = {
+                            val intent = Intent(this, LoginActivity::class.java)
+                            intent.putExtra("ongoing", true)
+                            startActivityForResult(intent, REQUEST_LOGIN_ONGOING)
+                        }
+                )
+            }
+        }
+
+        mDrawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 }

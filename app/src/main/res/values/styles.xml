@@ -58,4 +58,11 @@
         <item name="android:textColor">@color/field_text_color</item>
     </style>
 
+    <style name="NavigationViewTextAppearance">
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/black_asylum</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColorSecondary">@color/field_text_color</item>
+    </style>
+
 </resources>

@@ -3,11 +3,12 @@ package com.mystical.wildlegion.screens.main.fragments.members
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
 import com.mystical.wildlegion.R
 import com.mystical.wildlegion.screens.main.adapters.base.BaseSearchAdapter
 import com.mystical.wildlegion.screens.main.adapters.base.BinderViewHolder
@@ -46,6 +47,7 @@ class MembersAdapter(context: Context, items: MutableList<MemberItem>) :
 
         var tvGamerangerId: TextView = itemView.tvGamerangerId
         var tvGamerangerNickname: TextView = itemView.tvGamerangerNickname
+        var tvGovernment: TextView = itemView.tvGovernment
 
         init {
             itemView.setOnClickListener {
@@ -58,6 +60,17 @@ class MembersAdapter(context: Context, items: MutableList<MemberItem>) :
             val member = item as Member
             tvGamerangerId.text = member.gamerangerId
             tvGamerangerNickname.text = member.nickname
+
+            if (member.government != null && member.government?.isNotEmpty()!!)
+                tvGovernment.visibility = VISIBLE
+            else
+                tvGovernment.visibility = GONE
+            tvGovernment.text = when (member.government) {
+                "C" -> "COUNCIL"
+                "L" -> "LEADER"
+                "F" -> "FOUNDER"
+                else -> ""
+            }
         }
     }
 

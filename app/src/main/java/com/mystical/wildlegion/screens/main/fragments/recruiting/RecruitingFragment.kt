@@ -39,22 +39,6 @@ class RecruitingFragment : Fragment(), RecruitingContract.View {
         mScrollView.visibility = VISIBLE
     }
 
-    override fun hideProgressbar() {
-        progressBar.visibility = GONE
-    }
-
-    override fun showErrorMessage() {
-        mErrorLabel.visibility = VISIBLE
-    }
-
-    override fun hideGuestbookButton() {
-        openGuestBookBtn.visibility = GONE
-    }
-
-    override fun showGuestbookButton() {
-        openGuestBookBtn.visibility = VISIBLE
-    }
-
     override fun setListenerOnGuestBookButton() {
         openGuestBookBtn.setOnClickListener {
             startActivity(Intent(activity, GuestBookActivity::class.java))

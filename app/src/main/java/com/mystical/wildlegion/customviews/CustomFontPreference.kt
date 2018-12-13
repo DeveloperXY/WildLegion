@@ -11,7 +11,7 @@ interface CustomFontPreference {
         val title = rootView.findViewById<TextView>(android.R.id.title)
         val summary = rootView.findViewById<TextView>(android.R.id.summary)
         sequenceOf(title, summary).forEach {
-            it.typeface = Typefaces.getFont(context.assets)
+            it.typeface = Typefaces.getFont(context)
         }
 
         title.setTextColor(context.resources.getColor(R.color.field_text_color))

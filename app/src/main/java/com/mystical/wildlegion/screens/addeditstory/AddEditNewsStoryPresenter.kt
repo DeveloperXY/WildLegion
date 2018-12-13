@@ -19,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
+import java.net.UnknownHostException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -189,11 +190,15 @@ class AddEditNewsStoryPresenter(var mView: AddEditNewsStoryContract.View) : AddE
         mView.hideLoadingView()
         mView.showSaveButton()
 
-        (throwable as HttpException).apply {
-            val jsonObj = Gson().fromJson(response().errorBody()?.string(), JsonObject::class.java)
-            val errorMessage = if (jsonObj == null) "Unexpected error." else
-                jsonObj.get("message").asString
-            mView.showErrorMessage(errorMessage)
+        if (throwable is UnknownHostException)
+            mView.showErrorMessage("No internet connection.")
+        else {
+            (throwable as HttpException).apply {
+                val jsonObj = Gson().fromJson(response().errorBody()?.string(), JsonObject::class.java)
+                val errorMessage = if (jsonObj == null) "Unexpected error." else
+                    jsonObj.get("message").asString
+                mView.showErrorMessage(errorMessage)
+            }
         }
     }
 

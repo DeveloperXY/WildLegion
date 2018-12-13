@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_news"
+            android:checked="true"
+            android:title="News" />
+        <item
+            android:id="@+id/nav_members"
+            android:title="Members" />
+        <item
+            android:id="@+id/nav_about_clan"
+            android:title="About clan" />
+        <item
+            android:id="@+id/nav_recruiting"
+            android:title="Recruiting" />
+    </group>
+
+    <item android:title="OTHER">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_sign_out"
+                android:title="Sign out" />
+        </menu>
+    </item>
+
+</menu>

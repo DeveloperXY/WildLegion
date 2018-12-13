@@ -16,7 +16,7 @@ class MyPreferenceCategory @JvmOverloads constructor(
     override fun onBindView(view: View) {
         super.onBindView(view)
         val titleView = view.findViewById<TextView>(android.R.id.title)
-        titleView.typeface = Typefaces.getFont(context.assets, "Regular")
+        titleView.typeface = Typefaces.getFont(context, "Regular")
 
         titleView.setTextColor(context.resources.getColor(R.color.colorAccent))
     }

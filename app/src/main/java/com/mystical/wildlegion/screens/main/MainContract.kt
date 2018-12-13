@@ -17,7 +17,12 @@ interface MainContract {
         fun getContext(): Context
         fun addViewPagerChangeListener()
         fun clearViewPagerChangeListeners()
+        fun setupNavigationView()
+        fun displayCurrentUsername(username: String)
+        fun displayCurrentUserEmail(email: String)
     }
 
-    interface Presenter : BasePresenter
+    interface Presenter : BasePresenter {
+        fun updateNavigationHeaderInfo()
+    }
 }

@@ -12,6 +12,7 @@ class RecruitingPresenter(var mView: RecruitingContract.View) : RecruitingContra
 
     override fun start() {
         mView.setListenerOnGuestBookButton()
+        mView.showRecruitmentDescription()
         mWixAPI.getRecruitmentStatus()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -19,15 +20,10 @@ class RecruitingPresenter(var mView: RecruitingContract.View) : RecruitingContra
                         onNext = {
                             val description = getRecruitmentDescription(it.isOpen)
                             mView.setRecruitmentDescription(description)
-                            mView.showRecruitmentDescription()
-                            mView.showGuestbookButton()
-
                         },
                         onError = {
-                            mView.showErrorMessage()
-                            mView.hideGuestbookButton()
-                        },
-                        onComplete = mView::hideProgressbar
+                            mView.setRecruitmentDescription("Recruitment data is unavailable.")
+                        }
                 )
     }
 
