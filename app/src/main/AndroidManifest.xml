@@ -40,6 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".screens.guestbook.GuestBookActivity"
+            android:label="Guest book"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".WildLegionService">

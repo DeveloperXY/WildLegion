@@ -2,16 +2,12 @@ package com.mystical.wildlegion.screens.main.fragments.recruiting
 
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.mystical.wildlegion.R
-import com.mystical.wildlegion.screens.guestbook.GuestBookActivity
 import kotlinx.android.synthetic.main.fragment_recruiting.*
 
 class RecruitingFragment : Fragment(), RecruitingContract.View {
@@ -31,17 +27,7 @@ class RecruitingFragment : Fragment(), RecruitingContract.View {
         mPresenter.start()
     }
 
-    override fun setRecruitmentDescription(text: String) {
-        mRecruitmentOpenTextArea.text = text
-    }
-
-    override fun showRecruitmentDescription() {
-        mScrollView.visibility = VISIBLE
-    }
-
-    override fun setListenerOnGuestBookButton() {
-        openGuestBookBtn.setOnClickListener {
-            startActivity(Intent(activity, GuestBookActivity::class.java))
-        }
+    override fun displayGuestbook(url: String) {
+        mWebView.loadUrl(url)
     }
 }
